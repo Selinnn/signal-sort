@@ -51,8 +51,12 @@ yön okunur ve bir sonraki tick o yönde çıkar.
    Çıkış hücrelerinde çarpışma yoktur (aynı tick'te iki doğru sinyal teslim edilebilir).
 5. Aynı hücrede ≥2 sinyal (köprü hariç; köprüde yalnızca aynı eksende iki sinyal çarpışır) → `collision`. Renk fark etmez.
 6. Makas okları: bu tick'te çıkılan makas oklarını döndür.
-7. Döngü: tüm sinyallerin (hücre, yön) + makas yönleri global durumu daha önce görüldüyse → `loop`.
-   Üst sınır `W×H×4×(makas sayısı+1)` tick; aşılırsa `loop`.
+7. Döngü: bir sinyal daha önce bulunduğu (hücre, yön) durumuna dönerse → `loop` (koordinat: tekrar edilen hücre).
+   Makassız tahtalarda oklar Run boyunca sabit olduğundan bu kesin ve erken bir tespittir; global durum aramak
+   gereksiz (sinyal periyotlarının EKOK'u kadar uzayabilir). Makas oklarıyla (adım 3) anahtar
+   (hücre, yön, makas yönleri) olur; üst sınır `W×H×4×4^(makas sayısı)` tick, aşılırsa `loop`.
+   Hata koordinatları: `outOfBounds` → kenardaki son hücre, `blocked`/`wrongReceiver`/`collision` → girilen hücre,
+   `swapCollision` → sinyalin kendi hücresi.
 
 **Bitiş:** İlk başarısızlık tick'inde simülasyon durur; aynı tick'teki tüm hatalar raporlanır, UI sinyal ID
 sırasına göre ilkini vurgular. Tüm sinyaller teslim edildiyse başarı.
