@@ -14,8 +14,8 @@ public struct LevelRecord: Codable, Hashable, Sendable {
 
 /// Oyuncunun kalıcı ilerlemesi. Şema sürümlüdür; eski kayıtlar `migrated()` ile güncellenir.
 public struct PlayerProgress: Codable, Hashable, Sendable {
-    /// 1: kampanya kayıtları. 2: günlük bulmaca kayıtları eklendi.
-    public static let currentSchemaVersion = 2
+    /// 1: kampanya kayıtları. 2: günlük bulmaca kayıtları. 3: ipucu bakiyesi ve satın alma defteri.
+    public static let currentSchemaVersion = 3
 
     public var schemaVersion: Int
     /// Seviye ID → en iyi sonuç. Yalnız çözülmüş seviyeler bulunur.
@@ -23,20 +23,32 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
     public var lastPlayedLevelID: String?
     /// Günlük bulmaca: gün → en iyi sonuç.
     public var dailyRecords: [DayKey: LevelRecord]
+    public var hintBalance: Int
+    /// İpucu verilmiş consumable işlem ID'leri (çift teslimi önler).
+    public var grantedTransactionIDs: Set<UInt64>
+    public var fullGameBonusGranted: Bool
 
     public init(
         schemaVersion: Int = PlayerProgress.currentSchemaVersion,
         records: [String: LevelRecord] = [:],
         lastPlayedLevelID: String? = nil,
-        dailyRecords: [DayKey: LevelRecord] = [:]
+        dailyRecords: [DayKey: LevelRecord] = [:],
+        hintBalance: Int = HintEconomy.startingHints,
+        grantedTransactionIDs: Set<UInt64> = [],
+        fullGameBonusGranted: Bool = false
     ) {
         self.schemaVersion = schemaVersion
         self.records = records
         self.lastPlayedLevelID = lastPlayedLevelID
         self.dailyRecords = dailyRecords
+        self.hintBalance = hintBalance
+        self.grantedTransactionIDs = grantedTransactionIDs
+        self.fullGameBonusGranted = fullGameBonusGranted
     }
 
-    private enum CodingKeys: String, CodingKey { case schemaVersion, records, lastPlayedLevelID, dailyRecords }
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion, records, lastPlayedLevelID, dailyRecords, hintBalance, grantedTransactionIDs, fullGameBonusGranted
+    }
 
     /// Eski sürümlerde olmayan alanlar boş kabul edilir; böylece güncelleme sonrası ilerleme kaybolmaz.
     public init(from decoder: Decoder) throws {
@@ -46,6 +58,9 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
         lastPlayedLevelID = try c.decodeIfPresent(String.self, forKey: .lastPlayedLevelID)
         let daily = try c.decodeIfPresent([String: LevelRecord].self, forKey: .dailyRecords) ?? [:]
         dailyRecords = Dictionary(uniqueKeysWithValues: daily.compactMap { key, value in DayKey(key).map { ($0, value) } })
+        hintBalance = try c.decodeIfPresent(Int.self, forKey: .hintBalance) ?? HintEconomy.startingHints
+        grantedTransactionIDs = try c.decodeIfPresent(Set<UInt64>.self, forKey: .grantedTransactionIDs) ?? []
+        fullGameBonusGranted = try c.decodeIfPresent(Bool.self, forKey: .fullGameBonusGranted) ?? false
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -54,6 +69,9 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
         try c.encode(records, forKey: .records)
         try c.encodeIfPresent(lastPlayedLevelID, forKey: .lastPlayedLevelID)
         try c.encode(Dictionary(uniqueKeysWithValues: dailyRecords.map { ($0.key.description, $0.value) }), forKey: .dailyRecords)
+        try c.encode(hintBalance, forKey: .hintBalance)
+        try c.encode(grantedTransactionIDs.sorted(), forKey: .grantedTransactionIDs)
+        try c.encode(fullGameBonusGranted, forKey: .fullGameBonusGranted)
     }
 
     public func isCompleted(_ levelID: String) -> Bool { records[levelID] != nil }
@@ -78,6 +96,7 @@ public struct PlayerProgress: Codable, Hashable, Sendable {
         let new = LevelRecord(stars: stars, bestMoves: moves, hintUsed: hintUsed)
         guard let old = dailyRecords[day] else {
             dailyRecords[day] = new
+            hintBalance += HintEconomy.dailyReward
             return true
         }
         let better = stars > old.stars || (stars == old.stars && moves < old.bestMoves)

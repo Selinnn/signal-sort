@@ -81,7 +81,7 @@ import Testing
     @Test func versionOneSavesStillLoad() throws {
         let v1 = #"{"schemaVersion":1,"records":{"c1-01":{"stars":3,"bestMoves":1,"hintUsed":false}},"lastPlayedLevelID":"c1-01"}"#
         let progress = try JSONDecoder().decode(PlayerProgress.self, from: Data(v1.utf8)).migrated()
-        #expect(progress.schemaVersion == 2)
+        #expect(progress.schemaVersion == PlayerProgress.currentSchemaVersion)
         #expect(progress.records["c1-01"]?.stars == 3)
         #expect(progress.dailyRecords.isEmpty)
         var withDaily = progress

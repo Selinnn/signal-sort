@@ -1,0 +1,87 @@
+{
+  "identifier": "6A1C2F3E",
+  "nonRenewingSubscriptions": [],
+  "products": [
+    {
+      "displayPrice": "4.99",
+      "familyShareable": false,
+      "internalID": "6A1C2F01",
+      "localizations": [
+        {
+          "description": "Chapters 4–6, no ads, 20 hints and themes",
+          "displayName": "Full Game",
+          "locale": "en_US"
+        },
+        {
+          "description": "Bölüm 4–6, reklamsız, 20 ipucu ve temalar",
+          "displayName": "Tam Oyun",
+          "locale": "tr"
+        },
+        {
+          "description": "Capítulos 4–6, sin anuncios, 20 pistas y temas",
+          "displayName": "Juego completo",
+          "locale": "es_ES"
+        }
+      ],
+      "productID": "com.selinkaplan.signalsort.fullgame",
+      "referenceName": "Full Game",
+      "type": "NonConsumable"
+    },
+    {
+      "displayPrice": "2.99",
+      "familyShareable": false,
+      "internalID": "6A1C2F02",
+      "localizations": [
+        {
+          "description": "No more interstitial ads",
+          "displayName": "Remove Ads",
+          "locale": "en_US"
+        },
+        {
+          "description": "Geçiş reklamları kalkar",
+          "displayName": "Reklamları Kaldır",
+          "locale": "tr"
+        },
+        {
+          "description": "Sin anuncios intersticiales",
+          "displayName": "Quitar anuncios",
+          "locale": "es_ES"
+        }
+      ],
+      "productID": "com.selinkaplan.signalsort.removeads",
+      "referenceName": "Remove Ads",
+      "type": "NonConsumable"
+    },
+    {
+      "displayPrice": "0.99",
+      "familyShareable": false,
+      "internalID": "6A1C2F03",
+      "localizations": [
+        {
+          "description": "Ten hints for any puzzle",
+          "displayName": "10 Hints",
+          "locale": "en_US"
+        },
+        {
+          "description": "Her bulmacada kullanılabilir on ipucu",
+          "displayName": "10 İpucu",
+          "locale": "tr"
+        },
+        {
+          "description": "Diez pistas para cualquier reto",
+          "displayName": "10 pistas",
+          "locale": "es_ES"
+        }
+      ],
+      "productID": "com.selinkaplan.signalsort.hints10",
+      "referenceName": "Hint Pack",
+      "type": "Consumable"
+    }
+  ],
+  "settings": {},
+  "subscriptionGroups": [],
+  "version": {
+    "major": 3,
+    "minor": 0
+  }
+}

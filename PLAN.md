@@ -381,6 +381,19 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 > Paylaşım metni spoiler'sız: yıldızlar, hamle/par, Run denemeleri (🟥…🟩) ve ipucu sayısı. Uçak modu ayrıca
 > denenmedi; günlükler gömülü olduğundan ağ kullanılmıyor. **Paket bitmeden (2028-10) yeni sürümle uzatılmalı.**
 | 10 | StoreKit 2: Reklamları Kaldır, Tam Oyun, ipucu paketi, geri yükleme, ipucu ekonomisi | StoreKit test UI testleri yeşil |
+
+> **Adım 10 notları:** Ürün ID'leri `com.selinkaplan.signalsort.{fullgame,removeads,hints10}` — App Store
+> Connect'te birebir aynı oluşturulmalı. `StoreKit/SignalSort.storekit` scheme'in Run eylemine bağlı.
+> İpucu ekonomisi GameCore `HintEconomy` (başlangıç 3, günlük ilk çözüm +1, Tam Oyun +20 bir kez, paket +10);
+> `PlayerProgress` şema 3 (bakiye, consumable işlem defteri → çift teslim yok). İpucu bitince düğme "+" gösterir
+> ve mağazayı açar; Tam Oyun gereken bölüm/sonraki seviye de mağazayı açar.
+> **Bulgular:** (1) Bağlamsız `Product.purchase()` iOS 26 testinde asılı kaldı → arayüz SwiftUI `purchase`
+> ortam eylemini kullanıyor. (2) `currentEntitlements` bir kez okunduktan sonra yeni satın almayı geç
+> gösterdi (StoreKit test ortamı) → servis doğrulanmış işlemleri hak listesine ayrıca işliyor, iade
+> (`Transaction.updates`) ürünü düşürüyor. Testler: `SKTestSession` ile satın alma, bonusun tek verilmesi,
+> paket, Reklamları Kaldır, iade. **Doğrulanmadı:** satın alma diyaloğunun arayüzden uçtan uca akışı
+> (simülatörde elle denenmeli). **Borç:** Tam Oyun kartı "ek tahta temaları" vaat ediyor; temalar adım 12'de
+> yapılmalı, yoksa bu satır kaldırılmalı.
 | 11 | Reklam: AdMob SDK, `AdService`/`AdPolicy`, ödüllü ipucu, geçiş reklamı, UMP + ATT akışı, `SKAdNetworkItems`, `NSUserTrackingUsageDescription` | Test reklamlarıyla gerçek cihazda akış doğru; AdPolicy testleri yeşil |
 | 12 | Tema, ses, haptik, erişilebilirlik, EN+TR+ES yerelleştirme (ATT ön ekranı ve izin metni dahil), uygulama ikonu | Cihaz matrisi kontrolü |
 | 13 | fastlane snapshot (ekran görüntüleri), mağaza metinleri ve ekran görüntüleri EN+TR+ES, gizlilik/destek sayfaları (reklam ve veri kullanımı bölümüyle), `app-ads.txt` | Tüm metadata hazır |

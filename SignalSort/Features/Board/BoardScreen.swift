@@ -11,15 +11,17 @@ struct BoardScreen: View {
     let mode: BoardMode
     let store: ProgressStore
     let onNext: () -> Void
+    let showStore: () -> Void
     @State private var session: GameSession
     @State private var outcome: ResultOutcome?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    init(level: LevelDefinition, mode: BoardMode, store: ProgressStore, onNext: @escaping () -> Void) {
+    init(level: LevelDefinition, mode: BoardMode, store: ProgressStore, onNext: @escaping () -> Void, showStore: @escaping () -> Void) {
         self.level = level
         self.mode = mode
         self.store = store
         self.onNext = onNext
+        self.showStore = showStore
         _session = State(initialValue: GameSession(level: level))
     }
 
@@ -62,6 +64,16 @@ struct BoardScreen: View {
             }
         }
         .animation(.easeOut(duration: 0.25), value: session.showsResult)
+    }
+
+    /// Bakiye varsa ipucu verir ve bir ipucu düşer; bakiye yoksa mağazayı açar.
+    private func useHint() {
+        guard store.hintBalance > 0 else {
+            showStore()
+            return
+        }
+        guard session.canHint, store.spendHint() else { return }
+        session.hint()
     }
 
     private var title: Text {
@@ -136,7 +148,7 @@ struct BoardScreen: View {
             ControlButton(title: "board.reset", symbol: "arrow.counterclockwise", identifier: "board.reset",
                           enabled: session.isInteractive && session.play.canReset, action: session.reset)
             ControlButton(title: "board.hint", symbol: "lightbulb", identifier: "board.hint",
-                          enabled: session.isInteractive, action: session.hint)
+                          enabled: session.isInteractive, badge: store.hintBalance, action: useHint)
             Button(action: session.run) {
                 Label("board.run", systemImage: "play.fill")
                     .font(.headline)
@@ -156,6 +168,7 @@ private struct ControlButton: View {
     let symbol: String
     let identifier: String
     let enabled: Bool
+    var badge: Int?
     let action: () -> Void
 
     var body: some View {
@@ -167,6 +180,18 @@ private struct ControlButton: View {
             .frame(width: 58, height: 52)
             .background(RoundedRectangle(cornerRadius: 14).fill(Theme.surface))
             .foregroundStyle(enabled ? Theme.textPrimary : Theme.textSecondary.opacity(0.4))
+            .overlay(alignment: .topTrailing) {
+                if let badge {
+                    Text(badge > 0 ? "\(badge)" : "+")
+                        .font(.caption2.bold().monospacedDigit())
+                        .padding(.horizontal, 5)
+                        .frame(minWidth: 18, minHeight: 18)
+                        .background(Capsule().fill(badge > 0 ? Theme.hint : Color.accentColor))
+                        .foregroundStyle(Theme.background)
+                        .offset(x: 6, y: -6)
+                        .accessibilityIdentifier("\(identifier).badge")
+                }
+            }
         }
         .disabled(!enabled)
         .accessibilityIdentifier(identifier)

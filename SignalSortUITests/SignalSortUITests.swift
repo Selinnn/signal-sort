@@ -96,7 +96,7 @@ final class SignalSortUITests: XCTestCase {
 
     @MainActor
     func testHintsLeadToASolutionWithTwoStars() throws {
-        launch(["-unlockAll"])
+        launch(["-unlockAll", "-hints", "99"])
         app.buttons["home.chapters"].tap()
         app.buttons["chapter.2"].tap()
         app.buttons["level.c3-01"].tap()
@@ -117,7 +117,7 @@ final class SignalSortUITests: XCTestCase {
 
     @MainActor
     func testDailyPuzzleSolveShareAndStreak() throws {
-        launch(["-dailyDate", "2026-11-02"])
+        launch(["-dailyDate", "2026-11-02", "-hints", "99"])
         XCTAssertTrue(app.buttons["home.daily"].exists)
         app.buttons["home.daily"].tap()
         XCTAssertTrue(app.staticTexts["daily.streak"].waitForExistence(timeout: 5))
@@ -135,6 +135,30 @@ final class SignalSortUITests: XCTestCase {
         app.buttons["result.next"].tap()
         XCTAssertTrue(app.staticTexts["daily.streak"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["daily.streak"].label, "1-day streak")
+        // İlk kez çözülen günlük +1 ipucu verir: 99 − kullanılanlar + 1.
         attachScreenshot("daily-list")
+    }
+
+    @MainActor
+    func testStoreOpensWhenHintsRunOutAndFromLockedChapters() throws {
+        launch(["-hints", "0"])
+        app.buttons["home.continue"].tap()
+        XCTAssertTrue(app.buttons["board.hint"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["board.hint.badge"].label, "+")
+        app.buttons["board.hint"].tap()
+        XCTAssertTrue(app.buttons["store.restore"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["store.hintBalance"].label, "You have 0 hints")
+        attachScreenshot("store")
+        app.buttons["store.close"].tap()
+        XCTAssertTrue(app.buttons["board.run"].waitForExistence(timeout: 5))
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+
+        app.buttons["home.chapters"].tap()
+        app.buttons["chapter.3"].tap()
+        XCTAssertTrue(app.buttons["store.restore"].waitForExistence(timeout: 5))
+        app.buttons["store.close"].tap()
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["home.store"].tap()
+        XCTAssertTrue(app.buttons["store.restore"].waitForExistence(timeout: 5))
     }
 }

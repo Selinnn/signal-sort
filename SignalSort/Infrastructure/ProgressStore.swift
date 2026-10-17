@@ -12,8 +12,10 @@ final class ProgressStore {
     let dailies: DailyCatalog
     let progression: Progression
     private(set) var progress: PlayerProgress
-    /// Tam Oyun hakkı (adım 10'da StoreKit'ten gelir).
+    /// Tam Oyun hakkı; `StoreService` doğrulanmış işlemlerden ayarlar.
     var hasFullGame = false
+    /// Reklamları Kaldır veya Tam Oyun (adım 11'de geçiş reklamlarını kapatır).
+    var hasRemoveAds = false
     /// Yalnız DEBUG: tüm seviyeleri açar (görsel kontrol ve UI testleri).
     var unlockAll = false
 
@@ -70,6 +72,31 @@ final class ProgressStore {
     }
 
     func dailyStreak(today: DayKey) -> Int { progress.dailyStreak(today: today) }
+
+    // MARK: İpucu ekonomisi
+
+    var hintBalance: Int { progress.hintBalance }
+
+    func spendHint() -> Bool {
+        guard progress.spendHint() else { return false }
+        save()
+        return true
+    }
+
+    func applyHintPurchase(transactionID: UInt64, hints: Int) {
+        if progress.applyHintPurchase(transactionID: transactionID, hints: hints) > 0 { save() }
+    }
+
+    func grantFullGameBonusIfNeeded() {
+        if progress.grantFullGameBonusIfNeeded() > 0 { save() }
+    }
+
+    #if DEBUG
+    func setHintBalance(_ value: Int) {
+        progress.hintBalance = value
+        save()
+    }
+    #endif
 
     func reset() {
         progress = PlayerProgress()

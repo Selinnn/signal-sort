@@ -5,6 +5,7 @@ struct HomeView: View {
     let store: ProgressStore
     let today: DayKey
     @Binding var path: [AppRoute]
+    let showStore: () -> Void
 
     var body: some View {
         VStack(spacing: 28) {
@@ -49,6 +50,19 @@ struct HomeView: View {
             .padding(.bottom, 24)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .overlay(alignment: .topTrailing) {
+            Button(action: showStore) {
+                Image(systemName: "bag.fill")
+                    .font(.title3)
+                    .frame(width: 48, height: 48)
+                    .background(Circle().fill(Theme.surface))
+                    .foregroundStyle(Theme.textPrimary)
+            }
+            .accessibilityLabel(Text("store.title"))
+            .accessibilityIdentifier("home.store")
+            .padding(.trailing, 20)
+            .padding(.top, 8)
+        }
         .background(Theme.background.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
     }
@@ -95,7 +109,7 @@ struct HomeView: View {
             }
             .accessibilityIdentifier("home.continue")
         } else if store.isWaitingForFullGame {
-            Button { path.append(.chapters) } label: {
+            Button(action: showStore) {
                 Label("home.unlockFullGame", systemImage: "lock.open.fill")
                     .font(.title3.bold())
                     .frame(maxWidth: .infinity, minHeight: 64)

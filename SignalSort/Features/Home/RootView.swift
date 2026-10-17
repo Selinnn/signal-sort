@@ -12,34 +12,38 @@ enum AppRoute: Hashable {
 /// Uygulamanın gezinme kökü: Home → Bölümler → Bölüm → Seviye.
 struct RootView: View {
     let store: ProgressStore
+    let shop: StoreService
     @State private var path: [AppRoute] = []
+    @State private var showStore = false
     @State private var today = DayKey.today()
 
     var body: some View {
         NavigationStack(path: $path) {
-            HomeView(store: store, today: today, path: $path)
+            HomeView(store: store, today: today, path: $path, showStore: { showStore = true })
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .chapters:
-                        ChapterMapView(store: store, path: $path)
+                        ChapterMapView(store: store, path: $path, showStore: { showStore = true })
                     case .chapter(let index):
                         ChapterLevelsView(store: store, chapterIndex: index, path: $path)
                     case .level(let id):
                         if let level = store.catalog.level(withID: id) {
                             BoardScreen(level: level, mode: .campaign(number: store.catalog.number(of: id)), store: store,
-                                        onNext: { next(after: id) })
+                                        onNext: { next(after: id) }, showStore: { showStore = true })
                                 .id(id)
                         }
                     case .daily:
                         DailyView(store: store, today: today, path: $path)
                     case .dailyLevel(let day):
                         if let level = store.dailies.level(for: day) {
-                            BoardScreen(level: level, mode: .daily(day), store: store, onNext: { path.removeLast() })
+                            BoardScreen(level: level, mode: .daily(day), store: store, onNext: { path.removeLast() },
+                                        showStore: { showStore = true })
                                 .id(day)
                         }
                     }
                 }
         }
+        .sheet(isPresented: $showStore) { StoreView(shop: shop, store: store) }
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
             Task { @MainActor in today = DayKey.today() }
         }
@@ -49,7 +53,18 @@ struct RootView: View {
 
     /// Sonraki seviye açıksa ona geçer; Tam Oyun gerekiyorsa veya kampanya bittiyse bölüm haritasına döner.
     private func next(after id: String) {
-        guard let next = store.progression.level(after: id), store.availability(of: next.id) == .available else {
+        guard let next = store.progression.level(after: id) else {
+            path = [.chapters]
+            return
+        }
+        switch store.availability(of: next.id) {
+        case .available:
+            break
+        case .requiresFullGame:
+            path = [.chapters]
+            showStore = true
+            return
+        case .lockedByProgress:
             path = [.chapters]
             return
         }

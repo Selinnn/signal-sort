@@ -43,7 +43,10 @@ targets:
   SignalSortTests:
     type: bundle.unit-test
     platform: iOS
-    sources: [SignalSortTests]
+    sources:
+      - SignalSortTests
+      - path: StoreKit/SignalSort.storekit
+        buildPhase: resources
     dependencies:
       - target: SignalSort
       - package: GameCore
@@ -68,6 +71,8 @@ schemes:
     build:
       targets:
         SignalSort: all
+    run:
+      storeKitConfiguration: StoreKit/SignalSort.storekit
     test:
       gatherCoverageData: true
       targets:

@@ -18,6 +18,7 @@ extension Chapter {
 struct ChapterMapView: View {
     let store: ProgressStore
     @Binding var path: [AppRoute]
+    let showStore: () -> Void
 
     var body: some View {
         ScrollView {
@@ -41,7 +42,9 @@ struct ChapterMapView: View {
         let stars = store.progression.stars(chapter: index, progress: store.progress)
         let locked = availability != .available
 
-        return Button { path.append(.chapter(index)) } label: {
+        return Button {
+            if availability == .requiresFullGame { showStore() } else { path.append(.chapter(index)) }
+        } label: {
             HStack(spacing: 16) {
                 ZStack {
                     Circle().fill(Theme.cell).frame(width: 52, height: 52)
@@ -81,7 +84,7 @@ struct ChapterMapView: View {
             .background(RoundedRectangle(cornerRadius: 20).fill(Theme.surface))
         }
         .buttonStyle(.plain)
-        .disabled(locked)
+        .disabled(availability == .lockedByProgress)
         .accessibilityIdentifier("chapter.\(index)")
     }
 }

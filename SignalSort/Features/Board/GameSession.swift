@@ -89,11 +89,21 @@ final class GameSession {
         updateAngles(clockwise: false)
     }
 
-    func hint() {
-        guard isInteractive, let hint = play.takeHint() else { return }
+    /// İpucu verilebilecek durum var mı (çözülmemiş, oynatma yok ve yanlış taş var).
+    var canHint: Bool {
+        guard isInteractive else { return false }
+        var probe = play
+        return probe.takeHint() != nil
+    }
+
+    /// İpucunu uygular. Uygulandıysa true (çağıran bakiyeden düşer).
+    @discardableResult
+    func hint() -> Bool {
+        guard isInteractive, let hint = play.takeHint() else { return false }
         phase = .planning
         hintTileID = hint.tileID
         updateAngles(clockwise: true)
+        return true
     }
 
     func toggleSpeed() {
