@@ -1,0 +1,13 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "home.subtitle" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Route the colors" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Guía los colores" } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Renkleri yönlendir" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}
