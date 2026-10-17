@@ -8,6 +8,15 @@
 	<string>$(ADMOB_REWARDED_ID)</string>
 	<key>SignalSortInterstitialAdUnitID</key>
 	<string>$(ADMOB_INTERSTITIAL_ID)</string>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>LaunchBackground</string>
+		<key>UIImageName</key>
+		<string>LaunchLogo</string>
+		<key>UIImageRespectsSafeAreaInsets</key>
+		<false/>
+	</dict>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

@@ -283,4 +283,19 @@ final class SignalSortUITests: XCTestCase {
         XCTAssertTrue(app.buttons["store.restore"].waitForExistence(timeout: 5))
         attachScreenshot("matrix-store")
     }
+
+    /// Normal açılışta giriş animasyonu görünür ve kendiliğinden ana ekrana geçer.
+    @MainActor
+    func testSplashLeadsToHome() throws {
+        app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-resetProgress", "-splashDuration", "6"]
+        app.launch()
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "splash").firstMatch.waitForExistence(timeout: 3))
+        attachScreenshot("splash")
+        // Ana ekran splash'in altında hazır bekler; splash kendiliğinden kaybolmalı.
+        let splash = app.descendants(matching: .any).matching(identifier: "splash").firstMatch
+        expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: splash)
+        waitForExpectations(timeout: 10)
+        XCTAssertTrue(app.buttons["home.continue"].isHittable)
+    }
 }

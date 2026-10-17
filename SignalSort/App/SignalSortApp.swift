@@ -6,6 +6,8 @@ struct SignalSortApp: App {
     @State private var store: ProgressStore
     @State private var shop: StoreService
     @State private var ads: AdsCoordinator
+    /// UI testlerinde (hızlı oynatma) giriş animasyonu atlanır.
+    @State private var showSplash = !ProcessInfo.processInfo.arguments.contains("-uiTestFastPlayback")
 
     init() {
         let arguments = ProcessInfo.processInfo.arguments
@@ -48,9 +50,16 @@ struct SignalSortApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootView(store: store, shop: shop, ads: ads)
-                .task { await shop.start() }
-                .task { await ads.appLaunched() }
+            ZStack {
+                RootView(store: store, shop: shop, ads: ads)
+                if showSplash {
+                    SplashView { withAnimation(.easeInOut(duration: 0.35)) { showSplash = false } }
+                        .transition(.opacity)
+                        .zIndex(1)
+                }
+            }
+            .task { await shop.start() }
+            .task { await ads.appLaunched() }
         }
     }
 }

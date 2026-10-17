@@ -52,7 +52,6 @@ targets:
         ADMOB_INTERSTITIAL_ID: ca-app-pub-3940256099942544/4411468910
         INFOPLIST_KEY_CFBundleDisplayName: Signal Sort
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.puzzle-games
-        INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         INFOPLIST_KEY_UIRequiresFullScreen: YES
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO

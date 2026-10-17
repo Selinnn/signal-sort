@@ -1,20 +1,28 @@
 // Uygulama ikonunu (1024×1024, saydamlıksız PNG) CoreGraphics ile çizer. Kullanım:
 //   swift scripts/make-icon.swift SignalSort/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png
+// Açılış ekranı logosu (yuvarlatılmış köşe, saydam zemin):
+//   swift scripts/make-icon.swift SignalSort/Resources/Assets.xcassets/LaunchLogo.imageset/LaunchLogo.png logo
 import AppKit
 import CoreGraphics
 
 let size: CGFloat = 1024
 let output = CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : "AppIcon.png"
+let isLogo = CommandLine.arguments.count > 2 && CommandLine.arguments[2] == "logo"
 
 func rgb(_ r: CGFloat, _ g: CGFloat, _ b: CGFloat, _ a: CGFloat = 1) -> CGColor { CGColor(red: r, green: g, blue: b, alpha: a) }
 
 let space = CGColorSpace(name: CGColorSpace.sRGB)!
 let ctx = CGContext(data: nil, width: Int(size), height: Int(size), bitsPerComponent: 8, bytesPerRow: 0,
-                    space: space, bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)!
+                    space: space, bitmapInfo: (isLogo ? CGImageAlphaInfo.premultipliedLast : CGImageAlphaInfo.noneSkipLast).rawValue)!
 // CoreGraphics'te y yukarı; çizimi y aşağı düşünmek için çevir.
 ctx.translateBy(x: 0, y: size)
 ctx.scaleBy(x: 1, y: -1)
 
+// Logo: ikon iOS'taki gibi yuvarlatılmış köşeli kareye kırpılır (zemin saydam).
+if isLogo {
+    ctx.addPath(CGPath(roundedRect: CGRect(x: 0, y: 0, width: size, height: size), cornerWidth: 230, cornerHeight: 230, transform: nil))
+    ctx.clip()
+}
 // Zemin: lacivert dikey geçiş.
 let gradient = CGGradient(colorsSpace: space, colors: [rgb(0.09, 0.12, 0.26), rgb(0.04, 0.05, 0.12)] as CFArray, locations: [0, 1])!
 ctx.drawLinearGradient(gradient, start: .zero, end: CGPoint(x: 0, y: size), options: [])
