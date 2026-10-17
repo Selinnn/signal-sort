@@ -439,6 +439,14 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 > reposu ve AdMob `pub-` kimliği gerekir; ilk denemede açılan `urulu09/signal-sort` reposu silinmeli.
 | 14 | Release build, arşiv, App Store Connect'e yükleme, incelemeye gönderme | Selin onayıyla gönderilir |
 
+> **Adım 14 notları (hazırlık tamam, gönderim Selin'de):** `DEVELOPMENT_TEAM = 67ANTJMF7U`. Release derlemesi temiz
+> (1.0.0 (1), ~9 MB; DEBUG argümanları ikilide yok). Test AdMob kimlikleriyle arşiv bilerek reddediliyor (denendi).
+> Splash: sistem açılış ekranı + kısa animasyonlu giriş. Yükleme: Xcode Organizer ya da `fastlane release`
+> (`appstore/ExportOptions.plist`, `fastlane/Fastfile`; incelemeye göndermez). Adım adım liste: **`appstore/RELEASE.md`**.
+> Son tam tur: 111 çekirdek + 7 birim/StoreKit + 19 UI testi yeşil, `check-content.sh` geçti.
+> **Engelleyenler (Selin):** Paid Apps sözleşmesi/vergi/banka, App Store Connect kaydı ve 3 IAP, gerçek AdMob
+> kimlikleri + `pub-` (app-ads.txt), AdMob onay mesajları, SKAdNetwork listesi, App Privacy ve yaş formları.
+
 ## 9. Yayın kontrol listesi (Selin'in yapması gerekenler)
 - Apple Developer üyeliği aktif mi; App Store Connect'te uygulama kaydı, **isim müsaitliği** ("Signal Sort" alınmış olabilir — yedek isim hazır olmalı).
 - Bundle ID: `com.selinkaplan.signalsort` (onaylandı), imzalama ekibi (`DEVELOPMENT_TEAM` project.yml'e eklenmeli).

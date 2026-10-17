@@ -27,3 +27,9 @@ fastlane/test_output/
 
 # Ham ekran görüntüleri (scripts/make-screenshots.sh üretir)
 fastlane/raw/
+
+# fastlane çıktıları ve App Store Connect anahtarları
+build/
+fastlane/README.md
+*.ipa
+*.dSYM.zip

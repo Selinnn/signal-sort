@@ -1,0 +1,37 @@
+# Signal Sort yayın komutları. App Store Connect API anahtarı repoya girmez:
+#   export ASC_API_KEY_PATH=~/.appstoreconnect/signalsort.json   # {"key_id","issuer_id","key_filepath"}
+default_platform(:ios)
+
+platform :ios do
+  desc "Yalnız mağaza metinlerini ve ekran görüntülerini yükler (derleme yüklemez, incelemeye göndermez)"
+  lane :metadata do
+    upload_to_app_store(
+      api_key_path: ENV.fetch("ASC_API_KEY_PATH"),
+      skip_binary_upload: true,
+      overwrite_screenshots: true,
+      submit_for_review: false,
+      force: true,
+      precheck_include_in_app_purchases: false
+    )
+  end
+
+  desc "İçeriği doğrular, Release arşivi alır ve App Store Connect'e yükler (incelemeye göndermez)"
+  lane :release do
+    sh("cd .. && ./scripts/check-content.sh")
+    sh("cd .. && xcodegen generate")
+    build_app(
+      project: "SignalSort.xcodeproj",
+      scheme: "SignalSort",
+      configuration: "Release",
+      export_options: "appstore/ExportOptions.plist",
+      xcargs: "-allowProvisioningUpdates",
+      output_directory: "build"
+    )
+    upload_to_app_store(
+      api_key_path: ENV.fetch("ASC_API_KEY_PATH"),
+      submit_for_review: false,
+      force: true,
+      precheck_include_in_app_purchases: false
+    )
+  end
+end
