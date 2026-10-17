@@ -300,6 +300,20 @@ public struct HintProvider { func hint(_ level: LevelDefinition, _ state: LevelS
 6. `build-dailies --from <tarih> --days 730` aynı hattan `dailies.json` üretir.
 7. CI testi: her gömülü seviye validator'dan geçer, solver ≥1 çözüm bulur, kayıtlı par = solver par.
 
+**Uygulama notları (adım 5):**
+- PRNG: kendi SplitMix64 + tarafsız `int(below:)`, Fisher–Yates; stdlib `random(in:)`/`shuffle` kullanılmaz
+  (algoritmaları Swift sürümleri arasında değişebilir). Profil adı + üretici sürümü FNV-1a ile tohuma karışır.
+  Sözlük/küme sırası hiçbir üretim kararında kullanılmaz (Swift `Hasher` her süreçte farklı tohumlanır).
+- Yol kurma "yürüyücü" ile: önceki yolların tick çizelgesini bilir; aynı tick aynı hücre ve yer değiştirme yasak,
+  mevcut taşlara uyar, makas oka yalnız önceki tüm girişlerden sonra girer, başka rengin düz geçtiği hücrede
+  yalnız kendi rengindeki renkli okla döner, izinliyse aynı tick dik kesişmede köprü koyar.
+- Seviye JSON'u `par`, `solutionCount`, `solutions`, `seed`, `profile`, `generatorVersion` taşır.
+- Profiller: `route, obstacle, crossing, color, toggle, master` (bölüm 1–6). İlk ölçüm (release, 50 tohum):
+  hepsi 50/50 üretildi; ortalama deneme 1–12; master seviye başına ~0,9 sn.
+- Bitiş kriteri ölçümü (release): 1000 tohum (route/obstacle/crossing/color 200'er, toggle/master 100'er) →
+  1000/1000 üretildi, 0 başarısız, 1000/1000 `validate --deep` geçti. Par medyanları: 5/7/9/10/12/15.
+- Altın tohum testleri: `route-1`, `color-1`, `toggle-2` parmak izleri; değişirse `LevelGenerator.version` artırılır.
+
 ---
 
 ## 7. TestFlight olmadan kalite güvencesi

@@ -10,8 +10,13 @@ public struct LevelDefinition: Codable, Hashable, Sendable {
     /// Solver'ın hesapladığı minimum hamle. Elle yazılmaz.
     public var par: Int?
     public var solutionCount: Int?
+    /// Solver'ın bulduğu çözümler (hamleye göre sıralı). İpucu cihazda solver çalıştırmadan bunlardan hesaplanır.
+    public var solutions: [Solution]?
     /// Üreticiyle oluşturulduysa tohum; elle tasarlandıysa nil.
     public var seed: UInt64?
+    /// Üreticiyle oluşturulduysa profil adı ve üretici sürümü.
+    public var profile: String?
+    public var generatorVersion: Int?
 
     public init(
         id: String,
@@ -23,7 +28,10 @@ public struct LevelDefinition: Codable, Hashable, Sendable {
         tiles: [Tile] = [],
         par: Int? = nil,
         solutionCount: Int? = nil,
-        seed: UInt64? = nil
+        solutions: [Solution]? = nil,
+        seed: UInt64? = nil,
+        profile: String? = nil,
+        generatorVersion: Int? = nil
     ) {
         self.id = id
         self.schemaVersion = schemaVersion
@@ -34,7 +42,10 @@ public struct LevelDefinition: Codable, Hashable, Sendable {
         self.tiles = tiles
         self.par = par
         self.solutionCount = solutionCount
+        self.solutions = solutions
         self.seed = seed
+        self.profile = profile
+        self.generatorVersion = generatorVersion
     }
 
     public func contains(_ coordinate: Coordinate) -> Bool {

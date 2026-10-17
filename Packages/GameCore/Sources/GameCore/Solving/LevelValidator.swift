@@ -18,6 +18,7 @@ public enum ValidationIssue: Hashable, Sendable, CustomStringConvertible {
     case unsolvable
     case parMismatch(recorded: Int?, actual: Int?)
     case solutionCountMismatch(recorded: Int?, actual: Int)
+    case solutionsMismatch
     case searchIncomplete
 
     public var description: String {
@@ -41,6 +42,7 @@ public enum ValidationIssue: Hashable, Sendable, CustomStringConvertible {
         case .unsolvable: "Çözümü yok"
         case .parMismatch(let r, let a): "Kayıtlı par \(r.map(String.init) ?? "yok"), solver par \(a.map(String.init) ?? "yok")"
         case .solutionCountMismatch(let r, let a): "Kayıtlı çözüm sayısı \(r.map(String.init) ?? "yok"), solver \(a)"
+        case .solutionsMismatch: "Kayıtlı çözüm listesi solver ile uyuşmuyor"
         case .searchIncomplete: "Solver arama bütçesini aştı; par ve çözüm sayısı kesin değil"
         }
     }
@@ -72,6 +74,7 @@ public struct LevelValidator: Sendable {
         if level.solutionCount != report.solutionCount {
             issues.append(.solutionCountMismatch(recorded: level.solutionCount, actual: report.solutionCount))
         }
+        if let recorded = level.solutions, recorded != report.solutions { issues.append(.solutionsMismatch) }
         return issues
     }
 
