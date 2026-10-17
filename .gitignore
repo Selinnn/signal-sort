@@ -24,3 +24,6 @@ fastlane/test_output/
 *.p8
 *.mobileprovision
 .env
+
+# Ham ekran görüntüleri (scripts/make-screenshots.sh üretir)
+fastlane/raw/

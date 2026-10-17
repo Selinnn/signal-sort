@@ -1,0 +1,1 @@
+First release of Signal Sort: 150 levels, a daily puzzle, five board themes and full VoiceOver support.

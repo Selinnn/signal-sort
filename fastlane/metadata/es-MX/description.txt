@@ -1,0 +1,29 @@
+Gira las flechas. Guía cada señal. Evita los choques.
+
+Signal Sort es un puzle de lógica tranquilo e ingenioso. Cada señal de color sale de su fuente y sigue las flechas del tablero. Gira las flechas, pulsa Ejecutar y observa el recorrido: cada señal debe llegar a la salida de su color sin chocar con un muro, sin quedar en un bucle y sin chocar con otra señal.
+
+PLANEA, EJECUTA, APRENDE
+• Gira las flechas con un toque, ejecuta el tablero y míralo paso a paso.
+• Si algo falla, el juego te muestra dónde y por qué: un muro, un bucle, una salida equivocada o un choque.
+• Deshacer y reiniciar son siempre gratis. Sin temporizadores, vidas ni energía.
+
+PROFUNDIDAD QUE CRECE
+• Flechas fijas y muros que dan forma a tus rutas
+• Cruces donde el tiempo importa
+• Flechas de color que solo giran su propio color
+• Flechas alternas que cambian de dirección tras cada señal
+• Puentes que permiten que las señales se crucen
+
+150 NIVELES + UN RETO DIARIO
+• 6 capítulos con una curva de dificultad suave; cada nivel tiene solución verificada.
+• Un reto diario nuevo para todos, cada día: mantén una racha sin presión y comparte tu resultado sin spoilers.
+• Gana hasta tres estrellas resolviendo con el menor número de movimientos.
+
+PARA TODOS
+• Cada color tiene también su propia forma, y hay un modo de formas marcadas para daltónicos.
+• Compatible con VoiceOver, Texto dinámico y Reducir movimiento.
+• Temas claro y oscuro. Se juega totalmente sin conexión.
+• English, Türkçe y Español.
+
+GRATIS PARA JUGAR
+Los capítulos 1–3 y el reto diario son gratis, con anuncios ocasionales entre niveles. La compra única del juego completo desbloquea los capítulos 4–6, quita los anuncios y añade 20 pistas y temas de tablero extra. También puedes quitar solo los anuncios o comprar paquetes de pistas. Sin cuenta ni suscripción.

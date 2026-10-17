@@ -47,6 +47,7 @@
 		F87A36018EE2C0A107A1BC52 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B224B3F921F0620F470B005 /* BoardView.swift */; };
 		FC41122F5B2085F878B8A91A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4A4C7AA95C4A78976510E /* Theme.swift */; };
 		FCE30C7FF42E4BED5EF507C1 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 07FF130D36EA0953B311AF1B /* Localizable.xcstrings */; };
+		FDEBCF72DA4C2C036162B61A /* StoreScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7065499682D5362AEE88CE6 /* StoreScreenshotTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		89DD9F992B851892BC3EC6AD /* ProgressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressStore.swift; sourceTree = "<group>"; };
 		8ECECF72A8E1AF7D345258C9 /* HintOfferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintOfferView.swift; sourceTree = "<group>"; };
 		9E9351A5475D385DA65635FA /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		A7065499682D5362AEE88CE6 /* StoreScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreScreenshotTests.swift; sourceTree = "<group>"; };
 		A9C4A4C7AA95C4A78976510E /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B7EC29FAC5A09EFE76594E12 /* DailyCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCatalog.swift; sourceTree = "<group>"; };
 		BB23BA4BA74DD6E061041614 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				51D7ACD5BEA0852A52F621CA /* SignalSortUITests.swift */,
+				A7065499682D5362AEE88CE6 /* StoreScreenshotTests.swift */,
 			);
 			path = SignalSortUITests;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B32CCAE3468E969054840D12 /* SignalSortUITests.swift in Sources */,
+				FDEBCF72DA4C2C036162B61A /* StoreScreenshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

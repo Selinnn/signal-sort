@@ -1,0 +1,29 @@
+Okları çevir. Her sinyali yönlendir. Çarpışmalardan kaçın.
+
+Signal Sort sakin ve zekice bir mantık bulmacası. Her renkli sinyal kaynağından çıkar ve tahtadaki okları izler. Okları çevir, Çalıştır'a bas ve sinyallerin yolculuğunu izle — her biri duvara çarpmadan, döngüye girmeden ve başka bir sinyalle çarpışmadan kendi rengindeki çıkışa ulaşmalı.
+
+PLANLA, ÇALIŞTIR, ÖĞREN
+• Okları tek dokunuşla çevir, sonra tahtayı çalıştır ve adım adım izle.
+• Bir şey ters giderse oyun nerede ve neden olduğunu gösterir: duvar, döngü, yanlış çıkış ya da çarpışma.
+• Geri alma ve sıfırlama her zaman ücretsiz. Süre, can veya enerji yok.
+
+GİDEREK DERİNLEŞEN OYUN
+• Rotanı şekillendiren sabit oklar ve duvarlar
+• Zamanlamanın önemli olduğu kesişmeler
+• Yalnızca kendi rengini çeviren renkli oklar
+• Her sinyalden sonra yön değiştiren makas oklar
+• Sinyallerin birbirinin üzerinden geçtiği köprüler
+
+150 SEVİYE + GÜNLÜK BULMACA
+• Dengeli zorluk eğrisine sahip 6 bölüm; her seviyenin çözümü olduğu doğrulandı.
+• Herkes için her gün yeni bir günlük bulmaca — nazik bir seri tut ve sonucunu sürpriz bozmadan paylaş.
+• En az hamleyle çözerek üç yıldıza kadar kazan.
+
+HERKES İÇİN
+• Her rengin kendine ait bir şekli var; renk körlüğü için isteğe bağlı belirgin şekil modu.
+• VoiceOver, Dinamik Yazı ve Hareketi Azalt desteği.
+• Açık ve koyu temalar. Tamamen çevrimdışı oynanır.
+• English, Türkçe ve Español.
+
+ÜCRETSİZ OYNA
+1–3. bölümler ve günlük bulmaca ücretsizdir; seviyeler arasında zaman zaman reklam gösterilir. Tek seferlik Tam Oyun satın alımı 4–6. bölümleri açar, reklamları kaldırır, 20 ipucu ve ek tahta temaları ekler. Yalnızca reklamları kaldırabilir veya ipucu paketi de alabilirsin. Hesap ve abonelik yok.

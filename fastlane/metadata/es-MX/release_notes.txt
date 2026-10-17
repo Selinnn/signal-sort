@@ -1,0 +1,1 @@
+Primera versión de Signal Sort: 150 niveles, un reto diario, cinco temas de tablero y compatibilidad total con VoiceOver.

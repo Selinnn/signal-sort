@@ -424,11 +424,24 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 > **Yayın öncesi:** `AppLinks` adresleri (`selinkaplan.github.io/signal-sort/…`) tahmin; GitHub kullanıcı adı adım
 > 13'te doğrulanmalı.
 | 13 | fastlane snapshot (ekran görüntüleri), mağaza metinleri ve ekran görüntüleri EN+TR+ES, gizlilik/destek sayfaları (reklam ve veri kullanımı bölümüyle), `app-ads.txt` | Tüm metadata hazır |
+
+> **Adım 13 notları:** Ekran görüntüleri `scripts/make-screenshots.sh` ile üretiliyor: `StoreScreenshotTests` 5 sahneyi
+> iPhone 17 Pro Max'te (6.9", 1320×2868) EN/TR/ES çeker, durum çubuğu 9:41'e sabitlenir,
+> `scripts/compose-screenshots.swift` başlık ekleyip saydamlıksız PNG yazar → `fastlane/screenshots/{en-US,tr,es-ES}`.
+> fastlane snapshot yerine bu betik kullanıldı (aynı iş, ek bağımlılık yok). Mağaza metinleri
+> `fastlane/metadata/{en-US,tr,es-ES,es-MX}` (deliver biçimi, uzunluk sınırları kontrol edildi; es-MX = es-ES),
+> inceleme notları `fastlane/metadata/review_information/notes.txt`. Gizlilik ve destek sayfaları `docs/` (EN/TR/ES,
+> GitHub Pages için). App Privacy yanıt taslağı `appstore/privacy-labels.md`, `app-ads.txt` şablonu `appstore/`.
+> **Açık kalanlar (Selin):** (1) Sayfalardaki `SUPPORT_EMAIL` yerine herkese açık bir destek e-postası.
+> (2) Sayfaları yayımlamak: GitHub hesabı `urulu09` → `https://urulu09.github.io/signal-sort/` (uygulamadaki
+> bağlantılar bu adrese güncellendi). Herkese açık repo + Pages açmak onay gerektirir. (3) `app-ads.txt` alan adının
+> kökünde olmalı → ayrı `urulu09.github.io` reposu gerekir; içine AdMob `pub-` kimliği yazılmalı.
 | 14 | Release build, arşiv, App Store Connect'e yükleme, incelemeye gönderme | Selin onayıyla gönderilir |
 
 ## 9. Yayın kontrol listesi (Selin'in yapması gerekenler)
 - Apple Developer üyeliği aktif mi; App Store Connect'te uygulama kaydı, **isim müsaitliği** ("Signal Sort" alınmış olabilir — yedek isim hazır olmalı).
-- Bundle ID: `com.selinkaplan.signalsort` (onaylandı), imzalama ekibi.
+- Bundle ID: `com.selinkaplan.signalsort` (onaylandı), imzalama ekibi (`DEVELOPMENT_TEAM` project.yml'e eklenmeli).
+- Destek e-postası, GitHub Pages yayını (`docs/`) ve kök alan adında `app-ads.txt`.
 - IAP ürünlerini App Store Connect'te oluşturmak (ID'leri kod ile aynı), Paid Apps sözleşmesi + vergi/banka bilgileri
   (ödeme bilgileri için bunu senin girmen gerekiyor).
 - **AdMob hesabı** (Google hesabınla), uygulamayı AdMob'a ekleme, 2 ad unit (rewarded, interstitial), ödeme/vergi bilgileri

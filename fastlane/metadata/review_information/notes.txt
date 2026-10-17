@@ -1,0 +1,12 @@
+Signal Sort is an offline logic puzzle. Tap arrows to rotate them, then press Run: each colored signal follows the arrows and must reach the exit of its own color. Failures (wall, loop, wrong exit, collision) are shown on the board.
+
+No account or login is needed. Levels unlock in order; the daily puzzle is always free.
+
+In-app purchases (all available from the bag icon on the home screen and from Settings > Restore Purchases):
+- Full Game (non-consumable): unlocks chapters 4-6, removes interstitial ads, adds 20 hints and three extra board themes.
+- Remove Ads (non-consumable): removes interstitial ads only.
+- 10 Hints (consumable).
+
+Ads (Google AdMob): no ads or permission prompts in the first session or tutorial. After level 5 the Google UMP consent form appears where required, followed by the App Tracking Transparency prompt. Interstitials appear at most every 3 levels and 3 minutes, only after level 10. Rewarded ads are optional (+1 hint when out of hints).
+
+The original mechanics include colored arrows that turn only their own color, switch arrows that rotate after each signal, and bridges. All 150 levels and 730 daily puzzles are generated and verified offline at build time; there is no server.

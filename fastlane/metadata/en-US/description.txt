@@ -1,0 +1,29 @@
+Rotate the arrows. Route every signal. Avoid collisions.
+
+Signal Sort is a calm, clever logic puzzle. Each colored signal leaves its source and follows the arrows on the board. Turn the arrows, press Run and watch the signals travel — every one must reach the exit of its own color without hitting a wall, looping forever or crashing into another signal.
+
+PLAN, RUN, LEARN
+• Rotate arrows with a tap, then run the board and watch it play out step by step.
+• When something fails, the game shows you exactly where and why: a wall, a loop, a wrong exit or a collision.
+• Undo and reset are always free. No timers, no lives, no energy.
+
+DEPTH THAT GROWS
+• Fixed arrows and walls that shape your routes
+• Crossings where timing matters
+• Colored arrows that only turn their own color
+• Switch arrows that change direction after every signal
+• Bridges that let signals pass over each other
+
+150 LEVELS + A DAILY PUZZLE
+• 6 chapters with a smooth difficulty curve; every level is verified to have a solution.
+• A new daily puzzle for everyone, every day — keep a gentle streak and share your result without spoilers.
+• Earn up to three stars by solving with as few moves as possible.
+
+MADE FOR EVERYONE
+• Every color also has its own shape, plus an optional bold-shape mode for color-blind players.
+• VoiceOver, Dynamic Type and Reduce Motion support.
+• Light and dark themes. Plays fully offline.
+• English, Türkçe and Español.
+
+FREE TO PLAY
+Chapters 1–3 and the daily puzzle are free, with occasional ads between levels. The one-time Full Game purchase unlocks chapters 4–6, removes ads, adds 20 hints and extra board themes. You can also remove ads on their own or buy hint packs. No account and no subscription.

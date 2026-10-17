@@ -1,0 +1,3 @@
+# Bu dosya geliştirici web sitesi alan adının KÖKÜNDE yayımlanmalı (ör. https://urulu09.github.io/app-ads.txt)
+# ve App Store'daki "Marketing URL"/geliştirici sitesi bu alan adını göstermeli. pub- kimliği AdMob hesabından alınır.
+google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0

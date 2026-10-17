@@ -1,0 +1,1 @@
+puzzle,logic,arrow,routing,signal,color,sort,brain,daily,maze,path,rotate,circuit,flow,offline
