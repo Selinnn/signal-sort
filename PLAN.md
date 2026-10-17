@@ -345,6 +345,12 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 | 4 | Validator + olay güdümlü Solver + Scoring + HintProvider | Elle kurulan örneklerde par/çözüm sayısı doğru |
 | 5 | SplitMix64 + Generator + QualityFilter + CLI | 1000 seed'de 0 çözümsüz, golden-seed sabit |
 | 6 | Board ekranı: Canvas grid, döndürme, Run animasyonu, hata vurgusu, iz, hız, Undo/Reset/İpucu | Bir seviye uçtan uca oynanır |
+
+> **Adım 6 notları:** Hücreler VoiceOver için ayrı SwiftUI görünümleri (iz katmanı Canvas). Oyun mantığı
+> GameCore `PlaySession`'da (bot oyuncu bunu kullanacak); `GameSession` yalnız trace oynatma ve ok açıları.
+> `campaign.json` şimdilik 7 geliştirme seviyesi (adım 7'de 150 seviyeyle değişir), ana ekran geçici liste
+> (adım 8). Cila (adım 12) için not: renkli okların üzerindeki şekil işareti küçük ve zor seçiliyor; tahta dikeyde
+> ortalanmalı.
 | 7 | Tutorial + elle seviyeler + `build-campaign` → 150 seviye | CI içerik testi yeşil |
 | 8 | Home, bölüm haritası, sonuç, persistence, kilit akışı | Bot oyuncu tüm kampanyayı bitirir |
 | 9 | Günlük: `dailies.json`, seri, paylaşım kartı | Uçak modunda çalışır |
