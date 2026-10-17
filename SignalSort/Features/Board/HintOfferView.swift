@@ -17,7 +17,7 @@ struct HintOfferView: View {
                         .font(.headline)
                         .frame(maxWidth: .infinity, minHeight: 52)
                         .background(RoundedRectangle(cornerRadius: 16).fill(Color.accentColor))
-                        .foregroundStyle(Theme.background)
+                        .foregroundStyle(Theme.onAccent)
                 }
                 .accessibilityIdentifier("hintOffer.watchAd")
             }
@@ -33,7 +33,7 @@ struct HintOfferView: View {
         .padding(24)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Theme.surface.ignoresSafeArea())
-        .preferredColorScheme(.dark)
+        .preferredColorScheme(Theme.colorScheme)
     }
 }
 
@@ -55,7 +55,7 @@ struct TrackingExplainerView: View {
                     .font(.headline)
                     .frame(maxWidth: .infinity, minHeight: 52)
                     .background(RoundedRectangle(cornerRadius: 16).fill(Color.accentColor))
-                    .foregroundStyle(Theme.background)
+                    .foregroundStyle(Theme.onAccent)
             }
             .accessibilityIdentifier("tracking.continue")
         }
@@ -63,6 +63,6 @@ struct TrackingExplainerView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Theme.surface.ignoresSafeArea())
         .interactiveDismissDisabled()
-        .preferredColorScheme(.dark)
+        .preferredColorScheme(Theme.colorScheme)
     }
 }

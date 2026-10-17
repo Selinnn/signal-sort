@@ -7,6 +7,7 @@ enum AppRoute: Hashable {
     case level(String)
     case daily
     case dailyLevel(DayKey)
+    case settings
 }
 
 /// Uygulamanın gezinme kökü: Home → Bölümler → Bölüm → Seviye.
@@ -35,6 +36,8 @@ struct RootView: View {
                         }
                     case .daily:
                         DailyView(store: store, today: today, path: $path)
+                    case .settings:
+                        SettingsView(shop: shop, ads: ads, showStore: { showStore = true })
                     case .dailyLevel(let day):
                         if let level = store.dailies.level(for: day) {
                             BoardScreen(level: level, mode: .daily(day), store: store, ads: ads, today: today,
@@ -54,7 +57,7 @@ struct RootView: View {
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
             Task { @MainActor in today = DayKey.today() }
         }
-        .preferredColorScheme(.dark)
+        .preferredColorScheme(Theme.colorScheme)
         .tint(Color.accentColor)
     }
 

@@ -129,6 +129,7 @@ final class StoreService {
     private func applyEntitlements() {
         progress.hasFullGame = hasFullGame
         progress.hasRemoveAds = hasRemoveAds
+        ThemeManager.shared.fullGameUnlocked = hasFullGame || progress.unlockAll
         if hasFullGame { progress.grantFullGameBonusIfNeeded() }
     }
 }

@@ -13,7 +13,14 @@ struct SignalSortApp: App {
         let store = ProgressStore(catalog: .bundled, dailies: .bundled)
         #if DEBUG
         if arguments.contains("-resetProgress") { store.reset() }
-        if arguments.contains("-unlockAll") { store.unlockAll = true }
+        if arguments.contains("-unlockAll") {
+            store.unlockAll = true
+            ThemeManager.shared.fullGameUnlocked = true
+        }
+        if let index = arguments.firstIndex(of: "-theme"), index + 1 < arguments.count, let theme = ThemeID(rawValue: arguments[index + 1]) {
+            ThemeManager.shared.selection = theme
+        }
+        if arguments.contains("-resetProgress") { SettingsStore.shared.resetToDefaults() }
         if let index = arguments.firstIndex(of: "-hints"), index + 1 < arguments.count, let hints = Int(arguments[index + 1]) {
             store.setHintBalance(hints)
         }

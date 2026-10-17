@@ -10,6 +10,9 @@ final class SignalSortUITests: XCTestCase {
     private func launch(_ extra: [String] = [], reset: Bool = true) {
         app = XCUIApplication()
         app.launchArguments = ["-uiTestFastPlayback", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"] + extra
+        if let size = ProcessInfo.processInfo.environment["UI_CONTENT_SIZE"] {
+            app.launchArguments += ["-UIPreferredContentSizeCategoryName", size]
+        }
         if reset { app.launchArguments.append("-resetProgress") }
         app.launch()
         XCTAssertTrue(app.staticTexts["home.title"].waitForExistence(timeout: 5))
@@ -218,5 +221,66 @@ final class SignalSortUITests: XCTestCase {
         app.buttons["result.next"].tap()
         XCTAssertTrue(app.navigationBars["Level 2"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts["mockAd.interstitial"].exists)
+    }
+
+    @MainActor
+    func testSettingsPersistAndPremiumThemesAreLocked() throws {
+        launch()
+        app.buttons["home.settings"].tap()
+        let sound = app.switches["settings.sound"]
+        XCTAssertTrue(sound.waitForExistence(timeout: 5))
+        XCTAssertEqual(sound.value as? String, "1")
+        sound.switches.firstMatch.tap()
+        XCTAssertEqual(sound.value as? String, "0")
+        attachScreenshot("settings")
+        app.buttons["settings.theme.ember"].tap()
+        XCTAssertTrue(app.buttons["store.restore"].waitForExistence(timeout: 5))
+        app.buttons["store.close"].tap()
+        app.terminate()
+
+        launch(reset: false)
+        app.buttons["home.settings"].tap()
+        XCTAssertEqual(app.switches["settings.sound"].value as? String, "0")
+    }
+
+    @MainActor
+    func testDaylightThemeAndPremiumThemeWithFullGame() throws {
+        launch(["-unlockAll"])
+        app.buttons["home.settings"].tap()
+        app.buttons["settings.theme.daylight"].tap()
+        XCTAssertTrue(app.buttons["settings.theme.daylight"].isSelected)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        attachScreenshot("home-daylight")
+        app.buttons["home.continue"].tap()
+        app.buttons["board.run"].tap()
+        _ = app.descendants(matching: .any).matching(identifier: "board.failure").firstMatch.waitForExistence(timeout: 10)
+        attachScreenshot("board-daylight")
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["home.settings"].tap()
+        app.buttons["settings.theme.ocean"].tap()
+        XCTAssertTrue(app.buttons["settings.theme.ocean"].isSelected)
+        app.buttons["settings.theme.midnight"].tap()
+    }
+
+    /// Cihaz matrisi için ekran görüntüleri (küçük ekran ve en büyük yazı boyutu ayrı koşulur).
+    @MainActor
+    func testCaptureKeyScreens() throws {
+        launch(["-unlockAll", "-hints", "5"])
+        attachScreenshot("matrix-home")
+        app.buttons["home.chapters"].tap()
+        attachScreenshot("matrix-chapters")
+        app.buttons["chapter.5"].tap()
+        app.buttons["level.c6-30"].tap()
+        XCTAssertTrue(app.buttons["board.run"].waitForExistence(timeout: 5))
+        attachScreenshot("matrix-board-7x7")
+        app.buttons["board.run"].tap()
+        _ = app.descendants(matching: .any).matching(identifier: "board.failure").firstMatch.waitForExistence(timeout: 15)
+        attachScreenshot("matrix-board-run")
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["home.store"].tap()
+        XCTAssertTrue(app.buttons["store.restore"].waitForExistence(timeout: 5))
+        attachScreenshot("matrix-store")
     }
 }

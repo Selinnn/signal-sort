@@ -411,6 +411,18 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 > ve IDFA açıklama mesajı yayımlanmalı, uygulama ayarlarında maksimum içerik derecesi G. (4) App Privacy
 > etiketleri reklam verisine göre doldurulmalı. (5) Ayarlar'a "Gizlilik seçenekleri" (UMP) düğmesi adım 12'de.
 | 12 | Tema, ses, haptik, erişilebilirlik, EN+TR+ES yerelleştirme (ATT ön ekranı ve izin metni dahil), uygulama ikonu | Cihaz matrisi kontrolü |
+
+> **Adım 12 notları:** Temalar: Gece (varsayılan) ve Gündüz (açık) ücretsiz; Kor, Orman, Okyanus Tam Oyun ile
+> açılır (mağaza vaadi karşılandı). İade sonrası premium seçim ücretsiz temaya düşer. Sinyal renkleri temadan
+> bağımsız; açık temada şekillere kenar çizilir. Ayarlar: ses, titreşim, belirgin şekiller (renk körlüğü),
+> hızlı oynatma, tema, gizlilik seçenekleri (yalnız UMP gerektiriyorsa), gizlilik politikası, destek, geri
+> yükleme, sürüm. Sesler kodla sentezleniyor (`.ambient`, sessiz moda uyar). Run sonucu VoiceOver ile okunuyor.
+> 6. adım cilası: tahta dikeyde ortalandı, renkli okların şekil rozeti büyütüldü. İkon `scripts/make-icon.swift`
+> ile üretiliyor (1024 PNG, saydamlıksız). Cihaz matrisi: iPhone 17 (iOS 26.1), iPhone SE 3 (iOS 18.4; 7×7
+> tahta sığıyor), en büyük erişilebilirlik yazı boyutu (ana ekran taşıyordu → kaydırılabilir yapıldı), açık tema.
+> **Doğrulanmadı:** seslerin ve titreşimin gerçek cihazdaki hissi; VoiceOver ile tam oynanış elle denenmeli.
+> **Yayın öncesi:** `AppLinks` adresleri (`selinkaplan.github.io/signal-sort/…`) tahmin; GitHub kullanıcı adı adım
+> 13'te doğrulanmalı.
 | 13 | fastlane snapshot (ekran görüntüleri), mağaza metinleri ve ekran görüntüleri EN+TR+ES, gizlilik/destek sayfaları (reklam ve veri kullanımı bölümüyle), `app-ads.txt` | Tüm metadata hazır |
 | 14 | Release build, arşiv, App Store Connect'e yükleme, incelemeye gönderme | Selin onayıyla gönderilir |
 

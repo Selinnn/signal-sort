@@ -12,6 +12,7 @@
 		11D063A7D991551AA7924D26 /* StoreServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2FF210385BADB6820BFA6A /* StoreServiceTests.swift */; };
 		19C3FCD724302511EFDDB53D /* SignalSortApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CADE189C030D334740E5024 /* SignalSortApp.swift */; };
 		1BA1A28EDF65946F6DE12337 /* BoardScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3958034693830B056C93802 /* BoardScreen.swift */; };
+		1D3184DFFD9B2407EF006E94 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6562CFECEA411C4FC7274541 /* SettingsView.swift */; };
 		1E1CDCE3C869C7B6994515B0 /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56DB424D52375DA802672BE /* DailyView.swift */; };
 		3A062E468B6ACA3C86E60344 /* GameCore in Frameworks */ = {isa = PBXBuildFile; productRef = 83D7053A1137FAED24782EF2 /* GameCore */; };
 		4D617B955A649D27DD0538E6 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A9D0D8322B8ACD38D1556C7 /* AppTrackingTransparency.framework */; };
@@ -27,12 +28,14 @@
 		8858A8601FC7D70AE451F45D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4EF146EEEFF811FA2B85681A /* PrivacyInfo.xcprivacy */; };
 		8933872A155244E99ED1CD76 /* StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2E64B1805C06061E23B6C3 /* StoreView.swift */; };
 		8B75BD7E639B38434489B75B /* SignalSortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694A77541142FC4320AA99F8 /* SignalSortTests.swift */; };
+		8D1A20D572A8C76B9C132313 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762A595C2AFBF7B773E85EE5 /* SettingsStore.swift */; };
 		8E7E72E088D88CB715C87489 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13227A92F9BAA0D2FA352C7D /* HomeView.swift */; };
 		926C62E74AEEBDE60415504E /* DailyCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EC29FAC5A09EFE76594E12 /* DailyCatalog.swift */; };
 		A1ADAA8874FAF0D5BFD48748 /* SignalSort.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 87E10B4A7CCF060AEFBA7FED /* SignalSort.storekit */; };
 		B32CCAE3468E969054840D12 /* SignalSortUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D7ACD5BEA0852A52F621CA /* SignalSortUITests.swift */; };
 		B32F34493BBB57C1047E3632 /* ProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DD9F992B851892BC3EC6AD /* ProgressStore.swift */; };
 		B758631AA899964627421930 /* AdMobAdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A9F2863DB52733388BD11 /* AdMobAdService.swift */; };
+		BF3D11B88789FCE9B823E5E1 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F648F77D94244AE9B39C37 /* Feedback.swift */; };
 		C16FA40D72234FCBB16664BD /* LevelCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B24155C1E27D2A213648863 /* LevelCatalog.swift */; };
 		D7B685FC0CDF275E33AE6DBB /* AdsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6F03AED64D3FE524D27E02 /* AdsCoordinator.swift */; };
 		D9C33D089B02ACD8D0C177D4 /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81844D213F868FB9317DFA1C /* TileView.swift */; };
@@ -71,6 +74,7 @@
 		105C286DE7C5B1EC29D1954C /* GameCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GameCore; path = Packages/GameCore; sourceTree = SOURCE_ROOT; };
 		10E10A130E86C6B59D098691 /* GameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSession.swift; sourceTree = "<group>"; };
 		13227A92F9BAA0D2FA352C7D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		13F648F77D94244AE9B39C37 /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
 		2A9D0D8322B8ACD38D1556C7 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		2D5C092887027DEEDCBBBDE8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3B224B3F921F0620F470B005 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
@@ -79,7 +83,9 @@
 		51D7ACD5BEA0852A52F621CA /* SignalSortUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalSortUITests.swift; sourceTree = "<group>"; };
 		539D4CE9A6EC87857BFBFA94 /* ChapterViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterViews.swift; sourceTree = "<group>"; };
 		5E3348D7CFD60C6D67B23958 /* SignalSortTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SignalSortTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6562CFECEA411C4FC7274541 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		694A77541142FC4320AA99F8 /* SignalSortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalSortTests.swift; sourceTree = "<group>"; };
+		762A595C2AFBF7B773E85EE5 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		7B24155C1E27D2A213648863 /* LevelCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCatalog.swift; sourceTree = "<group>"; };
 		7CF8100B4F0403217DCE2943 /* StoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreService.swift; sourceTree = "<group>"; };
 		7D0A9F2863DB52733388BD11 /* AdMobAdService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMobAdService.swift; sourceTree = "<group>"; };
@@ -130,8 +136,10 @@
 			isa = PBXGroup;
 			children = (
 				B7EC29FAC5A09EFE76594E12 /* DailyCatalog.swift */,
+				13F648F77D94244AE9B39C37 /* Feedback.swift */,
 				7B24155C1E27D2A213648863 /* LevelCatalog.swift */,
 				89DD9F992B851892BC3EC6AD /* ProgressStore.swift */,
+				762A595C2AFBF7B773E85EE5 /* SettingsStore.swift */,
 				7CF8100B4F0403217DCE2943 /* StoreService.swift */,
 				D70C140D1E7E03F210830E31 /* Ads */,
 			);
@@ -221,6 +229,14 @@
 				539D4CE9A6EC87857BFBFA94 /* ChapterViews.swift */,
 			);
 			path = Chapters;
+			sourceTree = "<group>";
+		};
+		68D4001908C607D7E375B891 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				6562CFECEA411C4FC7274541 /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		7559C9A002C6A1E90B2238EF /* SignalSortUITests */ = {
@@ -316,6 +332,7 @@
 				6499F25211DEF1AAAACF3F77 /* Chapters */,
 				9F93804440482DFAADA92213 /* Daily */,
 				874F9B031BF27614B220000C /* Home */,
+				68D4001908C607D7E375B891 /* Settings */,
 				8C2AD7D69BFEE1C05AE35FEA /* Store */,
 			);
 			path = Features;
@@ -504,6 +521,7 @@
 				F5991A675ED9254D9C9A3A5F /* ConsentManager.swift in Sources */,
 				926C62E74AEEBDE60415504E /* DailyCatalog.swift in Sources */,
 				1E1CDCE3C869C7B6994515B0 /* DailyView.swift in Sources */,
+				BF3D11B88789FCE9B823E5E1 /* Feedback.swift in Sources */,
 				84BD709C8640A733F5C24622 /* GameSession.swift in Sources */,
 				80A0D48F0F46E49B23738740 /* HintOfferView.swift in Sources */,
 				8E7E72E088D88CB715C87489 /* HomeView.swift in Sources */,
@@ -511,6 +529,8 @@
 				6BEA72D6C5B426EE32D49BAA /* MockAdService.swift in Sources */,
 				B32F34493BBB57C1047E3632 /* ProgressStore.swift in Sources */,
 				796159681C8553C6D5B0C8BD /* RootView.swift in Sources */,
+				8D1A20D572A8C76B9C132313 /* SettingsStore.swift in Sources */,
+				1D3184DFFD9B2407EF006E94 /* SettingsView.swift in Sources */,
 				6F7C388D70A3698683F51FFC /* Shapes.swift in Sources */,
 				19C3FCD724302511EFDDB53D /* SignalSortApp.swift in Sources */,
 				E96FDD74565208DB65271DA9 /* StoreService.swift in Sources */,

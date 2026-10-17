@@ -67,7 +67,7 @@ struct StoreView: View {
                 Button("store.ok", role: .cancel) {}
             }
         }
-        .preferredColorScheme(.dark)
+        .preferredColorScheme(Theme.colorScheme)
     }
 
     private func card(_ id: StoreService.ProductID, symbol: String, title: LocalizedStringKey,
@@ -97,7 +97,7 @@ struct StoreView: View {
                     if owned {
                         Label("store.owned", systemImage: "checkmark.seal.fill")
                     } else if shop.purchasing == id {
-                        ProgressView().tint(Theme.background)
+                        ProgressView().tint(Theme.onAccent)
                     } else if let product = shop.products[id] {
                         Text(product.displayPrice)
                     } else {
@@ -107,7 +107,7 @@ struct StoreView: View {
                 .font(.headline)
                 .frame(maxWidth: .infinity, minHeight: 48)
                 .background(RoundedRectangle(cornerRadius: 14).fill(owned ? Theme.cell : (highlighted ? Color.accentColor : Theme.cell)))
-                .foregroundStyle(owned || !highlighted ? Theme.textPrimary : Theme.background)
+                .foregroundStyle(owned || !highlighted ? Theme.textPrimary : Theme.onAccent)
             }
             .disabled(owned || shop.products[id] == nil || shop.purchasing != nil)
             .accessibilityIdentifier("store.buy.\(id.rawValue.split(separator: ".").last!)")

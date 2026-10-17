@@ -84,11 +84,17 @@ struct CellView: View {
             arrow(tile.rotatable ? Theme.arrow : Theme.fixedArrow)
                 .overlay(alignment: .bottomTrailing) { if !tile.rotatable { lockBadge } }
         case .colorRouter:
-            ZStack {
+            // Renkli ok: okun kendisi renkli, köşedeki rozet rengin şeklini taşır (renk körlüğü için).
+            ZStack(alignment: .bottomLeading) {
                 arrow(tile.color?.color ?? Theme.arrow)
                 if let color = tile.color {
-                    SignalGlyph(color: color).frame(width: size * 0.16, height: size * 0.16)
-                        .overlay(SignalGlyph(color: color, filled: false, lineWidth: 1.5).foregroundStyle(Theme.cell))
+                    let badge = size * (SettingsStore.shared.strongShapes ? 0.38 : 0.32)
+                    ZStack {
+                        Circle().fill(Theme.cell)
+                        SignalGlyph(color: color).padding(badge * 0.2)
+                    }
+                    .frame(width: badge, height: badge)
+                    .padding(size * 0.06)
                 }
             }
         case .toggle:

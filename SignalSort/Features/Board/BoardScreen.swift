@@ -28,14 +28,18 @@ struct BoardScreen: View {
         self.today = today
         self.onNext = onNext
         self.showStore = showStore
-        _session = State(initialValue: GameSession(level: level))
+        let session = GameSession(level: level)
+        session.speed = SettingsStore.shared.fastPlayback ? .fast : .normal
+        _session = State(initialValue: session)
     }
 
     var body: some View {
         VStack(spacing: 16) {
             header
+            Spacer(minLength: 0)
             BoardView(session: session)
                 .padding(.horizontal, 12)
+            Spacer(minLength: 0)
             statusBanner
                 .frame(minHeight: 44)
             controls
@@ -46,8 +50,11 @@ struct BoardScreen: View {
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Theme.background, for: .navigationBar)
-        .toolbarColorScheme(.dark, for: .navigationBar)
-        .onAppear { session.instantPlayback = reduceMotion }
+        .toolbarColorScheme(Theme.colorScheme, for: .navigationBar)
+        .onAppear {
+            session.instantPlayback = reduceMotion
+            session.onEvent = handle
+        }
         .onChange(of: reduceMotion) { _, value in session.instantPlayback = value }
         .onChange(of: session.showsResult) { _, solved in
             guard solved else { return }
@@ -109,7 +116,25 @@ struct BoardScreen: View {
         let fresh = GameSession(level: level)
         fresh.instantPlayback = reduceMotion
         fresh.speed = session.speed
+        fresh.onEvent = handle
         session = fresh
+    }
+
+    /// Ses, haptik ve VoiceOver: Run bitince sonuç sesli okunur.
+    private func handle(_ event: BoardEvent) {
+        SoundPlayer.shared.play(event)
+        Haptics.play(event)
+        switch event {
+        case .solve:
+            AccessibilityNotification.Announcement(String(localized: "a11y.solved \(session.play.stars ?? 1)")).post()
+        case .fail:
+            if let failure = session.visibleFailures.first ?? session.result?.failures.first,
+               let color = session.color(ofSignal: failure.signalID) {
+                AccessibilityNotification.Announcement(FailureText.message(failure.reason, color: color)).post()
+            }
+        default:
+            break
+        }
     }
 
     private var header: some View {
@@ -175,7 +200,7 @@ struct BoardScreen: View {
                     .font(.headline)
                     .frame(maxWidth: .infinity, minHeight: 52)
                     .background(RoundedRectangle(cornerRadius: 16).fill(session.isInteractive ? Color.accentColor : Theme.surface))
-                    .foregroundStyle(Theme.background)
+                    .foregroundStyle(Theme.onAccent)
             }
             .disabled(!session.isInteractive)
             .accessibilityIdentifier("board.run")
@@ -208,7 +233,7 @@ private struct ControlButton: View {
                         .padding(.horizontal, 5)
                         .frame(minWidth: 18, minHeight: 18)
                         .background(Capsule().fill(badge > 0 ? Theme.hint : Color.accentColor))
-                        .foregroundStyle(Theme.background)
+                        .foregroundStyle(Theme.onAccent)
                         .offset(x: 6, y: -6)
                         .accessibilityIdentifier("\(identifier).badge")
                 }
@@ -265,7 +290,7 @@ private struct ResultOverlay: View {
                         .font(.headline)
                         .frame(maxWidth: .infinity, minHeight: 52)
                         .background(RoundedRectangle(cornerRadius: 16).fill(Color.accentColor))
-                        .foregroundStyle(Theme.background)
+                        .foregroundStyle(Theme.onAccent)
                 }
                 .accessibilityIdentifier("result.share")
             }
@@ -274,7 +299,7 @@ private struct ResultOverlay: View {
                     .font(.headline)
                     .frame(maxWidth: .infinity, minHeight: 52)
                     .background(RoundedRectangle(cornerRadius: 16).fill(outcome.shareText == nil ? Color.accentColor : Theme.cell))
-                    .foregroundStyle(outcome.shareText == nil ? Theme.background : Theme.textPrimary)
+                    .foregroundStyle(outcome.shareText == nil ? Theme.onAccent : Theme.textPrimary)
             }
             .accessibilityIdentifier("result.next")
             if stars < 3 {

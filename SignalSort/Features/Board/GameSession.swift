@@ -35,6 +35,8 @@ final class GameSession {
     var instantPlayback = false
 
     private var playbackTask: Task<Void, Never>?
+    /// Ses, haptik ve duyurular için olay bildirimi (BoardScreen bağlar).
+    @ObservationIgnored var onEvent: ((BoardEvent) -> Void)?
 
     init(level: LevelDefinition) {
         play = PlaySession(level: level)
@@ -68,6 +70,7 @@ final class GameSession {
 
     func tap(_ tile: Tile) {
         guard isInteractive, play.rotate(tile.id) else { return }
+        onEvent?(.rotate)
         phase = .planning
         hintTileID = nil
         updateAngles(clockwise: true)
@@ -118,9 +121,11 @@ final class GameSession {
         hintTileID = nil
         playbackTask?.cancel()
         playbackTick = 0
+        onEvent?(.run)
         if instantPlayback {
             playbackTick = result.totalTicks
             phase = .finished
+            onEvent?(result.isSuccess ? .solve : .fail)
             return
         }
         phase = .playing
@@ -128,10 +133,12 @@ final class GameSession {
             guard let self else { return }
             for tick in 1...max(result.totalTicks, 1) {
                 withAnimation(.linear(duration: self.tickDuration)) { self.playbackTick = tick }
+                if tick < result.totalTicks, Self.deliveries(in: result, at: tick) > 0 { self.onEvent?(.deliver) }
                 try? await Task.sleep(for: .seconds(self.tickDuration))
                 if Task.isCancelled { return }
             }
             withAnimation(.easeOut(duration: 0.2)) { self.phase = .finished }
+            self.onEvent?(result.isSuccess ? .solve : .fail)
         }
     }
 
@@ -141,6 +148,13 @@ final class GameSession {
         playbackTask?.cancel()
         playbackTick = result.totalTicks
         phase = .finished
+        onEvent?(result.isSuccess ? .solve : .fail)
+    }
+
+    /// O tick'te teslim edilen sinyal sayısı.
+    private static func deliveries(in result: SimulationResult, at tick: Int) -> Int {
+        let before = result.trace[tick - 1].signals.filter { $0.status == .delivered }.count
+        return result.trace[tick].signals.filter { $0.status == .delivered }.count - before
     }
 
     // MARK: Ok açıları

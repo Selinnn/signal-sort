@@ -78,8 +78,18 @@ struct SignalGlyph: View {
     private func styled(_ shape: some Shape) -> some View {
         if filled {
             shape.fill(color.color)
+                .overlay {
+                    if let outline = Self.outline { shape.stroke(outline, lineWidth: 1.5) }
+                }
         } else {
             shape.stroke(color.color, lineWidth: lineWidth)
         }
+    }
+
+    /// Açık temada her zaman, "belirgin şekiller" açıkken koyu temada da şekil kenarı çizilir.
+    @MainActor
+    private static var outline: Color? {
+        if Theme.glyphOutline != .clear { return Theme.glyphOutline }
+        return SettingsStore.shared.strongShapes ? Color.white.opacity(0.9) : nil
     }
 }
