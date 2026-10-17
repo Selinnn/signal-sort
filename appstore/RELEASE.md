@@ -37,8 +37,8 @@ Aşağıdaki adımlar **senin hesaplarınla** yapılmalı (ödeme, vergi, sözle
 - [ ] **Privacy & messaging**: GDPR onay mesajı ve IDFA (ATT) açıklama mesajı oluştur ve yayımla.
 - [ ] Uygulama ayarları → maksimum reklam içerik derecesi **G**; kumar/flört kategorilerini engelle.
 - [x] `app-ads.txt` yayında: `https://selinnn.github.io/app-ads.txt` (`pub-1984328158177269`, repo `Selinnn/selinnn.github.io`).
-- [ ] `SignalSort/Resources/Info.plist` → `SKAdNetworkItems`: Google'ın güncel listesini ekle
-      (https://developers.google.com/admob/ios/3p-skadnetworks). Şu an yalnız Google'ın kendi girdisi var.
+- [x] `SKAdNetworkItems`: Google'ın listesi eklendi (50 girdi, sayfanın 2026-02-10 güncellemesi). Google listeyi
+      güncellerse sonraki sürümlerde yenile: https://developers.google.com/admob/ios/3p-skadnetworks
 
 ## 5. App Store Connect formları
 - [ ] **App Privacy**: `appstore/privacy-labels.md` taslağına göre (göndermeden önce Google'ın güncel rehberiyle karşılaştır).

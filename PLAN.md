@@ -446,8 +446,9 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 > Son tam tur: 111 çekirdek + 7 birim/StoreKit + 19 UI testi yeşil, `check-content.sh` geçti.
 > AdMob: uygulama, ödüllü ve geçiş birimi kimlikleri yalnız Release'te (Debug test kimliklerinde); arşiv koruması
 > üçünü de denetliyor ve imzasız Release arşivi geçti.
+> SKAdNetwork: Google'ın 50 girdilik listesi Info.plist'te (2026-02-10 sürümü).
 > **Engelleyenler (Selin):** Paid Apps sözleşmesi/vergi/banka, App Store Connect kaydı
-> ve 3 IAP, AdMob onay mesajları, SKAdNetwork listesi, App Privacy ve yaş formları.
+> ve 3 IAP, AdMob onay mesajları, App Privacy ve yaş formları.
 
 ## 9. Yayın kontrol listesi (Selin'in yapması gerekenler)
 - Apple Developer üyeliği aktif mi; App Store Connect'te uygulama kaydı, **isim müsaitliği** ("Signal Sort" alınmış olabilir — yedek isim hazır olmalı).
