@@ -40,6 +40,6 @@ final class SettingsStore {
 
 /// Mağaza ve App Store için zorunlu bağlantılar (adım 13'te yayımlanır).
 enum AppLinks {
-    static let privacyPolicy = URL(string: "https://urulu09.github.io/signal-sort/privacy.html")!
-    static let support = URL(string: "https://urulu09.github.io/signal-sort/support.html")!
+    static let privacyPolicy = URL(string: "https://selinnn.github.io/signal-sort/privacy.html")!
+    static let support = URL(string: "https://selinnn.github.io/signal-sort/support.html")!
 }

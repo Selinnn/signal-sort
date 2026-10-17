@@ -433,9 +433,9 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 > inceleme notları `fastlane/metadata/review_information/notes.txt`. Gizlilik ve destek sayfaları `docs/` (EN/TR/ES,
 > GitHub Pages için). App Privacy yanıt taslağı `appstore/privacy-labels.md`, `app-ads.txt` şablonu `appstore/`.
 > Destek e-postası: kaplanselinn@gmail.com (Selin onayladı, 2026-10-17).
-> **Açık kalanlar (Selin):** (2) Sayfaları yayımlamak: GitHub hesabı `urulu09` → `https://urulu09.github.io/signal-sort/` (uygulamadaki
+> **Açık kalanlar (Selin):** (2) Sayfaları yayımlamak: GitHub hesabı `Selinnn` → `https://selinnn.github.io/signal-sort/` (uygulamadaki
 > bağlantılar bu adrese güncellendi). Herkese açık repo + Pages açmak onay gerektirir. (3) `app-ads.txt` alan adının
-> kökünde olmalı → ayrı `urulu09.github.io` reposu gerekir; içine AdMob `pub-` kimliği yazılmalı.
+> kökünde olmalı → ayrı `Selinnn/selinnn.github.io` reposu gerekir; içine AdMob `pub-` kimliği yazılmalı.
 | 14 | Release build, arşiv, App Store Connect'e yükleme, incelemeye gönderme | Selin onayıyla gönderilir |
 
 ## 9. Yayın kontrol listesi (Selin'in yapması gerekenler)
