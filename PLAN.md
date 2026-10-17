@@ -444,8 +444,9 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 > Splash: sistem açılış ekranı + kısa animasyonlu giriş. Yükleme: Xcode Organizer ya da `fastlane release`
 > (`appstore/ExportOptions.plist`, `fastlane/Fastfile`; incelemeye göndermez). Adım adım liste: **`appstore/RELEASE.md`**.
 > Son tam tur: 111 çekirdek + 7 birim/StoreKit + 19 UI testi yeşil, `check-content.sh` geçti.
-> AdMob: uygulama ve ödüllü birim kimlikleri yalnız Release'te (Debug test kimliklerinde). Arşiv koruması üç kimliği de denetler.
-> **Engelleyenler (Selin):** geçiş reklamı birim kimliği, Paid Apps sözleşmesi/vergi/banka, App Store Connect kaydı
+> AdMob: uygulama, ödüllü ve geçiş birimi kimlikleri yalnız Release'te (Debug test kimliklerinde); arşiv koruması
+> üçünü de denetliyor ve imzasız Release arşivi geçti.
+> **Engelleyenler (Selin):** Paid Apps sözleşmesi/vergi/banka, App Store Connect kaydı
 > ve 3 IAP, AdMob onay mesajları, SKAdNetwork listesi, App Privacy ve yaş formları.
 
 ## 9. Yayın kontrol listesi (Selin'in yapması gerekenler)

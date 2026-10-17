@@ -62,8 +62,7 @@ targets:
         Release:
           ADMOB_APP_ID: ca-app-pub-1984328158177269~4766668480
           ADMOB_REWARDED_ID: ca-app-pub-1984328158177269/8009663511
-          # Geçiş reklamı birimi henüz oluşturulmadı; gerçek kimlik gelene kadar arşiv bilerek başarısız olur.
-          ADMOB_INTERSTITIAL_ID: ca-app-pub-3940256099942544/4411468910
+          ADMOB_INTERSTITIAL_ID: ca-app-pub-1984328158177269/3300262317
     preBuildScripts:
       - name: Guard AdMob IDs on archive
         basedOnDependencyAnalysis: false

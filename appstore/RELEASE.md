@@ -32,8 +32,8 @@ Aşağıdaki adımlar **senin hesaplarınla** yapılmalı (ödeme, vergi, sözle
 ## 4. AdMob (gerçek reklam kimlikleri olmadan arşiv bilerek hata verir)
 - [x] AdMob'da uygulama eklendi (`ca-app-pub-1984328158177269~4766668480`) ve ödüllü birim oluşturuldu (`…/8009663511`).
       Bunlar `project.yml` → `configs` → `Release`'te; Debug derlemeler Google test kimliklerinde kalır.
-- [ ] **Geçiş (Interstitial)** birimini oluştur (Gelişmiş ayarlar → sıklık sınırı: kullanıcı başına saatte 4) ve kimliğini
-      `ADMOB_INTERSTITIAL_ID` (Release) yerine yaz. O zamana kadar arşiv bilerek hata verir.
+- [x] Geçiş (Interstitial) birimi oluşturuldu (`…/3300262317`) ve Release'e eklendi; Release arşivi koruması geçiyor.
+      AdMob'da bu birimin sıklık sınırının açık olduğundan emin ol (kullanıcı başına saatte 4).
 - [ ] **Privacy & messaging**: GDPR onay mesajı ve IDFA (ATT) açıklama mesajı oluştur ve yayımla.
 - [ ] Uygulama ayarları → maksimum reklam içerik derecesi **G**; kumar/flört kategorilerini engelle.
 - [x] `app-ads.txt` yayında: `https://selinnn.github.io/app-ads.txt` (`pub-1984328158177269`, repo `Selinnn/selinnn.github.io`).
