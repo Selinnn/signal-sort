@@ -2,13 +2,18 @@ import GameCore
 import SwiftUI
 
 struct BoardScreen: View {
+    let level: LevelDefinition
     let number: Int
-    let onNext: (() -> Void)?
+    let store: ProgressStore
+    let onNext: () -> Void
     @State private var session: GameSession
+    @State private var outcome: ResultOutcome?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    init(level: LevelDefinition, number: Int, onNext: (() -> Void)? = nil) {
+    init(level: LevelDefinition, number: Int, store: ProgressStore, onNext: @escaping () -> Void) {
+        self.level = level
         self.number = number
+        self.store = store
         self.onNext = onNext
         _session = State(initialValue: GameSession(level: level))
     }
@@ -31,13 +36,29 @@ struct BoardScreen: View {
         .toolbarColorScheme(.dark, for: .navigationBar)
         .onAppear { session.instantPlayback = reduceMotion }
         .onChange(of: reduceMotion) { _, value in session.instantPlayback = value }
+        .onChange(of: session.showsResult) { _, solved in
+            guard solved else { return }
+            let isNewBest = store.record(session.play)
+            let isChapterEnd = store.progression.position(of: level.id).map {
+                $0.index == store.catalog.chapters[$0.chapter].levels.count - 1
+            } ?? false
+            outcome = ResultOutcome(isNewBest: isNewBest, completesChapter: isChapterEnd)
+        }
         .overlay {
-            if session.showsResult {
-                ResultOverlay(session: session, onNext: onNext)
+            if session.showsResult, let outcome {
+                ResultOverlay(session: session, outcome: outcome, onNext: onNext, onRetry: retry)
                     .transition(.opacity.combined(with: .scale(scale: 0.95)))
             }
         }
         .animation(.easeOut(duration: 0.25), value: session.showsResult)
+    }
+
+    private func retry() {
+        outcome = nil
+        let fresh = GameSession(level: level)
+        fresh.instantPlayback = reduceMotion
+        fresh.speed = session.speed
+        session = fresh
     }
 
     private var header: some View {
@@ -134,15 +155,21 @@ private struct ControlButton: View {
     }
 }
 
+struct ResultOutcome: Equatable {
+    var isNewBest: Bool
+    var completesChapter: Bool
+}
+
 private struct ResultOverlay: View {
     let session: GameSession
-    let onNext: (() -> Void)?
-    @Environment(\.dismiss) private var dismiss
+    let outcome: ResultOutcome
+    let onNext: () -> Void
+    let onRetry: () -> Void
 
     var body: some View {
         let stars = session.play.stars ?? 1
         VStack(spacing: 18) {
-            Text("result.title")
+            Text(outcome.completesChapter ? "result.chapterComplete" : "result.title")
                 .font(.largeTitle.bold())
                 .foregroundStyle(Theme.textPrimary)
                 .accessibilityIdentifier("result.title")
@@ -160,9 +187,13 @@ private struct ResultOverlay: View {
                     .font(.headline.monospacedDigit())
                     .foregroundStyle(Theme.textSecondary)
             }
-            Button {
-                if let onNext { onNext() } else { dismiss() }
-            } label: {
+            if outcome.isNewBest {
+                Text("result.newBest")
+                    .font(.subheadline.bold())
+                    .foregroundStyle(Theme.success)
+                    .accessibilityIdentifier("result.newBest")
+            }
+            Button(action: onNext) {
                 Text("result.next")
                     .font(.headline)
                     .frame(maxWidth: .infinity, minHeight: 52)
@@ -170,6 +201,14 @@ private struct ResultOverlay: View {
                     .foregroundStyle(Theme.background)
             }
             .accessibilityIdentifier("result.next")
+            if stars < 3 {
+                Button(action: onRetry) {
+                    Label("result.retry", systemImage: "arrow.counterclockwise")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(Theme.textPrimary)
+                }
+                .accessibilityIdentifier("result.retry")
+            }
         }
         .padding(28)
         .background(RoundedRectangle(cornerRadius: 28).fill(Theme.surface))

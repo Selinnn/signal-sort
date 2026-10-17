@@ -1,57 +1,85 @@
 import GameCore
 import SwiftUI
 
-/// Geçici ana ekran: seviye listesi. Asıl Home ve bölüm haritası adım 8'de gelir.
 struct HomeView: View {
-    let catalog: LevelCatalog
-    @State private var path: [Int] = []
+    let store: ProgressStore
+    @Binding var path: [AppRoute]
 
     var body: some View {
-        NavigationStack(path: $path) {
-            List {
-                Section {
-                    ForEach(catalog.levels.indices, id: \.self) { index in
-                        NavigationLink(value: index) {
-                            HStack {
-                                Text("board.level \(index + 1)")
-                                    .foregroundStyle(Theme.textPrimary)
-                                Spacer()
-                                Text(catalog.levels[index].id)
-                                    .font(.caption)
-                                    .foregroundStyle(Theme.textSecondary)
-                            }
-                        }
-                        .listRowBackground(Theme.surface)
-                        .accessibilityIdentifier("level.\(index)")
-                    }
-                } header: {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Signal Sort")
-                            .font(.largeTitle.bold())
-                            .foregroundStyle(Theme.textPrimary)
-                            .accessibilityIdentifier("home.title")
-                        Text("home.subtitle")
-                            .font(.headline)
-                            .foregroundStyle(Theme.textSecondary)
-                    }
-                    .textCase(nil)
-                    .padding(.bottom, 12)
+        VStack(spacing: 28) {
+            Spacer()
+            VStack(spacing: 8) {
+                Text("Signal Sort")
+                    .font(.system(size: 44, weight: .heavy, design: .rounded))
+                    .foregroundStyle(Theme.textPrimary)
+                    .accessibilityIdentifier("home.title")
+                Text("home.subtitle")
+                    .font(.title3.weight(.medium))
+                    .foregroundStyle(Theme.textSecondary)
+            }
+            HStack(spacing: 10) {
+                ForEach(SignalColor.allCases.prefix(4), id: \.self) { color in
+                    SignalGlyph(color: color).frame(width: 22, height: 22)
                 }
             }
-            .scrollContentBackground(.hidden)
-            .background(Theme.background.ignoresSafeArea())
-            .navigationDestination(for: Int.self) { index in
-                BoardScreen(
-                    level: catalog.levels[index],
-                    number: index + 1,
-                    onNext: index + 1 < catalog.levels.count ? { path.append(index + 1) } : nil)
-                .id(index)
+            .accessibilityHidden(true)
+            Spacer()
+            VStack(spacing: 14) {
+                primaryButton
+                Button { path.append(.chapters) } label: {
+                    Label("home.chapters", systemImage: "square.grid.3x3.fill")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, minHeight: 56)
+                        .background(RoundedRectangle(cornerRadius: 18).fill(Theme.surface))
+                        .foregroundStyle(Theme.textPrimary)
+                }
+                .accessibilityIdentifier("home.chapters")
+                Label {
+                    Text("home.stars \(store.totalStars) \(store.maxStars)")
+                } icon: {
+                    Image(systemName: "star.fill").foregroundStyle(Theme.hint)
+                }
+                .font(.subheadline.monospacedDigit())
+                .foregroundStyle(Theme.textSecondary)
+                .accessibilityIdentifier("home.stars")
             }
+            .padding(.horizontal, 24)
+            .padding(.bottom, 24)
         }
-        .preferredColorScheme(.dark)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Theme.background.ignoresSafeArea())
+        .toolbar(.hidden, for: .navigationBar)
     }
-}
 
-#Preview {
-    HomeView(catalog: .bundled)
+    @ViewBuilder
+    private var primaryButton: some View {
+        if let level = store.continueLevel {
+            let number = store.catalog.number(of: level.id)
+            Button { path.append(.level(level.id)) } label: {
+                Group {
+                    if store.progress.records.isEmpty { Text("home.play") } else { Text("home.continue \(number)") }
+                }
+                .font(.title3.bold())
+                .frame(maxWidth: .infinity, minHeight: 64)
+                .background(RoundedRectangle(cornerRadius: 20).fill(Color.accentColor))
+                .foregroundStyle(Theme.background)
+            }
+            .accessibilityIdentifier("home.continue")
+        } else if store.isWaitingForFullGame {
+            Button { path.append(.chapters) } label: {
+                Label("home.unlockFullGame", systemImage: "lock.open.fill")
+                    .font(.title3.bold())
+                    .frame(maxWidth: .infinity, minHeight: 64)
+                    .background(RoundedRectangle(cornerRadius: 20).fill(Color.accentColor))
+                    .foregroundStyle(Theme.background)
+            }
+            .accessibilityIdentifier("home.unlock")
+        } else {
+            Text("home.allComplete")
+                .font(.title3.bold())
+                .foregroundStyle(Theme.success)
+                .frame(maxWidth: .infinity, minHeight: 64)
+                .accessibilityIdentifier("home.allComplete")
+        }
+    }
 }

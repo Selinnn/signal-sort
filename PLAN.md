@@ -362,6 +362,14 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 > kampanyanın birebir yeniden üretimi). Par eğrisi bölüm içinde arama düğümüne göre artar ama par'a göre
 > dalgalı (ör. bölüm 1: 1 3 4 5 3 6 7 8 4 …); gerçek zorluk hissi oynanarak kontrol edilmeli.
 | 8 | Home, bölüm haritası, sonuç, persistence, kilit akışı | Bot oyuncu tüm kampanyayı bitirir |
+
+> **Adım 8 notları:** Kilit ve sıra kuralları GameCore `Progression`'da (bölüm içi doğrusal, bölüm önceki bölümün
+> son seviyesiyle açılır, bölüm 4–6 Tam Oyun ister); `PlayerProgress` şema sürümlü JSON olarak UserDefaults'ta.
+> Bot testleri: 150 seviyeyi sırayla 3★ bitirir (450 yıldız); ücretsiz katman 70. seviyede durur; yalnız ipucu
+> kullanan bot her seviyeyi çözer (≤2★). Seviye numaraları kampanya boyunca 1–150. Ana ekranda şimdilik
+> Oyna/Devam ve Bölümler var; Günlük (9), Mağaza (10) ve Ayarlar (12) kendi adımlarında eklenecek.
+> Tam Oyun gereken noktada "Tam Oyunu Aç" bölüm haritasına götürüyor; satın alma ekranı adım 10'da.
+> DEBUG başlatma argümanları: `-resetProgress`, `-unlockAll`, `-uiTestFastPlayback`.
 | 9 | Günlük: `dailies.json`, seri, paylaşım kartı | Uçak modunda çalışır |
 | 10 | StoreKit 2: Reklamları Kaldır, Tam Oyun, ipucu paketi, geri yükleme, ipucu ekonomisi | StoreKit test UI testleri yeşil |
 | 11 | Reklam: AdMob SDK, `AdService`/`AdPolicy`, ödüllü ipucu, geçiş reklamı, UMP + ATT akışı, `SKAdNetworkItems`, `NSUserTrackingUsageDescription` | Test reklamlarıyla gerçek cihazda akış doğru; AdPolicy testleri yeşil |
