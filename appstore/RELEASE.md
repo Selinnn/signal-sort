@@ -30,15 +30,13 @@ Aşağıdaki adımlar **senin hesaplarınla** yapılmalı (ödeme, vergi, sözle
 - Ürünler ilk sürümle **birlikte** incelemeye gönderilmeli (sürüm sayfasında "In-App Purchases" bölümünden eklenir).
 
 ## 4. AdMob (gerçek reklam kimlikleri olmadan arşiv bilerek hata verir)
-- [ ] AdMob'da uygulamayı ekle (iOS, "henüz mağazada değil"), iki reklam birimi oluştur: **Ödüllü** ve **Geçiş (Interstitial)**.
-- [ ] `project.yml` içindeki üç değeri değiştir, sonra `xcodegen generate`:
-      `ADMOB_APP_ID` (`ca-app-pub-…~…`), `ADMOB_REWARDED_ID`, `ADMOB_INTERSTITIAL_ID` (`ca-app-pub-…/…`).
-      Debug derlemeler test kimlikleriyle kalsın istersen bu değerleri yalnız Release yapılandırmasına taşıyabilirim.
+- [x] AdMob'da uygulama eklendi (`ca-app-pub-1984328158177269~4766668480`) ve ödüllü birim oluşturuldu (`…/8009663511`).
+      Bunlar `project.yml` → `configs` → `Release`'te; Debug derlemeler Google test kimliklerinde kalır.
+- [ ] **Geçiş (Interstitial)** birimini oluştur (Gelişmiş ayarlar → sıklık sınırı: kullanıcı başına saatte 4) ve kimliğini
+      `ADMOB_INTERSTITIAL_ID` (Release) yerine yaz. O zamana kadar arşiv bilerek hata verir.
 - [ ] **Privacy & messaging**: GDPR onay mesajı ve IDFA (ATT) açıklama mesajı oluştur ve yayımla.
 - [ ] Uygulama ayarları → maksimum reklam içerik derecesi **G**; kumar/flört kategorilerini engelle.
-- [ ] Hesaptaki `pub-` kimliğiyle `app-ads.txt`: GitHub'da `Selinnn/selinnn.github.io` adlı repoyu oluştur, köküne
-      `appstore/app-ads.txt` içeriğini koy (`pub-XXXX…` yerine kendi kimliğin). Adres: `https://selinnn.github.io/app-ads.txt`.
-      İstersen bunu ben yaparım; kimliği vermen yeterli.
+- [x] `app-ads.txt` yayında: `https://selinnn.github.io/app-ads.txt` (`pub-1984328158177269`, repo `Selinnn/selinnn.github.io`).
 - [ ] `SignalSort/Resources/Info.plist` → `SKAdNetworkItems`: Google'ın güncel listesini ekle
       (https://developers.google.com/admob/ios/3p-skadnetworks). Şu an yalnız Google'ın kendi girdisi var.
 

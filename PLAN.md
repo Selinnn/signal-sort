@@ -435,8 +435,8 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 > Destek e-postası: kaplanselinn@gmail.com (Selin onayladı, 2026-10-17).
 > Yayın (2026-10-17): kaynak kod `https://github.com/Selinnn/signal-sort` (herkese açık), sayfalar GitHub Pages ile
 > `https://selinnn.github.io/signal-sort/` (`privacy.html`, `support.html`) yayında; uygulama ve metadata bu adresleri
-> kullanıyor. **Açık kalanlar (Selin):** `app-ads.txt` alan adının kökünde olmalı → ayrı `Selinnn/selinnn.github.io`
-> reposu ve AdMob `pub-` kimliği gerekir; ilk denemede açılan `urulu09/signal-sort` reposu silinmeli.
+> kullanıyor. `app-ads.txt` `https://selinnn.github.io/app-ads.txt` adresinde yayında (`Selinnn/selinnn.github.io`).
+> İlk denemede açılan `urulu09/signal-sort` reposunu Selin silecek.
 | 14 | Release build, arşiv, App Store Connect'e yükleme, incelemeye gönderme | Selin onayıyla gönderilir |
 
 > **Adım 14 notları (hazırlık tamam, gönderim Selin'de):** `DEVELOPMENT_TEAM = 67ANTJMF7U`. Release derlemesi temiz
@@ -444,8 +444,9 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 > Splash: sistem açılış ekranı + kısa animasyonlu giriş. Yükleme: Xcode Organizer ya da `fastlane release`
 > (`appstore/ExportOptions.plist`, `fastlane/Fastfile`; incelemeye göndermez). Adım adım liste: **`appstore/RELEASE.md`**.
 > Son tam tur: 111 çekirdek + 7 birim/StoreKit + 19 UI testi yeşil, `check-content.sh` geçti.
-> **Engelleyenler (Selin):** Paid Apps sözleşmesi/vergi/banka, App Store Connect kaydı ve 3 IAP, gerçek AdMob
-> kimlikleri + `pub-` (app-ads.txt), AdMob onay mesajları, SKAdNetwork listesi, App Privacy ve yaş formları.
+> AdMob: uygulama ve ödüllü birim kimlikleri yalnız Release'te (Debug test kimliklerinde). Arşiv koruması üç kimliği de denetler.
+> **Engelleyenler (Selin):** geçiş reklamı birim kimliği, Paid Apps sözleşmesi/vergi/banka, App Store Connect kaydı
+> ve 3 IAP, AdMob onay mesajları, SKAdNetwork listesi, App Privacy ve yaş formları.
 
 ## 9. Yayın kontrol listesi (Selin'in yapması gerekenler)
 - Apple Developer üyeliği aktif mi; App Store Connect'te uygulama kaydı, **isim müsaitliği** ("Signal Sort" alınmış olabilir — yedek isim hazır olmalı).

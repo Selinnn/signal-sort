@@ -503,7 +503,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"$ACTION\" = \"install\" ] && echo \"$ADMOB_APP_ID\" | grep -q \"3940256099942544\"; then\n  echo \"error: Release arşivi Google test AdMob kimlikleriyle yapılamaz. project.yml'de ADMOB_* değerlerini gerçek kimliklerle değiştirin.\"\n  exit 1\nfi\n";
+			shellScript = "if [ \"$ACTION\" = \"install\" ]; then\n  for ID in \"$ADMOB_APP_ID\" \"$ADMOB_REWARDED_ID\" \"$ADMOB_INTERSTITIAL_ID\"; do\n    if echo \"$ID\" | grep -q \"3940256099942544\"; then\n      echo \"error: Release arşivinde Google test AdMob kimliği var ($ID). project.yml > configs > Release değerlerini gerçek kimliklerle değiştirin.\"\n      exit 1\n    fi\n  done\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -699,9 +699,9 @@
 		8FD44215B122C29DA05C613A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ADMOB_APP_ID = "ca-app-pub-3940256099942544~1458002511";
+				ADMOB_APP_ID = "ca-app-pub-1984328158177269~4766668480";
 				ADMOB_INTERSTITIAL_ID = "ca-app-pub-3940256099942544/4411468910";
-				ADMOB_REWARDED_ID = "ca-app-pub-3940256099942544/1712485313";
+				ADMOB_REWARDED_ID = "ca-app-pub-1984328158177269/8009663511";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

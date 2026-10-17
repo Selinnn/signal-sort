@@ -46,8 +46,8 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_FILE: SignalSort/Resources/Info.plist
         INFOPLIST_KEY_NSUserTrackingUsageDescription: "Signal Sort is free thanks to ads. Allowing tracking lets ads be more relevant to you."
-        # Google'ın test kimlikleri. Yayından önce Release için gerçek AdMob kimlikleri girilmeli;
-        # arşivleme (Archive) test kimlikleriyle bilerek başarısız olur.
+        # Debug: Google'ın test kimlikleri (kendi reklamına tıklamak AdMob hesabını riske atar).
+        # Release'teki gerçek kimlikler aşağıda `configs`'te; arşiv, test kimliği kalırsa bilerek başarısız olur.
         ADMOB_APP_ID: ca-app-pub-3940256099942544~1458002511
         ADMOB_REWARDED_ID: ca-app-pub-3940256099942544/1712485313
         ADMOB_INTERSTITIAL_ID: ca-app-pub-3940256099942544/4411468910
@@ -58,13 +58,23 @@ targets:
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+      configs:
+        Release:
+          ADMOB_APP_ID: ca-app-pub-1984328158177269~4766668480
+          ADMOB_REWARDED_ID: ca-app-pub-1984328158177269/8009663511
+          # Geçiş reklamı birimi henüz oluşturulmadı; gerçek kimlik gelene kadar arşiv bilerek başarısız olur.
+          ADMOB_INTERSTITIAL_ID: ca-app-pub-3940256099942544/4411468910
     preBuildScripts:
       - name: Guard AdMob IDs on archive
         basedOnDependencyAnalysis: false
         script: |
-          if [ "$ACTION" = "install" ] && echo "$ADMOB_APP_ID" | grep -q "3940256099942544"; then
-            echo "error: Release arşivi Google test AdMob kimlikleriyle yapılamaz. project.yml'de ADMOB_* değerlerini gerçek kimliklerle değiştirin."
-            exit 1
+          if [ "$ACTION" = "install" ]; then
+            for ID in "$ADMOB_APP_ID" "$ADMOB_REWARDED_ID" "$ADMOB_INTERSTITIAL_ID"; do
+              if echo "$ID" | grep -q "3940256099942544"; then
+                echo "error: Release arşivinde Google test AdMob kimliği var ($ID). project.yml > configs > Release değerlerini gerçek kimliklerle değiştirin."
+                exit 1
+              fi
+            done
           fi
   SignalSortTests:
     type: bundle.unit-test

@@ -1,3 +1,3 @@
-# Bu dosya geliştirici web sitesi alan adının KÖKÜNDE yayımlanmalı (ör. https://selinnn.github.io/app-ads.txt)
-# ve App Store'daki "Marketing URL"/geliştirici sitesi bu alan adını göstermeli. pub- kimliği AdMob hesabından alınır.
-google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+# Yayında: https://selinnn.github.io/app-ads.txt (repo: Selinnn/selinnn.github.io). App Store'daki "Marketing URL"
+# (https://selinnn.github.io/signal-sort/) aynı alan adında olduğu için AdMob bu dosyayı bulur.
+google.com, pub-1984328158177269, DIRECT, f08c47fec0942fa0
