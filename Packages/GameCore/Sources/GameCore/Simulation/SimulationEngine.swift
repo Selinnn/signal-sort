@@ -15,7 +15,22 @@ public struct SimulationEngine: Sendable {
     public init() {}
 
     public func simulate(_ level: LevelDefinition, _ state: LevelState = .initial) -> SimulationResult {
-        let board = Board(level: level, state: state)
+        switch run(level, state, undecided: []) {
+        case .finished(let result): result
+        case .decisionNeeded: preconditionFailure("Karar beklenen taş yokken karar istenemez")
+        }
+    }
+
+    /// Solver için: `undecided` içindeki taşların yönü henüz seçilmemiştir. Bir sinyal böyle bir taşa
+    /// (renkli okta yalnız kendi rengi) girdiğinde simülasyon durur ve hangi taş için karar gerektiğini söyler.
+    /// Aynı tick'te karardan bağımsız bir hata (dışarı çıkma, engel, çarpışma, yanlış çıkış) varsa o önceliklidir.
+    enum Step {
+        case finished(SimulationResult)
+        case decisionNeeded(tileID: String)
+    }
+
+    func run(_ level: LevelDefinition, _ state: LevelState, undecided: Set<String>) -> Step {
+        let board = Board(level: level, state: state, undecided: undecided)
         var signals = level.sources.map {
             Signal(id: $0.id, color: $0.color, coordinate: $0.coordinate, direction: $0.direction)
         }
@@ -68,6 +83,7 @@ public struct SimulationEngine: Sendable {
             // 4. Hareket ve hücre etkileri.
             var occupants: [Occupancy: [Int]] = [:]
             var enteredToggles: [Int] = []
+            var pendingDecision: String?
             for i in targets.keys.sorted() {
                 let target = targets[i]!
                 signals[i].coordinate = target
@@ -81,6 +97,8 @@ public struct SimulationEngine: Sendable {
                     continue
                 }
                 switch board.cells[target] {
+                case .undecided(let tileID, let color) where color == nil || color == signals[i].color:
+                    if pendingDecision == nil { pendingDecision = tileID }
                 case .router(let direction):
                     signals[i].direction = direction
                 case .colorRouter(let color, let direction) where color == signals[i].color:
@@ -88,7 +106,7 @@ public struct SimulationEngine: Sendable {
                 case .toggle(let index):
                     signals[i].direction = toggles[index]
                     enteredToggles.append(index)
-                case .colorRouter, .bridge, nil:
+                case .colorRouter, .bridge, .undecided, nil:
                     break
                 }
                 let axis: Axis? = board.cells[target] == .bridge ? Axis(signals[i].direction) : nil
@@ -100,6 +118,10 @@ public struct SimulationEngine: Sendable {
                 for i in indices {
                     fail(i, .collision, at: cell.coordinate, others: indices.filter { $0 != i }.map { signals[$0].id })
                 }
+            }
+
+            if failures.isEmpty, let tileID = pendingDecision {
+                return .decisionNeeded(tileID: tileID)
             }
 
             // 6. Makas oklar döner.
@@ -129,7 +151,7 @@ public struct SimulationEngine: Sendable {
             if !failures.isEmpty {
                 let order = Dictionary(uniqueKeysWithValues: signals.enumerated().map { ($1.id, $0) })
                 failures.sort { order[$0.signalID]! < order[$1.signalID]! }
-                return SimulationResult(outcome: .failure, trace: trace, deliveredSignalIDs: delivered, failures: failures)
+                return .finished(SimulationResult(outcome: .failure, trace: trace, deliveredSignalIDs: delivered, failures: failures))
             }
         }
 
@@ -138,9 +160,9 @@ public struct SimulationEngine: Sendable {
         if !stuck.isEmpty {
             let tick = trace.last?.tick ?? 0
             let failures = stuck.map { SignalFailure(signalID: $0.id, reason: .loop, coordinate: $0.coordinate, tick: tick) }
-            return SimulationResult(outcome: .failure, trace: trace, deliveredSignalIDs: delivered, failures: failures)
+            return .finished(SimulationResult(outcome: .failure, trace: trace, deliveredSignalIDs: delivered, failures: failures))
         }
-        return SimulationResult(outcome: .success, trace: trace, deliveredSignalIDs: delivered, failures: [])
+        return .finished(SimulationResult(outcome: .success, trace: trace, deliveredSignalIDs: delivered, failures: []))
     }
 
     /// Makassız tahtada her sinyal en fazla W×H×4 farklı durumda bulunabilir. Makaslarla durum uzayı
@@ -205,6 +227,8 @@ private enum Cell: Equatable {
     /// Makas okların değişken yönü simülasyonda ayrı tutulur; burada indeksi saklanır.
     case toggle(Int)
     case bridge
+    /// Solver: yönü henüz seçilmemiş taş. `color` doluysa yalnız o renk karar gerektirir (renkli ok).
+    case undecided(tileID: String, color: SignalColor?)
 }
 
 /// Run boyunca değişmeyen hücre bilgisi. Değişen tek şey makas yönleridir.
@@ -215,11 +239,15 @@ private struct Board {
     var toggleIDs: [String] = []
     var initialToggleDirections: [Direction] = []
 
-    init(level: LevelDefinition, state: LevelState) {
+    init(level: LevelDefinition, state: LevelState, undecided: Set<String>) {
         for source in level.sources { impassable.insert(source.coordinate) }
         for receiver in level.receivers { receivers[receiver.coordinate] = receiver }
         for tile in level.tiles {
             let direction = state.direction(of: tile)
+            if undecided.contains(tile.id) {
+                cells[tile.coordinate] = .undecided(tileID: tile.id, color: tile.kind == .colorRouter ? tile.color : nil)
+                continue
+            }
             switch tile.kind {
             case .blocker:
                 impassable.insert(tile.coordinate)

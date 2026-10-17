@@ -85,7 +85,12 @@ oka girdiğinde 4 yöne dallanılır, atanmış oka girerse atanan yön kullanı
 kalır (maliyet 0). Böylece:
 - Çözüm sayısı yalnızca anlamlı kararları sayar.
 - Arama ağacı boyutu (ziyaret edilen düğüm) doğrudan **zorluk ölçütü** olur.
-- 7×7 tahtada bile milisaniyeler içinde çalışır; ipucu ve günlük bulmaca için cihazda kullanılabilir.
+- Uygulama: engine'e "karar bekleyen taş" kancası eklendi; solver her düğümde simülasyonu baştan koşar
+  (motorla birebir aynı kurallar, ayrı kural kopyası yok). Brute-force ile 200 rastgele tahtada par eşleşmesi test edilir.
+- Ölçüm (release, M serisi Mac, rastgele 7×7, 3 sinyal, 18 dönebilir taş): ortalama ~23 ms, en kötü ~1,2 sn
+  (33 bin düğüm, düğüm başına ~36 µs). Bu yüzden **cihazda solver çalışmaz**: CLI her seviyenin çözümlerini
+  JSON'a yazar (`solutions` alanı, adım 5), ipucu bu listeyle anında hesaplanır. Üretici, arama düğümü bandı
+  dışındaki adayları zaten reddeder.
 
 ### 1.5 Planla → çalıştır döngüsündeki tasarım boşlukları
 | Boşluk | Karar |
@@ -310,7 +315,7 @@ public struct HintProvider { func hint(_ level: LevelDefinition, _ state: LevelS
 - **Cihaz matrisi (simülatör):** iPhone SE (3. nesil), iPhone 17, iPhone 17 Pro Max, iPad; açık/koyu tema;
   en büyük Dynamic Type; VoiceOver ile tutorial; Reduce Motion.
 - **Gerçek cihaz:** Selin'in kendi iPhone'unda Xcode ile doğrudan kurulum ve tam bölüm oynanışı (TestFlight gerekmez).
-- **Performans:** 7×7 en kötü durumda solver < 50 ms (ipucu), soğuk açılış < 1 sn, bellek < 100 MB.
+- **Performans:** ipucu (gömülü çözümlerle) < 5 ms, soğuk açılış < 1 sn, bellek < 100 MB. Solver yalnız CLI/CI'da.
 
 ---
 
