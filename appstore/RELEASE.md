@@ -34,8 +34,8 @@ Aşağıdaki adımlar **senin hesaplarınla** yapılmalı (ödeme, vergi, sözle
       Bunlar `project.yml` → `configs` → `Release`'te; Debug derlemeler Google test kimliklerinde kalır.
 - [x] Geçiş (Interstitial) birimi oluşturuldu (`…/3300262317`) ve Release'e eklendi; Release arşivi koruması geçiyor.
       AdMob'da bu birimin sıklık sınırının açık olduğundan emin ol (kullanıcı başına saatte 4).
-- [ ] **Privacy & messaging**: GDPR onay mesajı ve IDFA (ATT) açıklama mesajı oluştur ve yayımla.
-- [ ] Uygulama ayarları → maksimum reklam içerik derecesi **G**; kumar/flört kategorilerini engelle.
+- [x] **Gizlilik ve mesajlaşma**: AB (GDPR), ABD eyalet ve IDFA açıklama mesajları yayımlandı (2026-10-17). AdMob ödeme profili tamamlandı.
+- [x] Maksimum reklam içerik derecesi **G** (hesap düzeyinde).
 - [x] `app-ads.txt` yayında: `https://selinnn.github.io/app-ads.txt` (`pub-1984328158177269`, repo `Selinnn/selinnn.github.io`).
 - [x] `SKAdNetworkItems`: Google'ın listesi eklendi (50 girdi, sayfanın 2026-02-10 güncellemesi). Google listeyi
       güncellerse sonraki sürümlerde yenile: https://developers.google.com/admob/ios/3p-skadnetworks
