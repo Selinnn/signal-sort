@@ -1,9 +1,11 @@
+import GameCore
 import SwiftUI
 
 @main
 struct SignalSortApp: App {
     @State private var store: ProgressStore
     @State private var shop: StoreService
+    @State private var ads: AdsCoordinator
 
     init() {
         let arguments = ProcessInfo.processInfo.arguments
@@ -15,15 +17,33 @@ struct SignalSortApp: App {
         if let index = arguments.firstIndex(of: "-hints"), index + 1 < arguments.count, let hints = Int(arguments[index + 1]) {
             store.setHintBalance(hints)
         }
+        if let index = arguments.firstIndex(of: "-seedCompleted"), index + 1 < arguments.count, let count = Int(arguments[index + 1]) {
+            store.seedCompletedLevels(count)
+        }
         #endif
         _store = State(initialValue: store)
         _shop = State(initialValue: StoreService(progress: store))
+
+        var useMockAds = false
+        #if DEBUG
+        useMockAds = arguments.contains("-mockAds")
+        #endif
+        let service: AdService = useMockAds ? MockAdService() : AdMobAdService()
+        let ads = AdsCoordinator(service: service, consent: ConsentManager(isMock: useMockAds))
+        #if DEBUG
+        if arguments.contains("-resetProgress") { ads.overrideState(AdPolicyState()) }
+        if arguments.contains("-adsReadyForInterstitial") {
+            ads.overrideState(AdPolicyState(sessionCount: 2, levelsSinceInterstitial: 3))
+        }
+        #endif
+        _ads = State(initialValue: ads)
     }
 
     var body: some Scene {
         WindowGroup {
-            RootView(store: store, shop: shop)
+            RootView(store: store, shop: shop, ads: ads)
                 .task { await shop.start() }
+                .task { await ads.appLaunched() }
         }
     }
 }

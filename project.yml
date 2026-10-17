@@ -17,21 +17,39 @@ settings:
 packages:
   GameCore:
     path: Packages/GameCore
+  GoogleMobileAds:
+    url: https://github.com/googleads/swift-package-manager-google-mobile-ads
+    exactVersion: 13.11.0
+  GoogleUserMessagingPlatform:
+    url: https://github.com/googleads/swift-package-manager-google-user-messaging-platform
+    exactVersion: 3.1.0
 targets:
   SignalSort:
     type: application
     platform: iOS
     sources:
       - path: SignalSort
-        excludes: ["**/.gitkeep"]
+        excludes: ["**/.gitkeep", "Resources/Info.plist"]
     dependencies:
       - package: GameCore
         product: GameCore
+      - package: GoogleMobileAds
+        product: GoogleMobileAds
+      - package: GoogleUserMessagingPlatform
+        product: GoogleUserMessagingPlatform
+      - sdk: AppTrackingTransparency.framework
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.selinkaplan.signalsort
         TARGETED_DEVICE_FAMILY: "1"
         GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_FILE: SignalSort/Resources/Info.plist
+        INFOPLIST_KEY_NSUserTrackingUsageDescription: "Signal Sort is free thanks to ads. Allowing tracking lets ads be more relevant to you."
+        # Google'ın test kimlikleri. Yayından önce Release için gerçek AdMob kimlikleri girilmeli;
+        # arşivleme (Archive) test kimlikleriyle bilerek başarısız olur.
+        ADMOB_APP_ID: ca-app-pub-3940256099942544~1458002511
+        ADMOB_REWARDED_ID: ca-app-pub-3940256099942544/1712485313
+        ADMOB_INTERSTITIAL_ID: ca-app-pub-3940256099942544/4411468910
         INFOPLIST_KEY_CFBundleDisplayName: Signal Sort
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.puzzle-games
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
@@ -40,6 +58,14 @@ targets:
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+    preBuildScripts:
+      - name: Guard AdMob IDs on archive
+        basedOnDependencyAnalysis: false
+        script: |
+          if [ "$ACTION" = "install" ] && echo "$ADMOB_APP_ID" | grep -q "3940256099942544"; then
+            echo "error: Release arşivi Google test AdMob kimlikleriyle yapılamaz. project.yml'de ADMOB_* değerlerini gerçek kimliklerle değiştirin."
+            exit 1
+          fi
   SignalSortTests:
     type: bundle.unit-test
     platform: iOS

@@ -83,6 +83,11 @@ final class ProgressStore {
         return true
     }
 
+    func grantHints(_ count: Int) {
+        progress.grantHints(count)
+        save()
+    }
+
     func applyHintPurchase(transactionID: UInt64, hints: Int) {
         if progress.applyHintPurchase(transactionID: transactionID, hints: hints) > 0 { save() }
     }
@@ -92,6 +97,14 @@ final class ProgressStore {
     }
 
     #if DEBUG
+    /// Kampanyanın ilk `count` seviyesini 3★ çözülmüş sayar (UI testleri için).
+    func seedCompletedLevels(_ count: Int) {
+        for level in catalog.levels.prefix(count) {
+            progress.record(levelID: level.id, moves: level.par ?? 0, stars: 3, hintUsed: false)
+        }
+        save()
+    }
+
     func setHintBalance(_ value: Int) {
         progress.hintBalance = value
         save()

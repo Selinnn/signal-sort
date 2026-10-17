@@ -1,0 +1,13 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSUserTrackingUsageDescription" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Signal Sort is free thanks to ads. Allowing tracking lets ads be more relevant to you." } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Signal Sort es gratis gracias a los anuncios. Permitir el seguimiento hace que los anuncios sean más relevantes para ti." } },
+        "tr" : { "stringUnit" : { "state" : "translated", "value" : "Signal Sort reklamlar sayesinde ücretsiz. İzin verirsen reklamlar ilgi alanlarına daha uygun olur." } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

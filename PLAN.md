@@ -395,6 +395,21 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 > (simülatörde elle denenmeli). **Borç:** Tam Oyun kartı "ek tahta temaları" vaat ediyor; temalar adım 12'de
 > yapılmalı, yoksa bu satır kaldırılmalı.
 | 11 | Reklam: AdMob SDK, `AdService`/`AdPolicy`, ödüllü ipucu, geçiş reklamı, UMP + ATT akışı, `SKAdNetworkItems`, `NSUserTrackingUsageDescription` | Test reklamlarıyla gerçek cihazda akış doğru; AdPolicy testleri yeşil |
+
+> **Adım 11 notları:** Google Mobile Ads 13.11.0 + UMP 3.1.0 (SPM, sabit sürüm). Kurallar GameCore `AdPolicy`'de
+> (saf, testli): geçiş reklamı yalnız kampanyada Sonuç → Sonraki, ilk oturumda değil, 10 seviye tamamlanmadan
+> değil, en az 3 seviye ve 3 dakika arayla, günlükten sonra/Reklamları Kaldır ile asla; ödüllü reklam günde 10.
+> Ödül yalnız SDK'nın ödül geri çağrısında verilir. İpucu bitince "Reklam izle +1 / Mağaza" sayfası açılır.
+> Onay: tutorial (seviye 5) sonunda veya ilk ödüllü reklamda UMP → ATT. Gerçek SDK ile simülatörde denendi
+> (`-umpDebugEEA`): AdMob test formu ve ATT penceresi doğru zamanda açıldı; test yayıncısında IDFA açıklaması
+> tanımlı olduğu için ATT'yi UMP kendisi gösterdi, uygulamanın açıklama ekranı yalnız ATT kararı hâlâ
+> verilmemişse çıkar. UI testleri `-mockAds` ile: ödül yalnız "ödülü al"da, 10. seviyeden sonra geçiş reklamı,
+> erken oyunda reklam yok. Gerçek test reklamının yüklenip gösterilmesi ayrıca doğrulanmadı.
+> **Yayın öncesi zorunlu:** (1) `project.yml`'deki `ADMOB_*` Google test kimlikleri gerçek kimliklerle
+> değiştirilmeli — Release arşivi test kimlikleriyle bilerek hata verir. (2) `Info.plist` `SKAdNetworkItems`
+> yalnız Google'ın `cstr6suwn9` girdisini içeriyor; Google'ın güncel listesi eklenmeli. (3) AdMob'da GDPR mesajı
+> ve IDFA açıklama mesajı yayımlanmalı, uygulama ayarlarında maksimum içerik derecesi G. (4) App Privacy
+> etiketleri reklam verisine göre doldurulmalı. (5) Ayarlar'a "Gizlilik seçenekleri" (UMP) düğmesi adım 12'de.
 | 12 | Tema, ses, haptik, erişilebilirlik, EN+TR+ES yerelleştirme (ATT ön ekranı ve izin metni dahil), uygulama ikonu | Cihaz matrisi kontrolü |
 | 13 | fastlane snapshot (ekran görüntüleri), mağaza metinleri ve ekran görüntüleri EN+TR+ES, gizlilik/destek sayfaları (reklam ve veri kullanımı bölümüyle), `app-ads.txt` | Tüm metadata hazır |
 | 14 | Release build, arşiv, App Store Connect'e yükleme, incelemeye gönderme | Selin onayıyla gönderilir |

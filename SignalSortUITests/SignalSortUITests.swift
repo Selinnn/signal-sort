@@ -146,6 +146,8 @@ final class SignalSortUITests: XCTestCase {
         XCTAssertTrue(app.buttons["board.hint"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["board.hint.badge"].label, "+")
         app.buttons["board.hint"].tap()
+        XCTAssertTrue(app.buttons["hintOffer.store"].waitForExistence(timeout: 5))
+        app.buttons["hintOffer.store"].tap()
         XCTAssertTrue(app.buttons["store.restore"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["store.hintBalance"].label, "You have 0 hints")
         attachScreenshot("store")
@@ -160,5 +162,61 @@ final class SignalSortUITests: XCTestCase {
         app.navigationBars.buttons.element(boundBy: 0).tap()
         app.buttons["home.store"].tap()
         XCTAssertTrue(app.buttons["store.restore"].waitForExistence(timeout: 5))
+    }
+
+    private func solveWithHints() {
+        for _ in 0..<15 {
+            if app.staticTexts["result.title"].exists { break }
+            app.buttons["board.hint"].tap()
+            app.buttons["board.run"].tap()
+            _ = app.staticTexts["result.title"].waitForExistence(timeout: 3)
+        }
+        XCTAssertTrue(app.staticTexts["result.title"].exists)
+    }
+
+    /// Ödül yalnız reklamın ödül geri çağrısında verilir: kapatmak ödül vermez.
+    @MainActor
+    func testRewardedAdGrantsAHintOnlyWhenEarned() throws {
+        launch(["-mockAds", "-hints", "0"])
+        app.buttons["home.continue"].tap()
+        app.buttons["board.hint"].tap()
+        app.buttons["hintOffer.watchAd"].tap()
+        XCTAssertTrue(app.staticTexts["mockAd.rewarded"].waitForExistence(timeout: 5))
+        app.buttons["mockAd.close"].tap()
+        XCTAssertEqual(app.staticTexts["board.hint.badge"].label, "+")
+        XCTAssertEqual(app.staticTexts["board.moves"].label, "Moves 0 · Par 1")
+
+        app.buttons["board.hint"].tap()
+        app.buttons["hintOffer.watchAd"].tap()
+        XCTAssertTrue(app.staticTexts["mockAd.rewarded"].waitForExistence(timeout: 5))
+        app.buttons["mockAd.claim"].tap()
+        // Kazanılan ipucu hemen kullanılır: ok döner, bakiye yine 0.
+        XCTAssertTrue(app.staticTexts["board.moves"].waitForExistence(timeout: 5))
+        let moved = NSPredicate(format: "label == %@", "Moves 1 · Par 1")
+        expectation(for: moved, evaluatedWith: app.staticTexts["board.moves"])
+        waitForExpectations(timeout: 5)
+        XCTAssertEqual(app.staticTexts["board.hint.badge"].label, "+")
+    }
+
+    @MainActor
+    func testInterstitialShowsAfterTheTenthLevelThenContinues() throws {
+        launch(["-mockAds", "-seedCompleted", "10", "-adsReadyForInterstitial", "-hints", "99"])
+        app.buttons["home.continue"].tap()
+        XCTAssertTrue(app.navigationBars["Level 11"].waitForExistence(timeout: 5))
+        solveWithHints()
+        app.buttons["result.next"].tap()
+        XCTAssertTrue(app.staticTexts["mockAd.interstitial"].waitForExistence(timeout: 5))
+        attachScreenshot("mock-interstitial")
+        app.buttons["mockAd.close"].tap()
+        XCTAssertTrue(app.navigationBars["Level 12"].waitForExistence(timeout: 5))
+    }
+
+    @MainActor
+    func testNoInterstitialEarlyInTheGame() throws {
+        launch(["-mockAds"])
+        solveFirstLevel()
+        app.buttons["result.next"].tap()
+        XCTAssertTrue(app.navigationBars["Level 2"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts["mockAd.interstitial"].exists)
     }
 }

@@ -13,6 +13,11 @@ public enum HintEconomy {
 }
 
 extension PlayerProgress {
+    /// Ödüllü reklam gibi tek seferlik kazanımlar.
+    public mutating func grantHints(_ count: Int) {
+        hintBalance += max(count, 0)
+    }
+
     /// Bir ipucu harcar. Bakiye yoksa false.
     public mutating func spendHint() -> Bool {
         guard hintBalance > 0 else { return false }

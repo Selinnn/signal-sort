@@ -10,16 +10,22 @@ struct BoardScreen: View {
     let level: LevelDefinition
     let mode: BoardMode
     let store: ProgressStore
+    let ads: AdsCoordinator
+    let today: DayKey
     let onNext: () -> Void
     let showStore: () -> Void
     @State private var session: GameSession
+    @State private var showHintOffer = false
     @State private var outcome: ResultOutcome?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    init(level: LevelDefinition, mode: BoardMode, store: ProgressStore, onNext: @escaping () -> Void, showStore: @escaping () -> Void) {
+    init(level: LevelDefinition, mode: BoardMode, store: ProgressStore, ads: AdsCoordinator, today: DayKey,
+         onNext: @escaping () -> Void, showStore: @escaping () -> Void) {
         self.level = level
         self.mode = mode
         self.store = store
+        self.ads = ads
+        self.today = today
         self.onNext = onNext
         self.showStore = showStore
         _session = State(initialValue: GameSession(level: level))
@@ -64,12 +70,27 @@ struct BoardScreen: View {
             }
         }
         .animation(.easeOut(duration: 0.25), value: session.showsResult)
+        .sheet(isPresented: $showHintOffer) {
+            HintOfferView(
+                canWatchAd: ads.canOfferRewarded(today: today) && (ads.service.isRewardedReady || !ads.consent.hasGathered),
+                watchAd: {
+                    showHintOffer = false
+                    Task {
+                        if await ads.watchRewardedForHint(today: today, progress: store) { useHint() }
+                    }
+                },
+                openStore: {
+                    showHintOffer = false
+                    showStore()
+                })
+            .presentationDetents([.medium])
+        }
     }
 
-    /// Bakiye varsa ipucu verir ve bir ipucu düşer; bakiye yoksa mağazayı açar.
+    /// Bakiye varsa ipucu verir ve bir ipucu düşer; bakiye yoksa ödüllü reklam / mağaza seçeneklerini açar.
     private func useHint() {
         guard store.hintBalance > 0 else {
-            showStore()
+            showHintOffer = true
             return
         }
         guard session.canHint, store.spendHint() else { return }

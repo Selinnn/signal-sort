@@ -1128,6 +1128,98 @@
         }
       }
     },
+    "hintOffer.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch a short ad for a free hint, or get a hint pack."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mira un anuncio corto para una pista gratis o consigue un paquete de pistas."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ücretsiz bir ipucu için kısa bir reklam izle ya da ipucu paketi al."
+          }
+        }
+      }
+    },
+    "hintOffer.store": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get more hints"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conseguir más pistas"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daha fazla ipucu al"
+          }
+        }
+      }
+    },
+    "hintOffer.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Out of hints"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin pistas"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İpucun kalmadı"
+          }
+        }
+      }
+    },
+    "hintOffer.watchAd": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch an ad · +1 hint"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver un anuncio · +1 pista"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reklam izle · +1 ipucu"
+          }
+        }
+      }
+    },
     "home.allComplete": {
       "extractionState": "manual",
       "localizations": {
@@ -2113,6 +2205,75 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mağazaya ulaşılamıyor. Tekrar denemek için dokun."
+          }
+        }
+      }
+    },
+    "tracking.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signal Sort shows a few ads between levels. On the next screen you can allow ads that match your interests. Either way, the game works the same, and you can change this later in Settings."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signal Sort muestra algunos anuncios entre niveles. En la siguiente pantalla puedes permitir anuncios según tus intereses. Elijas lo que elijas, el juego funciona igual y puedes cambiarlo luego en Ajustes."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signal Sort seviyeler arasında az sayıda reklam gösterir. Sonraki ekranda ilgi alanlarına uygun reklamlara izin verebilirsin. Hangi seçimi yaparsan yap oyun aynı çalışır; bunu sonra Ayarlar'dan değiştirebilirsin."
+          }
+        }
+      }
+    },
+    "tracking.continue": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Devam"
+          }
+        }
+      }
+    },
+    "tracking.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Help keep Signal Sort free"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ayuda a que Signal Sort siga siendo gratis"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signal Sort'un ücretsiz kalmasına yardım et"
           }
         }
       }

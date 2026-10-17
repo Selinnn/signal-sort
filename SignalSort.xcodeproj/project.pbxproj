@@ -7,16 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		032E9E785B8287A2ECB3B27E /* AdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B32EB225DA161DCE3850C1 /* AdService.swift */; };
 		0624FEFE321FEE1F7DFB5610 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C092887027DEEDCBBBDE8 /* Assets.xcassets */; };
 		11D063A7D991551AA7924D26 /* StoreServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2FF210385BADB6820BFA6A /* StoreServiceTests.swift */; };
 		19C3FCD724302511EFDDB53D /* SignalSortApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CADE189C030D334740E5024 /* SignalSortApp.swift */; };
 		1BA1A28EDF65946F6DE12337 /* BoardScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3958034693830B056C93802 /* BoardScreen.swift */; };
 		1E1CDCE3C869C7B6994515B0 /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56DB424D52375DA802672BE /* DailyView.swift */; };
 		3A062E468B6ACA3C86E60344 /* GameCore in Frameworks */ = {isa = PBXBuildFile; productRef = 83D7053A1137FAED24782EF2 /* GameCore */; };
+		4D617B955A649D27DD0538E6 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A9D0D8322B8ACD38D1556C7 /* AppTrackingTransparency.framework */; };
+		58FB8E564F5E61F788A94D99 /* GoogleUserMessagingPlatform in Frameworks */ = {isa = PBXBuildFile; productRef = 55093F1F5D3DA2C40366470D /* GoogleUserMessagingPlatform */; };
 		5A706722B55C36A6C07FB3FE /* campaign.json in Resources */ = {isa = PBXBuildFile; fileRef = F3E7542CD62A1449C059BA62 /* campaign.json */; };
+		6BEA72D6C5B426EE32D49BAA /* MockAdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86061CFE79FBF4C68A176B77 /* MockAdService.swift */; };
 		6F7C388D70A3698683F51FFC /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0595EE2F16B43A699293C793 /* Shapes.swift */; };
 		796159681C8553C6D5B0C8BD /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9351A5475D385DA65635FA /* RootView.swift */; };
 		7EA93428C4E025480B8DD139 /* ChapterViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539D4CE9A6EC87857BFBFA94 /* ChapterViews.swift */; };
+		80A0D48F0F46E49B23738740 /* HintOfferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECECF72A8E1AF7D345258C9 /* HintOfferView.swift */; };
+		80D3FDE60183BF8B46B5C98B /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 3E3BBF308485FD99BA7494F8 /* GoogleMobileAds */; };
 		84BD709C8640A733F5C24622 /* GameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E10A130E86C6B59D098691 /* GameSession.swift */; };
 		8858A8601FC7D70AE451F45D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4EF146EEEFF811FA2B85681A /* PrivacyInfo.xcprivacy */; };
 		8933872A155244E99ED1CD76 /* StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2E64B1805C06061E23B6C3 /* StoreView.swift */; };
@@ -26,11 +32,15 @@
 		A1ADAA8874FAF0D5BFD48748 /* SignalSort.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 87E10B4A7CCF060AEFBA7FED /* SignalSort.storekit */; };
 		B32CCAE3468E969054840D12 /* SignalSortUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D7ACD5BEA0852A52F621CA /* SignalSortUITests.swift */; };
 		B32F34493BBB57C1047E3632 /* ProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DD9F992B851892BC3EC6AD /* ProgressStore.swift */; };
+		B758631AA899964627421930 /* AdMobAdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A9F2863DB52733388BD11 /* AdMobAdService.swift */; };
 		C16FA40D72234FCBB16664BD /* LevelCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B24155C1E27D2A213648863 /* LevelCatalog.swift */; };
+		D7B685FC0CDF275E33AE6DBB /* AdsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6F03AED64D3FE524D27E02 /* AdsCoordinator.swift */; };
 		D9C33D089B02ACD8D0C177D4 /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81844D213F868FB9317DFA1C /* TileView.swift */; };
+		DDEE41CD1CEE6CBDBCC68B11 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BB23BA4BA74DD6E061041614 /* InfoPlist.xcstrings */; };
 		DE932FC45C0CB746DA2DE4B2 /* dailies.json in Resources */ = {isa = PBXBuildFile; fileRef = BCB8F45AE0623B1CC6D94E2C /* dailies.json */; };
 		E7C1A65EF5084D3B629F2436 /* GameCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3A52401DD2689096D472A902 /* GameCore */; };
 		E96FDD74565208DB65271DA9 /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF8100B4F0403217DCE2943 /* StoreService.swift */; };
+		F5991A675ED9254D9C9A3A5F /* ConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1713155B05537DAE2865C5 /* ConsentManager.swift */; };
 		F87A36018EE2C0A107A1BC52 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B224B3F921F0620F470B005 /* BoardView.swift */; };
 		FC41122F5B2085F878B8A91A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4A4C7AA95C4A78976510E /* Theme.swift */; };
 		FCE30C7FF42E4BED5EF507C1 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 07FF130D36EA0953B311AF1B /* Localizable.xcstrings */; };
@@ -61,8 +71,10 @@
 		105C286DE7C5B1EC29D1954C /* GameCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GameCore; path = Packages/GameCore; sourceTree = SOURCE_ROOT; };
 		10E10A130E86C6B59D098691 /* GameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSession.swift; sourceTree = "<group>"; };
 		13227A92F9BAA0D2FA352C7D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		2A9D0D8322B8ACD38D1556C7 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		2D5C092887027DEEDCBBBDE8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3B224B3F921F0620F470B005 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		41B32EB225DA161DCE3850C1 /* AdService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdService.swift; sourceTree = "<group>"; };
 		4EF146EEEFF811FA2B85681A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		51D7ACD5BEA0852A52F621CA /* SignalSortUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalSortUITests.swift; sourceTree = "<group>"; };
 		539D4CE9A6EC87857BFBFA94 /* ChapterViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterViews.swift; sourceTree = "<group>"; };
@@ -70,16 +82,22 @@
 		694A77541142FC4320AA99F8 /* SignalSortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalSortTests.swift; sourceTree = "<group>"; };
 		7B24155C1E27D2A213648863 /* LevelCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCatalog.swift; sourceTree = "<group>"; };
 		7CF8100B4F0403217DCE2943 /* StoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreService.swift; sourceTree = "<group>"; };
+		7D0A9F2863DB52733388BD11 /* AdMobAdService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMobAdService.swift; sourceTree = "<group>"; };
 		7E391165CEEBCD3117E9641A /* SignalSortUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SignalSortUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F1713155B05537DAE2865C5 /* ConsentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentManager.swift; sourceTree = "<group>"; };
 		81844D213F868FB9317DFA1C /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
+		86061CFE79FBF4C68A176B77 /* MockAdService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAdService.swift; sourceTree = "<group>"; };
 		87E10B4A7CCF060AEFBA7FED /* SignalSort.storekit */ = {isa = PBXFileReference; path = SignalSort.storekit; sourceTree = "<group>"; };
 		89DD9F992B851892BC3EC6AD /* ProgressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressStore.swift; sourceTree = "<group>"; };
+		8ECECF72A8E1AF7D345258C9 /* HintOfferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintOfferView.swift; sourceTree = "<group>"; };
 		9E9351A5475D385DA65635FA /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		A9C4A4C7AA95C4A78976510E /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B7EC29FAC5A09EFE76594E12 /* DailyCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCatalog.swift; sourceTree = "<group>"; };
+		BB23BA4BA74DD6E061041614 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		BCB8F45AE0623B1CC6D94E2C /* dailies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dailies.json; sourceTree = "<group>"; };
 		BEBABC611B0BE5E655882DCE /* SignalSort.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SignalSort.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3958034693830B056C93802 /* BoardScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardScreen.swift; sourceTree = "<group>"; };
+		DA6F03AED64D3FE524D27E02 /* AdsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsCoordinator.swift; sourceTree = "<group>"; };
 		F3E7542CD62A1449C059BA62 /* campaign.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = campaign.json; sourceTree = "<group>"; };
 		F56DB424D52375DA802672BE /* DailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyView.swift; sourceTree = "<group>"; };
 		FF2E64B1805C06061E23B6C3 /* StoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreView.swift; sourceTree = "<group>"; };
@@ -91,6 +109,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7C1A65EF5084D3B629F2436 /* GameCore in Frameworks */,
+				80D3FDE60183BF8B46B5C98B /* GoogleMobileAds in Frameworks */,
+				58FB8E564F5E61F788A94D99 /* GoogleUserMessagingPlatform in Frameworks */,
+				4D617B955A649D27DD0538E6 /* AppTrackingTransparency.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +133,7 @@
 				7B24155C1E27D2A213648863 /* LevelCatalog.swift */,
 				89DD9F992B851892BC3EC6AD /* ProgressStore.swift */,
 				7CF8100B4F0403217DCE2943 /* StoreService.swift */,
+				D70C140D1E7E03F210830E31 /* Ads */,
 			);
 			path = Infrastructure;
 			sourceTree = "<group>";
@@ -185,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				2D5C092887027DEEDCBBBDE8 /* Assets.xcassets */,
+				BB23BA4BA74DD6E061041614 /* InfoPlist.xcstrings */,
 				07FF130D36EA0953B311AF1B /* Localizable.xcstrings */,
 				4EF146EEEFF811FA2B85681A /* PrivacyInfo.xcprivacy */,
 				2DDB3667D0F399F4B1708072 /* Levels */,
@@ -233,12 +256,21 @@
 			path = Daily;
 			sourceTree = "<group>";
 		};
+		AB6DB1860369A83D128F2026 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A9D0D8322B8ACD38D1556C7 /* AppTrackingTransparency.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AB9E621FF1FA2186CB9317DE /* Board */ = {
 			isa = PBXGroup;
 			children = (
 				C3958034693830B056C93802 /* BoardScreen.swift */,
 				3B224B3F921F0620F470B005 /* BoardView.swift */,
 				10E10A130E86C6B59D098691 /* GameSession.swift */,
+				8ECECF72A8E1AF7D345258C9 /* HintOfferView.swift */,
 				81844D213F868FB9317DFA1C /* TileView.swift */,
 			);
 			path = Board;
@@ -252,6 +284,7 @@
 				4ECEE63DB6FB3AB1C4D7278B /* SignalSortTests */,
 				7559C9A002C6A1E90B2238EF /* SignalSortUITests */,
 				B155AC2D331A71C93631EC73 /* StoreKit */,
+				AB6DB1860369A83D128F2026 /* Frameworks */,
 				2EBD50E66B81DAB10D596A9C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -262,6 +295,18 @@
 				87E10B4A7CCF060AEFBA7FED /* SignalSort.storekit */,
 			);
 			path = StoreKit;
+			sourceTree = "<group>";
+		};
+		D70C140D1E7E03F210830E31 /* Ads */ = {
+			isa = PBXGroup;
+			children = (
+				7D0A9F2863DB52733388BD11 /* AdMobAdService.swift */,
+				DA6F03AED64D3FE524D27E02 /* AdsCoordinator.swift */,
+				41B32EB225DA161DCE3850C1 /* AdService.swift */,
+				7F1713155B05537DAE2865C5 /* ConsentManager.swift */,
+				86061CFE79FBF4C68A176B77 /* MockAdService.swift */,
+			);
+			path = Ads;
 			sourceTree = "<group>";
 		};
 		DF9C178D62925B7AD0478E52 /* Features */ = {
@@ -283,6 +328,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 490BB5DCDF04214BBC33B4E7 /* Build configuration list for PBXNativeTarget "SignalSort" */;
 			buildPhases = (
+				57C35BD7A9E29B57AB0E506F /* Guard AdMob IDs on archive */,
 				9C97DC43176D046E9BCE88FD /* Sources */,
 				04E0D8E5A09E87E381EF3C24 /* Resources */,
 				80F4A0C4C22FE821B8611103 /* Frameworks */,
@@ -294,6 +340,8 @@
 			name = SignalSort;
 			packageProductDependencies = (
 				3A52401DD2689096D472A902 /* GameCore */,
+				3E3BBF308485FD99BA7494F8 /* GoogleMobileAds */,
+				55093F1F5D3DA2C40366470D /* GoogleUserMessagingPlatform */,
 			);
 			productName = SignalSort;
 			productReference = BEBABC611B0BE5E655882DCE /* SignalSort.app */;
@@ -371,6 +419,8 @@
 			mainGroup = AE876F92EEA16F99B91AB911;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				BF34D2D7C66B9CBF750855EC /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				9E11609BDFC59E99AD8D8633 /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */,
 				146DDDFE5870466E9DECAB92 /* XCLocalSwiftPackageReference "Packages/GameCore" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -391,6 +441,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0624FEFE321FEE1F7DFB5610 /* Assets.xcassets in Resources */,
+				DDEE41CD1CEE6CBDBCC68B11 /* InfoPlist.xcstrings in Resources */,
 				FCE30C7FF42E4BED5EF507C1 /* Localizable.xcstrings in Resources */,
 				8858A8601FC7D70AE451F45D /* PrivacyInfo.xcprivacy in Resources */,
 				5A706722B55C36A6C07FB3FE /* campaign.json in Resources */,
@@ -408,6 +459,28 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		57C35BD7A9E29B57AB0E506F /* Guard AdMob IDs on archive */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Guard AdMob IDs on archive";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"$ACTION\" = \"install\" ] && echo \"$ADMOB_APP_ID\" | grep -q \"3940256099942544\"; then\n  echo \"error: Release arşivi Google test AdMob kimlikleriyle yapılamaz. project.yml'de ADMOB_* değerlerini gerçek kimliklerle değiştirin.\"\n  exit 1\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		93475DD8FB0FA8CC5B83E555 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -422,14 +495,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B758631AA899964627421930 /* AdMobAdService.swift in Sources */,
+				032E9E785B8287A2ECB3B27E /* AdService.swift in Sources */,
+				D7B685FC0CDF275E33AE6DBB /* AdsCoordinator.swift in Sources */,
 				1BA1A28EDF65946F6DE12337 /* BoardScreen.swift in Sources */,
 				F87A36018EE2C0A107A1BC52 /* BoardView.swift in Sources */,
 				7EA93428C4E025480B8DD139 /* ChapterViews.swift in Sources */,
+				F5991A675ED9254D9C9A3A5F /* ConsentManager.swift in Sources */,
 				926C62E74AEEBDE60415504E /* DailyCatalog.swift in Sources */,
 				1E1CDCE3C869C7B6994515B0 /* DailyView.swift in Sources */,
 				84BD709C8640A733F5C24622 /* GameSession.swift in Sources */,
+				80A0D48F0F46E49B23738740 /* HintOfferView.swift in Sources */,
 				8E7E72E088D88CB715C87489 /* HomeView.swift in Sources */,
 				C16FA40D72234FCBB16664BD /* LevelCatalog.swift in Sources */,
+				6BEA72D6C5B426EE32D49BAA /* MockAdService.swift in Sources */,
 				B32F34493BBB57C1047E3632 /* ProgressStore.swift in Sources */,
 				796159681C8553C6D5B0C8BD /* RootView.swift in Sources */,
 				6F7C388D70A3698683F51FFC /* Shapes.swift in Sources */,
@@ -588,13 +667,18 @@
 		8FD44215B122C29DA05C613A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ADMOB_APP_ID = "ca-app-pub-3940256099942544~1458002511";
+				ADMOB_INTERSTITIAL_ID = "ca-app-pub-3940256099942544/4411468910";
+				ADMOB_REWARDED_ID = "ca-app-pub-3940256099942544/1712485313";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SignalSort/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Signal Sort";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Signal Sort is free thanks to ads. Allowing tracking lets ads be more relevant to you.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -611,13 +695,18 @@
 		D1F89E38435C9BF4692CE2CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ADMOB_APP_ID = "ca-app-pub-3940256099942544~1458002511";
+				ADMOB_INTERSTITIAL_ID = "ca-app-pub-3940256099942544/4411468910";
+				ADMOB_REWARDED_ID = "ca-app-pub-3940256099942544/1712485313";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SignalSort/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Signal Sort";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Signal Sort is free thanks to ads. Allowing tracking lets ads be more relevant to you.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -758,10 +847,39 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		9E11609BDFC59E99AD8D8633 /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-user-messaging-platform";
+			requirement = {
+				kind = exactVersion;
+				version = 3.1.0;
+			};
+		};
+		BF34D2D7C66B9CBF750855EC /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads";
+			requirement = {
+				kind = exactVersion;
+				version = 13.11.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		3A52401DD2689096D472A902 /* GameCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GameCore;
+		};
+		3E3BBF308485FD99BA7494F8 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF34D2D7C66B9CBF750855EC /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+		55093F1F5D3DA2C40366470D /* GoogleUserMessagingPlatform */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9E11609BDFC59E99AD8D8633 /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */;
+			productName = GoogleUserMessagingPlatform;
 		};
 		83D7053A1137FAED24782EF2 /* GameCore */ = {
 			isa = XCSwiftPackageProductDependency;
