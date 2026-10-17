@@ -114,4 +114,27 @@ final class SignalSortUITests: XCTestCase {
         app.buttons["result.retry"].tap()
         XCTAssertEqual(app.staticTexts["board.moves"].label, "Moves 0 · Par 5")
     }
+
+    @MainActor
+    func testDailyPuzzleSolveShareAndStreak() throws {
+        launch(["-dailyDate", "2026-11-02"])
+        XCTAssertTrue(app.buttons["home.daily"].exists)
+        app.buttons["home.daily"].tap()
+        XCTAssertTrue(app.staticTexts["daily.streak"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["daily.streak"].label, "0-day streak")
+        app.buttons["daily.2026-11-02"].tap()
+        XCTAssertTrue(app.buttons["board.run"].waitForExistence(timeout: 5))
+        for _ in 0..<12 {
+            if app.staticTexts["result.title"].exists { break }
+            app.buttons["board.hint"].tap()
+            app.buttons["board.run"].tap()
+            _ = app.staticTexts["result.title"].waitForExistence(timeout: 3)
+        }
+        XCTAssertTrue(app.buttons["result.share"].waitForExistence(timeout: 5))
+        attachScreenshot("daily-solved")
+        app.buttons["result.next"].tap()
+        XCTAssertTrue(app.staticTexts["daily.streak"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["daily.streak"].label, "1-day streak")
+        attachScreenshot("daily-list")
+    }
 }

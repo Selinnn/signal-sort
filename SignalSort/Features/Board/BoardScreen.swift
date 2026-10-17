@@ -1,18 +1,23 @@
 import GameCore
 import SwiftUI
 
+enum BoardMode: Equatable {
+    case campaign(number: Int)
+    case daily(DayKey)
+}
+
 struct BoardScreen: View {
     let level: LevelDefinition
-    let number: Int
+    let mode: BoardMode
     let store: ProgressStore
     let onNext: () -> Void
     @State private var session: GameSession
     @State private var outcome: ResultOutcome?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    init(level: LevelDefinition, number: Int, store: ProgressStore, onNext: @escaping () -> Void) {
+    init(level: LevelDefinition, mode: BoardMode, store: ProgressStore, onNext: @escaping () -> Void) {
         self.level = level
-        self.number = number
+        self.mode = mode
         self.store = store
         self.onNext = onNext
         _session = State(initialValue: GameSession(level: level))
@@ -30,7 +35,7 @@ struct BoardScreen: View {
         .padding(.vertical, 12)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Theme.background.ignoresSafeArea())
-        .navigationTitle(Text("board.level \(number)"))
+        .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Theme.background, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
@@ -38,11 +43,17 @@ struct BoardScreen: View {
         .onChange(of: reduceMotion) { _, value in session.instantPlayback = value }
         .onChange(of: session.showsResult) { _, solved in
             guard solved else { return }
-            let isNewBest = store.record(session.play)
-            let isChapterEnd = store.progression.position(of: level.id).map {
-                $0.index == store.catalog.chapters[$0.chapter].levels.count - 1
-            } ?? false
-            outcome = ResultOutcome(isNewBest: isNewBest, completesChapter: isChapterEnd)
+            switch mode {
+            case .campaign:
+                let isNewBest = store.record(session.play)
+                let isChapterEnd = store.progression.position(of: level.id).map {
+                    $0.index == store.catalog.chapters[$0.chapter].levels.count - 1
+                } ?? false
+                outcome = ResultOutcome(isNewBest: isNewBest, completesChapter: isChapterEnd, shareText: nil)
+            case .daily(let day):
+                let isNewBest = store.recordDaily(day, session.play)
+                outcome = ResultOutcome(isNewBest: isNewBest, completesChapter: false, shareText: DailyShare.text(day: day, session: session.play))
+            }
         }
         .overlay {
             if session.showsResult, let outcome {
@@ -51,6 +62,13 @@ struct BoardScreen: View {
             }
         }
         .animation(.easeOut(duration: 0.25), value: session.showsResult)
+    }
+
+    private var title: Text {
+        switch mode {
+        case .campaign(let number): Text("board.level \(number)")
+        case .daily(let day): Text("board.daily \(day.localizedText)")
+        }
     }
 
     private func retry() {
@@ -158,6 +176,8 @@ private struct ControlButton: View {
 struct ResultOutcome: Equatable {
     var isNewBest: Bool
     var completesChapter: Bool
+    /// Günlükte paylaşım metni; kampanyada nil.
+    var shareText: String?
 }
 
 private struct ResultOverlay: View {
@@ -193,12 +213,22 @@ private struct ResultOverlay: View {
                     .foregroundStyle(Theme.success)
                     .accessibilityIdentifier("result.newBest")
             }
+            if let shareText = outcome.shareText {
+                ShareLink(item: shareText) {
+                    Label("result.share", systemImage: "square.and.arrow.up")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, minHeight: 52)
+                        .background(RoundedRectangle(cornerRadius: 16).fill(Color.accentColor))
+                        .foregroundStyle(Theme.background)
+                }
+                .accessibilityIdentifier("result.share")
+            }
             Button(action: onNext) {
-                Text("result.next")
+                (outcome.shareText == nil ? Text("result.next") : Text("result.done"))
                     .font(.headline)
                     .frame(maxWidth: .infinity, minHeight: 52)
-                    .background(RoundedRectangle(cornerRadius: 16).fill(Color.accentColor))
-                    .foregroundStyle(Theme.background)
+                    .background(RoundedRectangle(cornerRadius: 16).fill(outcome.shareText == nil ? Color.accentColor : Theme.cell))
+                    .foregroundStyle(outcome.shareText == nil ? Theme.background : Theme.textPrimary)
             }
             .accessibilityIdentifier("result.next")
             if stars < 3 {

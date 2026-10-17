@@ -12,6 +12,8 @@ let usage = """
       signalsort-cli profiles
       signalsort-cli build-campaign --spec <spec.json> --handmade <klasör> --out <campaign.json>
       signalsort-cli check-campaign <campaign.json> [--deep]
+      signalsort-cli build-dailies --from <yyyy-MM-dd> --days <n> --out <dailies.json>
+      signalsort-cli check-dailies <dailies.json> [--deep]
     """
 
 struct CLIError: Error, CustomStringConvertible {
@@ -200,6 +202,33 @@ func run(_ args: [String]) throws -> Int32 {
             }
         }
         print("\(campaign.levels.count - failed)/\(campaign.levels.count) geçerli\(deep ? " (derin)" : "")")
+        return failed == 0 ? 0 : 1
+
+    case "build-dailies":
+        guard let fromText = option("--from", in: rest), let start = DayKey(fromText),
+              let days = option("--days", in: rest).flatMap(Int.init), let outPath = option("--out", in: rest) else {
+            throw CLIError(description: "build-dailies: --from <yyyy-MM-dd>, --days ve --out gerekli")
+        }
+        let started = Date()
+        let pack = try DailySchedule.build(from: start, days: days)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        try encoder.encode(pack).write(to: URL(fileURLWithPath: outPath))
+        print("\(pack.levels.count) günlük yazıldı: \(pack.startDate) … \(pack.endDate) (\(String(format: "%.0f", Date().timeIntervalSince(started))) sn)")
+
+    case "check-dailies":
+        guard let path = positional(rest).first else { throw CLIError(description: "check-dailies: dosya yolu gerekli") }
+        let pack = try JSONDecoder().decode(DailyPack.self, from: Data(contentsOf: URL(fileURLWithPath: path)))
+        let deep = rest.contains("--deep")
+        var failed = 0
+        for level in pack.levels {
+            let issues = LevelValidator().validate(level, deep: deep)
+            if !issues.isEmpty {
+                failed += 1
+                print("✗ \(level.id): \(issues.map(\.description).joined(separator: "; "))")
+            }
+        }
+        print("\(pack.levels.count - failed)/\(pack.levels.count) geçerli\(deep ? " (derin)" : "")")
         return failed == 0 ? 0 : 1
 
     case "profiles":

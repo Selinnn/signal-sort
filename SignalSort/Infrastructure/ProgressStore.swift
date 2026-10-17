@@ -9,6 +9,7 @@ final class ProgressStore {
     static let storageKey = "playerProgress"
 
     let catalog: LevelCatalog
+    let dailies: DailyCatalog
     let progression: Progression
     private(set) var progress: PlayerProgress
     /// Tam Oyun hakkı (adım 10'da StoreKit'ten gelir).
@@ -18,8 +19,9 @@ final class ProgressStore {
 
     @ObservationIgnored private let defaults: UserDefaults
 
-    init(catalog: LevelCatalog, defaults: UserDefaults = .standard) {
+    init(catalog: LevelCatalog, dailies: DailyCatalog, defaults: UserDefaults = .standard) {
         self.catalog = catalog
+        self.dailies = dailies
         self.defaults = defaults
         progression = Progression(campaign: catalog.campaign)
         if let data = defaults.data(forKey: Self.storageKey),
@@ -58,6 +60,16 @@ final class ProgressStore {
         save()
         return improved
     }
+
+    @discardableResult
+    func recordDaily(_ day: DayKey, _ session: PlaySession) -> Bool {
+        guard session.isSolved, let stars = session.stars else { return false }
+        let improved = progress.recordDaily(day, moves: session.moves, stars: stars, hintUsed: session.hintUsed)
+        save()
+        return improved
+    }
+
+    func dailyStreak(today: DayKey) -> Int { progress.dailyStreak(today: today) }
 
     func reset() {
         progress = PlayerProgress()

@@ -80,7 +80,14 @@ public struct DifficultyProfile: Codable, Hashable, Sendable {
         requirements: [.colorRouterShare], minSharedCells: 2, minDecisions: 6, minScrambled: 4,
         par: 6...18, searchNodes: 20...30_000, maxSolutions: 3)
 
-    public static let all: [DifficultyProfile] = [.route, .obstacle, .crossing, .color, .toggle, .master]
+    /// Hafta sonu günlükleri: ücretsiz mekaniklerle (ok, sabit ok, engel) üç sinyalli zor kesişmeler.
+    public static let dailyHard = DifficultyProfile(
+        name: "daily-hard", sizes: [BoardSize(6, 6), BoardSize(7, 7)], signals: 3...3, pathLength: 7...16,
+        fixedPercent: 20, decoys: 2...4, blockers: 1...4, colorRouterPercent: 0, togglePercent: 0, bridges: false,
+        requirements: [], minSharedCells: 2, minDecisions: 6, minScrambled: 4,
+        par: 8...16, searchNodes: 40...10_000, maxSolutions: 2)
+
+    public static let all: [DifficultyProfile] = [.route, .obstacle, .crossing, .color, .toggle, .master, .dailyHard]
 
     public static func named(_ name: String) -> DifficultyProfile? {
         all.first { $0.name == name }

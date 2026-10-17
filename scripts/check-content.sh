@@ -10,3 +10,6 @@ TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 $CLI build-campaign --spec content/campaign-spec.json --handmade content/handmade --out "$TMP/campaign.json" >/dev/null
 cmp -s "$TMP/campaign.json" SignalSort/Resources/Levels/campaign.json && echo "kampanya yeniden üretilebilir ✓" || { echo "kampanya kaynaklardan farklı ✗"; exit 1; }
+$CLI check-dailies SignalSort/Resources/Levels/dailies.json --deep
+$CLI build-dailies --from 2026-11-01 --days 730 --out "$TMP/dailies.json" >/dev/null
+cmp -s "$TMP/dailies.json" SignalSort/Resources/Levels/dailies.json && echo "günlükler yeniden üretilebilir ✓" || { echo "günlükler kaynaklardan farklı ✗"; exit 1; }

@@ -10,6 +10,7 @@
 		0624FEFE321FEE1F7DFB5610 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C092887027DEEDCBBBDE8 /* Assets.xcassets */; };
 		19C3FCD724302511EFDDB53D /* SignalSortApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CADE189C030D334740E5024 /* SignalSortApp.swift */; };
 		1BA1A28EDF65946F6DE12337 /* BoardScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3958034693830B056C93802 /* BoardScreen.swift */; };
+		1E1CDCE3C869C7B6994515B0 /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56DB424D52375DA802672BE /* DailyView.swift */; };
 		3A062E468B6ACA3C86E60344 /* GameCore in Frameworks */ = {isa = PBXBuildFile; productRef = 83D7053A1137FAED24782EF2 /* GameCore */; };
 		5A706722B55C36A6C07FB3FE /* campaign.json in Resources */ = {isa = PBXBuildFile; fileRef = F3E7542CD62A1449C059BA62 /* campaign.json */; };
 		6F7C388D70A3698683F51FFC /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0595EE2F16B43A699293C793 /* Shapes.swift */; };
@@ -19,10 +20,12 @@
 		8858A8601FC7D70AE451F45D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4EF146EEEFF811FA2B85681A /* PrivacyInfo.xcprivacy */; };
 		8B75BD7E639B38434489B75B /* SignalSortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694A77541142FC4320AA99F8 /* SignalSortTests.swift */; };
 		8E7E72E088D88CB715C87489 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13227A92F9BAA0D2FA352C7D /* HomeView.swift */; };
+		926C62E74AEEBDE60415504E /* DailyCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EC29FAC5A09EFE76594E12 /* DailyCatalog.swift */; };
 		B32CCAE3468E969054840D12 /* SignalSortUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D7ACD5BEA0852A52F621CA /* SignalSortUITests.swift */; };
 		B32F34493BBB57C1047E3632 /* ProgressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DD9F992B851892BC3EC6AD /* ProgressStore.swift */; };
 		C16FA40D72234FCBB16664BD /* LevelCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B24155C1E27D2A213648863 /* LevelCatalog.swift */; };
 		D9C33D089B02ACD8D0C177D4 /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81844D213F868FB9317DFA1C /* TileView.swift */; };
+		DE932FC45C0CB746DA2DE4B2 /* dailies.json in Resources */ = {isa = PBXBuildFile; fileRef = BCB8F45AE0623B1CC6D94E2C /* dailies.json */; };
 		E7C1A65EF5084D3B629F2436 /* GameCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3A52401DD2689096D472A902 /* GameCore */; };
 		F87A36018EE2C0A107A1BC52 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B224B3F921F0620F470B005 /* BoardView.swift */; };
 		FC41122F5B2085F878B8A91A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4A4C7AA95C4A78976510E /* Theme.swift */; };
@@ -66,9 +69,12 @@
 		89DD9F992B851892BC3EC6AD /* ProgressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressStore.swift; sourceTree = "<group>"; };
 		9E9351A5475D385DA65635FA /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		A9C4A4C7AA95C4A78976510E /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		B7EC29FAC5A09EFE76594E12 /* DailyCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCatalog.swift; sourceTree = "<group>"; };
+		BCB8F45AE0623B1CC6D94E2C /* dailies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dailies.json; sourceTree = "<group>"; };
 		BEBABC611B0BE5E655882DCE /* SignalSort.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SignalSort.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3958034693830B056C93802 /* BoardScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardScreen.swift; sourceTree = "<group>"; };
 		F3E7542CD62A1449C059BA62 /* campaign.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = campaign.json; sourceTree = "<group>"; };
+		F56DB424D52375DA802672BE /* DailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +100,7 @@
 		0BE00147231B045CB6E7F431 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				B7EC29FAC5A09EFE76594E12 /* DailyCatalog.swift */,
 				7B24155C1E27D2A213648863 /* LevelCatalog.swift */,
 				89DD9F992B851892BC3EC6AD /* ProgressStore.swift */,
 			);
@@ -104,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				F3E7542CD62A1449C059BA62 /* campaign.json */,
+				BCB8F45AE0623B1CC6D94E2C /* dailies.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -199,6 +207,14 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		9F93804440482DFAADA92213 /* Daily */ = {
+			isa = PBXGroup;
+			children = (
+				F56DB424D52375DA802672BE /* DailyView.swift */,
+			);
+			path = Daily;
+			sourceTree = "<group>";
+		};
 		AB9E621FF1FA2186CB9317DE /* Board */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +242,7 @@
 			children = (
 				AB9E621FF1FA2186CB9317DE /* Board */,
 				6499F25211DEF1AAAACF3F77 /* Chapters */,
+				9F93804440482DFAADA92213 /* Daily */,
 				874F9B031BF27614B220000C /* Home */,
 			);
 			path = Features;
@@ -348,6 +365,7 @@
 				FCE30C7FF42E4BED5EF507C1 /* Localizable.xcstrings in Resources */,
 				8858A8601FC7D70AE451F45D /* PrivacyInfo.xcprivacy in Resources */,
 				5A706722B55C36A6C07FB3FE /* campaign.json in Resources */,
+				DE932FC45C0CB746DA2DE4B2 /* dailies.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +387,8 @@
 				1BA1A28EDF65946F6DE12337 /* BoardScreen.swift in Sources */,
 				F87A36018EE2C0A107A1BC52 /* BoardView.swift in Sources */,
 				7EA93428C4E025480B8DD139 /* ChapterViews.swift in Sources */,
+				926C62E74AEEBDE60415504E /* DailyCatalog.swift in Sources */,
+				1E1CDCE3C869C7B6994515B0 /* DailyView.swift in Sources */,
 				84BD709C8640A733F5C24622 /* GameSession.swift in Sources */,
 				8E7E72E088D88CB715C87489 /* HomeView.swift in Sources */,
 				C16FA40D72234FCBB16664BD /* LevelCatalog.swift in Sources */,

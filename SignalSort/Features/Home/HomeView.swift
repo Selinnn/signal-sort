@@ -3,6 +3,7 @@ import SwiftUI
 
 struct HomeView: View {
     let store: ProgressStore
+    let today: DayKey
     @Binding var path: [AppRoute]
 
     var body: some View {
@@ -26,6 +27,7 @@ struct HomeView: View {
             Spacer()
             VStack(spacing: 14) {
                 primaryButton
+                dailyButton
                 Button { path.append(.chapters) } label: {
                     Label("home.chapters", systemImage: "square.grid.3x3.fill")
                         .font(.headline)
@@ -49,6 +51,33 @@ struct HomeView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Theme.background.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
+    }
+
+    private var dailyButton: some View {
+        let record = store.progress.dailyRecords[today]
+        let streak = store.dailyStreak(today: today)
+        return Button { path.append(.daily) } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "calendar").font(.title3).foregroundStyle(Color.accentColor)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("home.daily").font(.headline).foregroundStyle(Theme.textPrimary)
+                    Text(record == nil ? String(localized: "home.dailyNew") : String(localized: "home.dailySolved"))
+                        .font(.subheadline).foregroundStyle(Theme.textSecondary)
+                }
+                Spacer()
+                if streak > 0 {
+                    Label("\(streak)", systemImage: "flame.fill")
+                        .font(.headline.monospacedDigit())
+                        .foregroundStyle(Color.accentColor)
+                }
+                if let record { StarsView(stars: record.stars) }
+            }
+            .padding(.horizontal, 18)
+            .frame(maxWidth: .infinity, minHeight: 64)
+            .background(RoundedRectangle(cornerRadius: 18).fill(Theme.surface))
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("home.daily")
     }
 
     @ViewBuilder

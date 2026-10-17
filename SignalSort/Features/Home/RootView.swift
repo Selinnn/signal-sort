@@ -5,16 +5,19 @@ enum AppRoute: Hashable {
     case chapters
     case chapter(Int)
     case level(String)
+    case daily
+    case dailyLevel(DayKey)
 }
 
 /// Uygulamanın gezinme kökü: Home → Bölümler → Bölüm → Seviye.
 struct RootView: View {
     let store: ProgressStore
     @State private var path: [AppRoute] = []
+    @State private var today = DayKey.today()
 
     var body: some View {
         NavigationStack(path: $path) {
-            HomeView(store: store, path: $path)
+            HomeView(store: store, today: today, path: $path)
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .chapters:
@@ -23,11 +26,22 @@ struct RootView: View {
                         ChapterLevelsView(store: store, chapterIndex: index, path: $path)
                     case .level(let id):
                         if let level = store.catalog.level(withID: id) {
-                            BoardScreen(level: level, number: store.catalog.number(of: id), store: store, onNext: { next(after: id) })
+                            BoardScreen(level: level, mode: .campaign(number: store.catalog.number(of: id)), store: store,
+                                        onNext: { next(after: id) })
                                 .id(id)
+                        }
+                    case .daily:
+                        DailyView(store: store, today: today, path: $path)
+                    case .dailyLevel(let day):
+                        if let level = store.dailies.level(for: day) {
+                            BoardScreen(level: level, mode: .daily(day), store: store, onNext: { path.removeLast() })
+                                .id(day)
                         }
                     }
                 }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
+            Task { @MainActor in today = DayKey.today() }
         }
         .preferredColorScheme(.dark)
         .tint(Color.accentColor)

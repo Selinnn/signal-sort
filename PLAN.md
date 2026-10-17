@@ -371,6 +371,15 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 > Tam Oyun gereken noktada "Tam Oyunu Aç" bölüm haritasına götürüyor; satın alma ekranı adım 10'da.
 > DEBUG başlatma argümanları: `-resetProgress`, `-unlockAll`, `-uiTestFastPlayback`.
 | 9 | Günlük: `dailies.json`, seri, paylaşım kartı | Uçak modunda çalışır |
+
+> **Adım 9 notları:** `dailies.json` 2026-11-01 → 2028-10-30 (730 gün, 960 KB, 34 sn'de üretilir). Plandaki
+> ~300 KB tahmini çözüm listeleri yüzünden aşıldı; kabul edilebilir. Günlük her zaman ücretsiz olduğundan yalnız
+> ücretsiz mekanikler kullanılır: Pzt `route`, Sal–Çar `obstacle`, Per–Cum `crossing`, Cmt–Paz yeni `daily-hard`
+> (3 sinyal, 6×6/7×7). Gün anahtarı `DayKey` (Foundation'sız Gregoryen hesap, yerel gün); paket dışındaki günlerde
+> döngü. Seri nazik: bugün oynanmadıysa dünden sayılır, kaçırılan gün yalnız sayacı sıfırlar; arşivden son 7 gün
+> oynanabilir ve seriye sayılır. `PlayerProgress` şema 2 (`dailyRecords`); v1 kayıtları sorunsuz açılır.
+> Paylaşım metni spoiler'sız: yıldızlar, hamle/par, Run denemeleri (🟥…🟩) ve ipucu sayısı. Uçak modu ayrıca
+> denenmedi; günlükler gömülü olduğundan ağ kullanılmıyor. **Paket bitmeden (2028-10) yeni sürümle uzatılmalı.**
 | 10 | StoreKit 2: Reklamları Kaldır, Tam Oyun, ipucu paketi, geri yükleme, ipucu ekonomisi | StoreKit test UI testleri yeşil |
 | 11 | Reklam: AdMob SDK, `AdService`/`AdPolicy`, ödüllü ipucu, geçiş reklamı, UMP + ATT akışı, `SKAdNetworkItems`, `NSUserTrackingUsageDescription` | Test reklamlarıyla gerçek cihazda akış doğru; AdPolicy testleri yeşil |
 | 12 | Tema, ses, haptik, erişilebilirlik, EN+TR+ES yerelleştirme (ATT ön ekranı ve izin metni dahil), uygulama ikonu | Cihaz matrisi kontrolü |
