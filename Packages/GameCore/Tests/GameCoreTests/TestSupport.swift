@@ -16,6 +16,18 @@ func blocker(_ id: String, _ x: Int, _ y: Int) -> Tile {
     .blocker(id, at: Coordinate(x, y))
 }
 
+func colorRouter(_ id: String, _ color: SignalColor, _ x: Int, _ y: Int, _ direction: Direction, rotatable: Bool = true) -> Tile {
+    .colorRouter(id, color, at: Coordinate(x, y), direction, rotatable: rotatable)
+}
+
+func toggle(_ id: String, _ x: Int, _ y: Int, _ direction: Direction, rotatable: Bool = true) -> Tile {
+    .toggle(id, at: Coordinate(x, y), direction, rotatable: rotatable)
+}
+
+func bridge(_ id: String, _ x: Int, _ y: Int) -> Tile {
+    .bridge(id, at: Coordinate(x, y))
+}
+
 func level(_ width: Int, _ height: Int, sources: [Source], receivers: [Receiver] = [], tiles: [Tile] = []) -> LevelDefinition {
     LevelDefinition(id: "test", width: width, height: height, sources: sources, receivers: receivers, tiles: tiles)
 }

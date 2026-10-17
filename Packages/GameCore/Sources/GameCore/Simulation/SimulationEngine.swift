@@ -4,9 +4,12 @@
 /// 1. Her aktif sinyalin hedef hücresi hesaplanır.
 /// 2. Tahta dışı → `outOfBounds`; engel veya kaynak hücresi → `blocked`.
 /// 3. Yer değiştirme (A→B ve B→A) → `swapCollision`.
-/// 4. Hareket uygulanır. Çıkış: doğru renk teslim edilir, yanlış renk → `wrongReceiver`. Ok hücresinde yön okunur.
-/// 5. Aynı hücreye giren ≥2 sinyal → `collision` (çıkış hücreleri hariç).
-/// 6. Döngü: sinyal daha önce bulunduğu (hücre, yön) durumuna dönerse → `loop`.
+/// 4. Hareket uygulanır. Çıkış: doğru renk teslim edilir, yanlış renk → `wrongReceiver`.
+///    Ok: yön okunur. Renkli ok: yalnız kendi rengi döner. Makas: mevcut yönü verilir. Köprü: düz geçiş.
+/// 5. Aynı hücreye giren ≥2 sinyal → `collision` (çıkışlar hariç; köprüde yalnız aynı eksendekiler).
+/// 6. Bu tick'te girilen her makas ok, giren sinyal başına 90° saat yönünde döner.
+/// 7. Döngü → `loop`. Makassız tahtada: sinyal aynı (hücre, yön) durumuna döner.
+///    Makaslı tahtada: tüm tahtanın durumu (aktif sinyaller + makas yönleri) tekrar eder.
 /// İlk hata tick'inde simülasyon durur; o tick'teki tüm hatalar raporlanır.
 public struct SimulationEngine: Sendable {
     public init() {}
@@ -16,12 +19,13 @@ public struct SimulationEngine: Sendable {
         var signals = level.sources.map {
             Signal(id: $0.id, color: $0.color, coordinate: $0.coordinate, direction: $0.direction)
         }
-        var trace = [snapshot(tick: 0, signals)]
+        var toggles = board.initialToggleDirections
+        var trace = [snapshot(tick: 0, signals, toggles, board)]
         var delivered: [String] = []
-        // Her sinyal en fazla W×H×4 farklı (hücre, yön) durumunda bulunabilir; döngü tespiti bundan önce tetiklenir.
-        let maxTicks = level.width * level.height * 4 + 1
+        var seenGlobalStates: Set<GlobalKey> = []
+        let maxTicks = Self.tickLimit(level: level, toggleCount: toggles.count)
 
-        for tick in 1...max(maxTicks, 1) {
+        for tick in 1...maxTicks {
             let activeIndices = signals.indices.filter { signals[$0].status == .active }
             if activeIndices.isEmpty { break }
 
@@ -37,14 +41,14 @@ public struct SimulationEngine: Sendable {
                 let target = signals[i].coordinate.moved(signals[i].direction)
                 if !level.contains(target) {
                     fail(i, .outOfBounds, at: signals[i].coordinate)
-                } else if board.isImpassable(target) {
+                } else if board.impassable.contains(target) {
                     fail(i, .blocked, at: target)
                 } else {
                     targets[i] = target
                 }
             }
 
-            // 3. Yer değiştirme.
+            // 3. Yer değiştirme. İki sinyal ancak aynı eksende yer değiştirebilir, köprü bunu engellemez.
             let movers = targets.keys.sorted()
             var swapped = Set<Int>()
             for (n, i) in movers.enumerated() {
@@ -61,8 +65,9 @@ public struct SimulationEngine: Sendable {
                 targets[i] = nil
             }
 
-            // 4. Hareket, çıkışlar ve oklar.
-            var occupants: [Coordinate: [Int]] = [:]
+            // 4. Hareket ve hücre etkileri.
+            var occupants: [Occupancy: [Int]] = [:]
+            var enteredToggles: [Int] = []
             for i in targets.keys.sorted() {
                 let target = targets[i]!
                 signals[i].coordinate = target
@@ -75,29 +80,52 @@ public struct SimulationEngine: Sendable {
                     }
                     continue
                 }
-                if let direction = board.routerDirections[target] {
+                switch board.cells[target] {
+                case .router(let direction):
                     signals[i].direction = direction
+                case .colorRouter(let color, let direction) where color == signals[i].color:
+                    signals[i].direction = direction
+                case .toggle(let index):
+                    signals[i].direction = toggles[index]
+                    enteredToggles.append(index)
+                case .colorRouter, .bridge, nil:
+                    break
                 }
-                occupants[target, default: []].append(i)
+                let axis: Axis? = board.cells[target] == .bridge ? Axis(signals[i].direction) : nil
+                occupants[Occupancy(coordinate: target, axis: axis), default: []].append(i)
             }
 
-            // 5. Aynı hücrede çarpışma.
+            // 5. Aynı hücrede (köprüde aynı eksende) çarpışma.
             for (cell, indices) in occupants where indices.count > 1 {
                 for i in indices {
-                    let others = indices.filter { $0 != i }.map { signals[$0].id }
-                    fail(i, .collision, at: cell, others: others)
+                    fail(i, .collision, at: cell.coordinate, others: indices.filter { $0 != i }.map { signals[$0].id })
                 }
             }
 
-            // 6. Döngü.
-            for i in targets.keys.sorted() where signals[i].status == .active {
-                let key = SignalKey(coordinate: signals[i].coordinate, direction: signals[i].direction)
-                if !signals[i].visited.insert(key).inserted {
-                    fail(i, .loop, at: signals[i].coordinate)
+            // 6. Makas oklar döner.
+            for index in enteredToggles { toggles[index] = toggles[index].clockwise }
+
+            // 7. Döngü.
+            if toggles.isEmpty {
+                for i in targets.keys.sorted() where signals[i].status == .active {
+                    let key = SignalKey(coordinate: signals[i].coordinate, direction: signals[i].direction)
+                    if !signals[i].visited.insert(key).inserted {
+                        fail(i, .loop, at: signals[i].coordinate)
+                    }
+                }
+            } else if failures.isEmpty {
+                do {
+                    let active = signals.indices.filter { signals[$0].status == .active }
+                    let key = GlobalKey(
+                        signals: active.map { GlobalKey.Entry(index: $0, coordinate: signals[$0].coordinate, direction: signals[$0].direction) },
+                        toggles: toggles)
+                    if !active.isEmpty && !seenGlobalStates.insert(key).inserted {
+                        for i in active { fail(i, .loop, at: signals[i].coordinate) }
+                    }
                 }
             }
 
-            trace.append(snapshot(tick: tick, signals))
+            trace.append(snapshot(tick: tick, signals, toggles, board))
             if !failures.isEmpty {
                 let order = Dictionary(uniqueKeysWithValues: signals.enumerated().map { ($1.id, $0) })
                 failures.sort { order[$0.signalID]! < order[$1.signalID]! }
@@ -105,7 +133,7 @@ public struct SimulationEngine: Sendable {
             }
         }
 
-        // Güvenlik ağı: döngü tespiti bunu imkânsız kılmalı.
+        // Güvenlik ağı: döngü tespiti normalde bundan önce tetiklenir.
         let stuck = signals.filter { $0.status == .active }
         if !stuck.isEmpty {
             let tick = trace.last?.tick ?? 0
@@ -115,16 +143,51 @@ public struct SimulationEngine: Sendable {
         return SimulationResult(outcome: .success, trace: trace, deliveredSignalIDs: delivered, failures: [])
     }
 
-    private func snapshot(tick: Int, _ signals: [Signal]) -> TickSnapshot {
-        TickSnapshot(tick: tick, signals: signals.map {
-            SignalSnapshot(signalID: $0.id, color: $0.color, coordinate: $0.coordinate, direction: $0.direction, status: $0.status)
-        })
+    /// Makassız tahtada her sinyal en fazla W×H×4 farklı durumda bulunabilir. Makaslarla durum uzayı
+    /// 4^makas katına çıkar; pratik bir tavanla sınırlanır.
+    static func tickLimit(level: LevelDefinition, toggleCount: Int) -> Int {
+        let base = max(level.width * level.height * 4, 1)
+        var limit = base
+        for _ in 0..<toggleCount where limit < 1_000_000 { limit *= 4 }
+        return min(limit, 1_000_000) + 1
     }
+
+    private func snapshot(tick: Int, _ signals: [Signal], _ toggles: [Direction], _ board: Board) -> TickSnapshot {
+        TickSnapshot(
+            tick: tick,
+            signals: signals.map {
+                SignalSnapshot(signalID: $0.id, color: $0.color, coordinate: $0.coordinate, direction: $0.direction, status: $0.status)
+            },
+            toggleDirections: Dictionary(uniqueKeysWithValues: board.toggleIDs.enumerated().map { ($1, toggles[$0]) }))
+    }
+}
+
+private enum Axis: Hashable {
+    case horizontal, vertical
+
+    init(_ direction: Direction) {
+        self = direction.dx != 0 ? .horizontal : .vertical
+    }
+}
+
+private struct Occupancy: Hashable {
+    var coordinate: Coordinate
+    var axis: Axis?
 }
 
 private struct SignalKey: Hashable {
     var coordinate: Coordinate
     var direction: Direction
+}
+
+private struct GlobalKey: Hashable {
+    struct Entry: Hashable {
+        var index: Int
+        var coordinate: Coordinate
+        var direction: Direction
+    }
+    var signals: [Entry]
+    var toggles: [Direction]
 }
 
 private struct Signal {
@@ -136,24 +199,42 @@ private struct Signal {
     var visited: Set<SignalKey> = []
 }
 
-/// Simülasyon boyunca değişmeyen hücre bilgisi (oklar Run sırasında dönmez).
+private enum Cell: Equatable {
+    case router(Direction)
+    case colorRouter(SignalColor, Direction)
+    /// Makas okların değişken yönü simülasyonda ayrı tutulur; burada indeksi saklanır.
+    case toggle(Int)
+    case bridge
+}
+
+/// Run boyunca değişmeyen hücre bilgisi. Değişen tek şey makas yönleridir.
 private struct Board {
     var impassable: Set<Coordinate> = []
     var receivers: [Coordinate: Receiver] = [:]
-    var routerDirections: [Coordinate: Direction] = [:]
+    var cells: [Coordinate: Cell] = [:]
+    var toggleIDs: [String] = []
+    var initialToggleDirections: [Direction] = []
 
     init(level: LevelDefinition, state: LevelState) {
         for source in level.sources { impassable.insert(source.coordinate) }
         for receiver in level.receivers { receivers[receiver.coordinate] = receiver }
         for tile in level.tiles {
+            let direction = state.direction(of: tile)
             switch tile.kind {
             case .blocker:
                 impassable.insert(tile.coordinate)
+            case .bridge:
+                cells[tile.coordinate] = .bridge
             case .router:
-                if let direction = state.direction(of: tile) { routerDirections[tile.coordinate] = direction }
+                if let direction { cells[tile.coordinate] = .router(direction) }
+            case .colorRouter:
+                if let direction, let color = tile.color { cells[tile.coordinate] = .colorRouter(color, direction) }
+            case .toggle:
+                guard let direction else { continue }
+                cells[tile.coordinate] = .toggle(toggleIDs.count)
+                toggleIDs.append(tile.id)
+                initialToggleDirections.append(direction)
             }
         }
     }
-
-    func isImpassable(_ coordinate: Coordinate) -> Bool { impassable.contains(coordinate) }
 }

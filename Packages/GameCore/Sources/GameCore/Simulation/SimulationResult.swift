@@ -9,7 +9,7 @@ public enum FailureReason: String, Codable, Sendable {
     case wrongReceiver
     /// İki veya daha fazla sinyal aynı tick'te aynı hücreye girdi. Koordinat: o hücre.
     case collision
-    /// Sinyal daha önce bulunduğu (hücre, yön) durumuna geri döndü. Koordinat: tekrar edilen hücre.
+    /// Sinyal daha önce bulunduğu durumuna geri döndü (makaslı tahtalarda tüm tahtanın durumu). Koordinat: sinyalin hücresi.
     case loop
 }
 
@@ -46,6 +46,8 @@ public struct SignalSnapshot: Codable, Hashable, Sendable {
 public struct TickSnapshot: Codable, Hashable, Sendable {
     public var tick: Int
     public var signals: [SignalSnapshot]
+    /// Makas okların tick sonundaki yönleri (taş ID → yön). Makas yoksa boş.
+    public var toggleDirections: [String: Direction] = [:]
 }
 
 public struct SimulationResult: Codable, Hashable, Sendable {

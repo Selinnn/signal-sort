@@ -32,7 +32,7 @@ bu yüzden yanlıştı — düzeltildi.)
 | 3 | **Engel** | Girilemez | Rotayı kısıtlar |
 | 4 | **Kesişme + zamanlama** | Aynı tick aynı hücre = çarpışma | Oyuncu bir sinyali **dolambaçlı yoldan** geciktirerek çarpışmayı önler |
 | 5 | **Renkli ok** | Yalnızca kendi rengindeki sinyali çevirir; diğer renkler düz geçer | Farklı renkler aynı hücreyi **gerçekten paylaşır** |
-| 6 | **Makas (Toggle) ok** | Her sinyal geçtikten sonra kendiliğinden 90° saat yönünde döner; oyuncu başlangıç yönünü seçer | Sıra ve zamanlama planlaması |
+| 6 | **Makas (Toggle) ok** | Giren sinyale mevcut yönünü verir, o tick'in sonunda kendiliğinden 90° saat yönünde döner; oyuncu başlangıç yönünü seçer, her Run başlangıç yönünden başlar | Sıra ve zamanlama planlaması |
 | 7 | **Köprü** | Dikey ve yatay geçiş çarpışmaz (alt/üst geçit) | Yoğun tahtalarda kesişmeyi serbest bırakır |
 
 Kampanya: her bölüm tek yeni öğe getirir, son bölüm hepsini karıştırır. Yeni öğe dışında kural eklenmez.
@@ -50,11 +50,12 @@ yön okunur ve bir sonraki tick o yönde çıkar.
 4. Hareketi uygula. Çıkış hücresi: doğru renk → teslim (sinyal tahtadan kalkar), yanlış renk → `wrongReceiver`.
    Çıkış hücrelerinde çarpışma yoktur (aynı tick'te iki doğru sinyal teslim edilebilir).
 5. Aynı hücrede ≥2 sinyal (köprü hariç; köprüde yalnızca aynı eksende iki sinyal çarpışır) → `collision`. Renk fark etmez.
-6. Makas okları: bu tick'te çıkılan makas oklarını döndür.
+6. Makas okları: bu tick'te girilen her makas ok, giren sinyal başına 90° saat yönünde döner (trace her tick'te makas yönlerini taşır; UI dönüşü sinyal çıkarken canlandırır).
 7. Döngü: bir sinyal daha önce bulunduğu (hücre, yön) durumuna dönerse → `loop` (koordinat: tekrar edilen hücre).
    Makassız tahtalarda oklar Run boyunca sabit olduğundan bu kesin ve erken bir tespittir; global durum aramak
-   gereksiz (sinyal periyotlarının EKOK'u kadar uzayabilir). Makas oklarıyla (adım 3) anahtar
-   (hücre, yön, makas yönleri) olur; üst sınır `W×H×4×4^(makas sayısı)` tick, aşılırsa `loop`.
+   gereksiz (sinyal periyotlarının EKOK'u kadar uzayabilir). Makaslı tahtada sinyal başına tekrar yeterli değil
+   (makas değişmiş olabilir, sinyal sonra çıkabilir) → **tüm tahta durumu** (aktif sinyaller + makas yönleri)
+   tekrar ederse tüm aktif sinyaller `loop`. Üst sınır `W×H×4×4^(makas sayısı)` tick (en fazla 1.000.000), aşılırsa `loop`.
    Hata koordinatları: `outOfBounds` → kenardaki son hücre, `blocked`/`wrongReceiver`/`collision` → girilen hücre,
    `swapCollision` → sinyalin kendi hücresi.
 

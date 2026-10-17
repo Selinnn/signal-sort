@@ -110,11 +110,26 @@ public struct Receiver: Codable, Hashable, Sendable {
     }
 }
 
-public enum TileKind: String, Codable, Sendable {
+public enum TileKind: String, Codable, CaseIterable, Sendable {
     /// Giren sinyalin yönünü okun yönü yapar.
     case router
     /// Girilemez hücre.
     case blocker
+    /// Yalnızca kendi rengindeki sinyalin yönünü değiştirir; diğer renkler düz geçer.
+    case colorRouter
+    /// Makas ok: giren sinyale mevcut yönünü verir, ardından kendiliğinden 90° saat yönünde döner.
+    /// Oyuncu yalnızca başlangıç yönünü seçer; her Run başlangıç yönünden başlar.
+    case toggle
+    /// Köprü: sinyaller düz geçer; yatay ve dikey geçişler aynı tick'te çarpışmaz.
+    case bridge
+
+    /// Bu türün bir yönü var mı (router, colorRouter, toggle).
+    public var isDirectional: Bool {
+        switch self {
+        case .router, .colorRouter, .toggle: true
+        case .blocker, .bridge: false
+        }
+    }
 }
 
 public struct Tile: Codable, Hashable, Sendable {
@@ -124,13 +139,16 @@ public struct Tile: Codable, Hashable, Sendable {
     /// Başlangıç yönü. Yönlü olmayan türlerde (engel) nil.
     public var direction: Direction?
     public var rotatable: Bool
+    /// Yalnız `colorRouter` için: etkilediği renk.
+    public var color: SignalColor?
 
-    public init(id: String, kind: TileKind, at coordinate: Coordinate, direction: Direction? = nil, rotatable: Bool = false) {
+    public init(id: String, kind: TileKind, at coordinate: Coordinate, direction: Direction? = nil, rotatable: Bool = false, color: SignalColor? = nil) {
         self.id = id
         self.kind = kind
         self.coordinate = coordinate
         self.direction = direction
         self.rotatable = rotatable
+        self.color = color
     }
 
     public static func router(_ id: String, at coordinate: Coordinate, _ direction: Direction, rotatable: Bool = true) -> Tile {
@@ -141,7 +159,19 @@ public struct Tile: Codable, Hashable, Sendable {
         Tile(id: id, kind: .blocker, at: coordinate)
     }
 
-    private enum CodingKeys: String, CodingKey { case id, kind, x, y, dir, rotatable }
+    public static func colorRouter(_ id: String, _ color: SignalColor, at coordinate: Coordinate, _ direction: Direction, rotatable: Bool = true) -> Tile {
+        Tile(id: id, kind: .colorRouter, at: coordinate, direction: direction, rotatable: rotatable, color: color)
+    }
+
+    public static func toggle(_ id: String, at coordinate: Coordinate, _ direction: Direction, rotatable: Bool = true) -> Tile {
+        Tile(id: id, kind: .toggle, at: coordinate, direction: direction, rotatable: rotatable)
+    }
+
+    public static func bridge(_ id: String, at coordinate: Coordinate) -> Tile {
+        Tile(id: id, kind: .bridge, at: coordinate)
+    }
+
+    private enum CodingKeys: String, CodingKey { case id, kind, x, y, dir, rotatable, color }
 
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -150,6 +180,7 @@ public struct Tile: Codable, Hashable, Sendable {
         coordinate = Coordinate(try c.decode(Int.self, forKey: .x), try c.decode(Int.self, forKey: .y))
         direction = try c.decodeIfPresent(Direction.self, forKey: .dir)
         rotatable = try c.decodeIfPresent(Bool.self, forKey: .rotatable) ?? false
+        color = try c.decodeIfPresent(SignalColor.self, forKey: .color)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -160,5 +191,6 @@ public struct Tile: Codable, Hashable, Sendable {
         try c.encode(coordinate.y, forKey: .y)
         try c.encodeIfPresent(direction, forKey: .dir)
         if rotatable { try c.encode(true, forKey: .rotatable) }
+        try c.encodeIfPresent(color, forKey: .color)
     }
 }

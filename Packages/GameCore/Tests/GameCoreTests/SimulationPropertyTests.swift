@@ -11,7 +11,7 @@ import Testing
             let first = engine.simulate(lvl, state)
             let second = engine.simulate(lvl, state)
             #expect(first == second)
-            #expect(first.totalTicks <= lvl.width * lvl.height * 4)
+            #expect(first.totalTicks < SimulationEngine.tickLimit(level: lvl, toggleCount: lvl.tiles.filter { $0.kind == .toggle }.count))
             #expect(first.trace.map(\.tick) == Array(0...first.totalTicks))
             if first.isSuccess {
                 #expect(first.failures.isEmpty)
@@ -43,10 +43,14 @@ import Testing
         let tileCount = Int.random(in: 0...(cells.count - 2 * signalCount), using: &rng)
         for i in 0..<tileCount {
             let cell = next.next()!
-            if Int.random(in: 0..<5, using: &rng) == 0 {
-                tiles.append(.blocker("b\(i)", at: cell))
-            } else {
-                tiles.append(.router("r\(i)", at: cell, Direction.allCases.randomElement(using: &rng)!, rotatable: Bool.random(using: &rng)))
+            let direction = Direction.allCases.randomElement(using: &rng)!
+            let rotatable = Bool.random(using: &rng)
+            switch Int.random(in: 0..<10, using: &rng) {
+            case 0: tiles.append(.blocker("b\(i)", at: cell))
+            case 1: tiles.append(.bridge("g\(i)", at: cell))
+            case 2: tiles.append(.colorRouter("c\(i)", colors[Int.random(in: 0..<3, using: &rng)], at: cell, direction, rotatable: rotatable))
+            case 3 where tiles.filter({ $0.kind == .toggle }).count < 3: tiles.append(.toggle("t\(i)", at: cell, direction, rotatable: rotatable))
+            default: tiles.append(.router("r\(i)", at: cell, direction, rotatable: rotatable))
             }
         }
         var rotations: [String: Int] = [:]
