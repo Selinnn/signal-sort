@@ -1,0 +1,54 @@
+{
+ "id": "tutorial-5",
+ "schemaVersion": 1,
+ "width": 5,
+ "height": 5,
+ "sources": [
+  {
+   "id": "o",
+   "color": "orange",
+   "x": 0,
+   "y": 1,
+   "dir": "east"
+  },
+  {
+   "id": "b",
+   "color": "blue",
+   "x": 4,
+   "y": 3,
+   "dir": "west"
+  }
+ ],
+ "receivers": [
+  {
+   "id": "do",
+   "color": "orange",
+   "x": 2,
+   "y": 4
+  },
+  {
+   "id": "db",
+   "color": "blue",
+   "x": 1,
+   "y": 0
+  }
+ ],
+ "tiles": [
+  {
+   "id": "r1",
+   "kind": "router",
+   "x": 2,
+   "y": 1,
+   "dir": "east",
+   "rotatable": true
+  },
+  {
+   "id": "r2",
+   "kind": "router",
+   "x": 1,
+   "y": 3,
+   "dir": "south",
+   "rotatable": true
+  }
+ ]
+}

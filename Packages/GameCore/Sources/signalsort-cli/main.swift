@@ -10,6 +10,8 @@ let usage = """
       signalsort-cli solve <level.json> [--write]
       signalsort-cli generate --profile <ad> [--seed <n>] [--count <n>] [--out <klasör>] [--quiet]
       signalsort-cli profiles
+      signalsort-cli build-campaign --spec <spec.json> --handmade <klasör> --out <campaign.json>
+      signalsort-cli check-campaign <campaign.json> [--deep]
     """
 
 struct CLIError: Error, CustomStringConvertible {
@@ -47,6 +49,14 @@ func describe(_ level: LevelDefinition, _ report: SolveReport) -> String {
     let par = report.par.map(String.init) ?? "—"
     let exact = report.isExhaustive ? "" : " (eksik arama)"
     return "par \(par), çözüm \(report.solutionCount)\(exact), arama düğümü \(report.searchNodes)"
+}
+
+/// Bölüm başına zorluk eğrisi: par ve arama düğümü (PLAN §6 tablosu için).
+func printCurve(_ campaign: Campaign) {
+    for chapter in campaign.chapters {
+        let pars = chapter.levels.map { $0.par.map(String.init) ?? "?" }.joined(separator: " ")
+        print("  \(chapter.id) par: \(pars)")
+    }
 }
 
 func run(_ args: [String]) throws -> Int32 {
@@ -158,6 +168,39 @@ func run(_ args: [String]) throws -> Int32 {
             if !reasons.isEmpty { print("  başarısız tohumların red nedenleri: \(reasons.sorted { $0.value > $1.value }.map { "\($0.key.rawValue)=\($0.value)" }.joined(separator: " "))") }
         }
         return failures.isEmpty ? 0 : 1
+
+    case "build-campaign":
+        guard let specPath = option("--spec", in: rest), let handmadeDir = option("--handmade", in: rest),
+              let outPath = option("--out", in: rest) else {
+            throw CLIError(description: "build-campaign: --spec, --handmade ve --out gerekli")
+        }
+        let spec = try JSONDecoder().decode(CampaignSpec.self, from: Data(contentsOf: URL(fileURLWithPath: specPath)))
+        var handmade: [String: LevelDefinition] = [:]
+        for file in try FileManager.default.contentsOfDirectory(atPath: handmadeDir).sorted() where file.hasSuffix(".json") {
+            handmade[String(file.dropLast(5))] = try loadLevel("\(handmadeDir)/\(file)")
+        }
+        let started = Date()
+        let campaign = try CampaignBuilder().build(spec: spec, handmade: handmade) { print($0) }
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        try encoder.encode(campaign).write(to: URL(fileURLWithPath: outPath))
+        print("\(campaign.levels.count) seviye yazıldı: \(outPath) (\(String(format: "%.0f", Date().timeIntervalSince(started))) sn)")
+        printCurve(campaign)
+
+    case "check-campaign":
+        guard let path = positional(rest).first else { throw CLIError(description: "check-campaign: dosya yolu gerekli") }
+        let campaign = try JSONDecoder().decode(Campaign.self, from: Data(contentsOf: URL(fileURLWithPath: path)))
+        let deep = rest.contains("--deep")
+        var failed = 0
+        for level in campaign.levels {
+            let issues = LevelValidator().validate(level, deep: deep)
+            if !issues.isEmpty {
+                failed += 1
+                print("✗ \(level.id): \(issues.map(\.description).joined(separator: "; "))")
+            }
+        }
+        print("\(campaign.levels.count - failed)/\(campaign.levels.count) geçerli\(deep ? " (derin)" : "")")
+        return failed == 0 ? 0 : 1
 
     case "profiles":
         for profile in DifficultyProfile.all {

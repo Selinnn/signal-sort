@@ -1,0 +1,13 @@
+{
+  "maxSimilarity": 0.6,
+  "poolFactor": 3,
+  "chapters": [
+    { "id": "route",    "profile": "route",    "count": 20, "seed": 10000,
+      "handmade": ["tutorial-1", "tutorial-2", "tutorial-3", "tutorial-4", "tutorial-5"] },
+    { "id": "obstacle", "profile": "obstacle", "count": 25, "seed": 20000, "handmade": ["intro-blocker", "intro-fixed"] },
+    { "id": "crossing", "profile": "crossing", "count": 25, "seed": 30000, "handmade": ["intro-crossing"] },
+    { "id": "color",    "profile": "color",    "count": 25, "seed": 40000, "handmade": ["intro-color"] },
+    { "id": "toggle",   "profile": "toggle",   "count": 25, "seed": 50000, "handmade": ["intro-toggle"] },
+    { "id": "master",   "profile": "master",   "count": 30, "seed": 60000, "handmade": ["intro-bridge"] }
+  ]
+}

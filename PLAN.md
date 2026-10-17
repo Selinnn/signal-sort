@@ -352,6 +352,15 @@ Her adım kendi commit'i; ✅ = bitiş kriteri.
 > (adım 8). Cila (adım 12) için not: renkli okların üzerindeki şekil işareti küçük ve zor seçiliyor; tahta dikeyde
 > ortalanmalı.
 | 7 | Tutorial + elle seviyeler + `build-campaign` → 150 seviye | CI içerik testi yeşil |
+
+> **Adım 7 notları:** Elle 11 seviye (`content/handmade/`): tutorial 1–5 (tek dokunuş → iki ok → tuzak ok →
+> döngü → ikinci renk) ve bölüm 2–6'nın tanıtım seviyeleri (engel, sabit ok, kesişme/zamanlama, renkli ok,
+> makas, köprü). Plandaki "her bölümün ilk 2 seviyesi elle" yerine bölüm başına 1 tanıtım + üreticiden en kolay
+> aday kullanıldı. Hepsi tek çözümlü. `content/campaign-spec.json` → `build-campaign` (havuz = gerekenin 3 katı,
+> benzerlik eşiği 0,6, 8 simetri) → `campaign.json` (200 KB, 82 sn). Doğrulama: `swift test` (kayıtlı çözümleri
+> oynatır, benzerlik, 1. bölümü yeniden üretir) + `scripts/check-content.sh` (150/150 derin doğrulama ve tüm
+> kampanyanın birebir yeniden üretimi). Par eğrisi bölüm içinde arama düğümüne göre artar ama par'a göre
+> dalgalı (ör. bölüm 1: 1 3 4 5 3 6 7 8 4 …); gerçek zorluk hissi oynanarak kontrol edilmeli.
 | 8 | Home, bölüm haritası, sonuç, persistence, kilit akışı | Bot oyuncu tüm kampanyayı bitirir |
 | 9 | Günlük: `dailies.json`, seri, paylaşım kartı | Uçak modunda çalışır |
 | 10 | StoreKit 2: Reklamları Kaldır, Tam Oyun, ipucu paketi, geri yükleme, ipucu ekonomisi | StoreKit test UI testleri yeşil |

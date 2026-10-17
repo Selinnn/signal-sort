@@ -11,7 +11,7 @@ final class SignalSortUITests: XCTestCase {
     }
 
     private func openLevel(_ index: Int) {
-        XCTAssertTrue(app.staticTexts["home.title"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["level.\(index)"].waitForExistence(timeout: 5))
         app.buttons["level.\(index)"].tap()
         XCTAssertTrue(app.buttons["board.run"].waitForExistence(timeout: 5))
     }
@@ -33,9 +33,8 @@ final class SignalSortUITests: XCTestCase {
     func testSolveFirstLevelAndContinue() throws {
         openLevel(0)
         attachScreenshot("level1-start")
-        let router = app.buttons["cell.1.2"]
-        for _ in 0..<3 { router.tap() }
-        XCTAssertEqual(app.staticTexts["board.moves"].label, "Moves 3 · Par 3")
+        app.buttons["cell.2.2"].tap()
+        XCTAssertEqual(app.staticTexts["board.moves"].label, "Moves 1 · Par 1")
         app.buttons["board.run"].tap()
         XCTAssertTrue(app.staticTexts["result.title"].waitForExistence(timeout: 10))
         attachScreenshot("level1-solved")
@@ -52,11 +51,11 @@ final class SignalSortUITests: XCTestCase {
         XCTAssertEqual(failure.label, "The orange signal left the board.")
         attachScreenshot("level1-failure")
 
-        app.buttons["cell.1.2"].tap()
+        app.buttons["cell.2.2"].tap()
         XCTAssertFalse(failure.exists)
-        XCTAssertEqual(app.staticTexts["board.moves"].label, "Moves 1 · Par 3")
+        XCTAssertEqual(app.staticTexts["board.moves"].label, "Moves 1 · Par 1")
         app.buttons["board.undo"].tap()
-        XCTAssertEqual(app.staticTexts["board.moves"].label, "Moves 0 · Par 3")
+        XCTAssertEqual(app.staticTexts["board.moves"].label, "Moves 0 · Par 1")
         XCTAssertFalse(app.buttons["board.reset"].isEnabled)
     }
 
@@ -73,20 +72,22 @@ final class SignalSortUITests: XCTestCase {
         attachScreenshot("level4-solved-with-hints")
     }
 
-    /// Görsel kontrol için her seviyenin başlangıcı ve başarısız bir Run sonrası.
+    /// Görsel kontrol için her bölümün tanıtım ve son seviyesi: başlangıç ve başarısız bir Run sonrası.
     @MainActor
-    func testCaptureEveryLevel() throws {
+    func testCaptureChapterLevels() throws {
         XCTAssertTrue(app.staticTexts["home.title"].waitForExistence(timeout: 5))
-        var index = 0
-        while app.buttons["level.\(index)"].exists {
+        for index in [0, 3, 20, 44, 45, 70, 95, 120, 149] {
+            var swipes = 0
+            while !app.buttons["level.\(index)"].isHittable && swipes < 40 {
+                app.swipeUp()
+                swipes += 1
+            }
             openLevel(index)
             attachScreenshot("level\(index + 1)-board")
             app.buttons["board.run"].tap()
             _ = app.descendants(matching: .any).matching(identifier: "board.failure").firstMatch.waitForExistence(timeout: 10)
             attachScreenshot("level\(index + 1)-run")
             app.navigationBars.buttons.element(boundBy: 0).tap()
-            index += 1
         }
-        XCTAssertGreaterThan(index, 0)
     }
 }

@@ -1,0 +1,46 @@
+{
+ "id": "intro-toggle",
+ "schemaVersion": 1,
+ "width": 6,
+ "height": 6,
+ "sources": [
+  {
+   "id": "o",
+   "color": "orange",
+   "x": 0,
+   "y": 3,
+   "dir": "east"
+  },
+  {
+   "id": "b",
+   "color": "blue",
+   "x": 2,
+   "y": 0,
+   "dir": "south"
+  }
+ ],
+ "receivers": [
+  {
+   "id": "do",
+   "color": "orange",
+   "x": 5,
+   "y": 3
+  },
+  {
+   "id": "db",
+   "color": "blue",
+   "x": 2,
+   "y": 5
+  }
+ ],
+ "tiles": [
+  {
+   "id": "t1",
+   "kind": "toggle",
+   "x": 2,
+   "y": 3,
+   "dir": "west",
+   "rotatable": true
+  }
+ ]
+}

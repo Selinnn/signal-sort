@@ -1,0 +1,60 @@
+{
+ "id": "intro-bridge",
+ "schemaVersion": 1,
+ "width": 7,
+ "height": 7,
+ "sources": [
+  {
+   "id": "o",
+   "color": "orange",
+   "x": 0,
+   "y": 3,
+   "dir": "east"
+  },
+  {
+   "id": "b",
+   "color": "blue",
+   "x": 3,
+   "y": 0,
+   "dir": "south"
+  }
+ ],
+ "receivers": [
+  {
+   "id": "do",
+   "color": "orange",
+   "x": 6,
+   "y": 3
+  },
+  {
+   "id": "db",
+   "color": "blue",
+   "x": 3,
+   "y": 6
+  }
+ ],
+ "tiles": [
+  {
+   "id": "r1",
+   "kind": "router",
+   "x": 1,
+   "y": 3,
+   "dir": "north",
+   "rotatable": true
+  },
+  {
+   "id": "r2",
+   "kind": "router",
+   "x": 3,
+   "y": 1,
+   "dir": "west",
+   "rotatable": true
+  },
+  {
+   "id": "g1",
+   "kind": "bridge",
+   "x": 3,
+   "y": 3
+  }
+ ]
+}

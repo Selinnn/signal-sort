@@ -1,0 +1,69 @@
+{
+ "id": "intro-crossing",
+ "schemaVersion": 1,
+ "width": 6,
+ "height": 6,
+ "sources": [
+  {
+   "id": "o",
+   "color": "orange",
+   "x": 5,
+   "y": 3,
+   "dir": "west"
+  },
+  {
+   "id": "b",
+   "color": "blue",
+   "x": 2,
+   "y": 0,
+   "dir": "south"
+  }
+ ],
+ "receivers": [
+  {
+   "id": "do",
+   "color": "orange",
+   "x": 0,
+   "y": 3
+  },
+  {
+   "id": "db",
+   "color": "blue",
+   "x": 2,
+   "y": 5
+  }
+ ],
+ "tiles": [
+  {
+   "id": "r1",
+   "kind": "router",
+   "x": 2,
+   "y": 1,
+   "dir": "south",
+   "rotatable": true
+  },
+  {
+   "id": "r2",
+   "kind": "router",
+   "x": 4,
+   "y": 1,
+   "dir": "east",
+   "rotatable": true
+  },
+  {
+   "id": "r3",
+   "kind": "router",
+   "x": 4,
+   "y": 4,
+   "dir": "south",
+   "rotatable": true
+  },
+  {
+   "id": "f1",
+   "kind": "router",
+   "x": 2,
+   "y": 4,
+   "dir": "south"
+  }
+ ]
+}

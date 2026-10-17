@@ -16,7 +16,7 @@ struct HomeView: View {
                                 Text("board.level \(index + 1)")
                                     .foregroundStyle(Theme.textPrimary)
                                 Spacer()
-                                Text(catalog.levels[index].profile ?? "")
+                                Text(catalog.levels[index].id)
                                     .font(.caption)
                                     .foregroundStyle(Theme.textSecondary)
                             }

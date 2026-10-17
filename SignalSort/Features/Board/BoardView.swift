@@ -99,8 +99,18 @@ struct BoardView: View {
     private func signals(size: CGFloat) -> some View {
         let snapshot = session.snapshot
         let failures = Dictionary(uniqueKeysWithValues: session.visibleFailures.map { ($0.signalID, $0) })
+        // Aynı hücredeki (çarpışan) sinyaller üst üste binmesin diye çapraz kaydırılır.
+        var stacked: [Coordinate: [String]] = [:]
+        for signal in snapshot?.signals ?? [] where signal.status != .delivered {
+            stacked[signal.coordinate, default: []].append(signal.signalID)
+        }
         return ForEach(snapshot?.signals ?? [], id: \.signalID) { signal in
             var point = Self.center(signal.coordinate, size)
+            if let group = stacked[signal.coordinate], group.count > 1, let order = group.firstIndex(of: signal.signalID) {
+                let shift = (CGFloat(order) - CGFloat(group.count - 1) / 2) * size * 0.26
+                point.x += shift
+                point.y += shift
+            }
             if let failure = failures[signal.signalID], [.outOfBounds, .blocked].contains(failure.reason) {
                 // Duvara/kenara çarpma: sinyal gideceği yöne doğru hafifçe kayar.
                 let bump = failure.reason == .outOfBounds ? 0.42 : 0.3
