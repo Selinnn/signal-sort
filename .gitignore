@@ -33,3 +33,6 @@ build/
 fastlane/README.md
 *.ipa
 *.dSYM.zip
+build-archive.log
+build-archive.log
+build-upload.log

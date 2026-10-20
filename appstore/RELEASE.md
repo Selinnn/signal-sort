@@ -63,6 +63,9 @@ Aşağıdaki adımlar **senin hesaplarınla** yapılmalı (ödeme, vergi, sözle
   Demo hesap gerekmez (giriş yok).
 
 ## 7. Derleme ve yükleme
+> ✅ **1.0.0 (1) yüklendi (2026-10-20)**: terminalden `xcodebuild archive` + `-exportArchive` (`appstore/ExportOptions.plist`,
+> `-allowProvisioningUpdates`). GoogleMobileAds/UMP dSYM uyarıları zararsız (Google sembol dosyası dağıtmıyor).
+> Sonraki yüklemede derleme numarası 2 olmalı.
 1. Her yüklemede derleme numarasını artır: `project.yml` → `CURRENT_PROJECT_VERSION` (1, 2, 3…), sonra `xcodegen generate`.
 2. Ya Xcode: **Product → Archive → Distribute App → App Store Connect → Upload** (otomatik imzalama dağıtım
    sertifikasını kendisi oluşturur),
