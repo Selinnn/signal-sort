@@ -18,6 +18,9 @@ Aşağıdaki adımlar **senin hesaplarınla** yapılmalı (ödeme, vergi, sözle
 | SKU | `signalsort-ios` |
 | Fiyat | Ücretsiz, tüm ülkeler |
 
+> Mağaza adları (2026-10-20): EN **Signal Sort**; TR **Sinyal Yolu: Renk Bulmacası**; ES-ES/ES-MX **Ruta de Señales: Puzle**.
+> "Signal Sort" TR ve ES yerelleştirmelerinde başka bir uygulamayla çakıştığı için kabul edilmedi; cihazdaki ad her dilde "Signal Sort".
+
 ## 3. Uygulama içi satın almalar (ID'ler kodla birebir aynı olmalı)
 | Ürün ID | Tür | Fiyat | Görünen ad (EN / TR / ES) |
 |---|---|---|---|
